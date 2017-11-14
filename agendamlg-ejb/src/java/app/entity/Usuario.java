@@ -9,18 +9,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
+    , @NamedQuery(name = "Usuario.findByFoto", query = "SELECT u FROM Usuario u WHERE u.foto = :foto")
     , @NamedQuery(name = "Usuario.findByFechanacimiento", query = "SELECT u FROM Usuario u WHERE u.fechanacimiento = :fechanacimiento")})
 public class Usuario implements Serializable {
 
@@ -84,20 +81,15 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "FOTO")
+    private Integer foto;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHANACIMIENTO")
     @Temporal(TemporalType.DATE)
     private Date fechanacimiento;
     @ManyToMany(mappedBy = "usuarioCollection")
-    private Collection<Evento> eventoCollection;
-    @ManyToMany(mappedBy = "usuarioCollection")
     private Collection<Categoria> categoriaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Comentario> comentarioCollection;
-    @JoinColumn(name = "FOTO", referencedColumnName = "ID")
-    @ManyToOne
-    private Archivo foto;
 
     public Usuario() {
     }
@@ -173,6 +165,14 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
+    public Integer getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Integer foto) {
+        this.foto = foto;
+    }
+
     public Date getFechanacimiento() {
         return fechanacimiento;
     }
@@ -182,38 +182,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Evento> getEventoCollection() {
-        return eventoCollection;
-    }
-
-    public void setEventoCollection(Collection<Evento> eventoCollection) {
-        this.eventoCollection = eventoCollection;
-    }
-
-    @XmlTransient
     public Collection<Categoria> getCategoriaCollection() {
         return categoriaCollection;
     }
 
     public void setCategoriaCollection(Collection<Categoria> categoriaCollection) {
         this.categoriaCollection = categoriaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
-    }
-
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
-    }
-
-    public Archivo getFoto() {
-        return foto;
-    }
-
-    public void setFoto(Archivo foto) {
-        this.foto = foto;
     }
 
     @Override

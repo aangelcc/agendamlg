@@ -10,19 +10,15 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -92,17 +88,8 @@ public class Evento implements Serializable {
     @NotNull
     @Column(name = "LIKES")
     private int likes;
-    @JoinTable(name = "CALENDARIO", joinColumns = {
-        @JoinColumn(name = "EVENTO_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")})
-    @ManyToMany
-    private Collection<Usuario> usuarioCollection;
     @ManyToMany(mappedBy = "eventoCollection")
     private Collection<Categoria> categoriaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
-    private Collection<Comentario> comentarioCollection;
-    @OneToMany(mappedBy = "eventoId")
-    private Collection<Archivo> archivoCollection;
 
     public Evento() {
     }
@@ -195,39 +182,12 @@ public class Evento implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
-    }
-
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
-    }
-
-    @XmlTransient
     public Collection<Categoria> getCategoriaCollection() {
         return categoriaCollection;
     }
 
     public void setCategoriaCollection(Collection<Categoria> categoriaCollection) {
         this.categoriaCollection = categoriaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
-    }
-
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
-    }
-
-    @XmlTransient
-    public Collection<Archivo> getArchivoCollection() {
-        return archivoCollection;
-    }
-
-    public void setArchivoCollection(Collection<Archivo> archivoCollection) {
-        this.archivoCollection = archivoCollection;
     }
 
     @Override
