@@ -7,7 +7,7 @@
     <module id="agendamlg-war-Web">
         <web>
             <web-uri>war</web-uri>
-            <context-root>agendamlg_war-Web</context-root>
+            <context-root>agendamlg-war</context-root>
         </web>
     </module>
     <module id="agendamlg-ejb-EJB">

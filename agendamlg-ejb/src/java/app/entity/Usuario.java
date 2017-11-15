@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -90,6 +92,8 @@ public class Usuario implements Serializable {
     private Date fechanacimiento;
     @ManyToMany(mappedBy = "usuarioCollection")
     private Collection<Categoria> categoriaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creador")
+    private Collection<Evento> eventoCollection;
 
     public Usuario() {
     }
@@ -188,6 +192,15 @@ public class Usuario implements Serializable {
 
     public void setCategoriaCollection(Collection<Categoria> categoriaCollection) {
         this.categoriaCollection = categoriaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Evento> getEventoCollection() {
+        return eventoCollection;
+    }
+
+    public void setEventoCollection(Collection<Evento> eventoCollection) {
+        this.eventoCollection = eventoCollection;
     }
 
     @Override

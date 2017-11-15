@@ -15,6 +15,7 @@ CREATE TABLE Evento (
   direccion VARCHAR(200) NOT NULL,
   validado DECIMAL(1,0) NOT NULL DEFAULT 0,
   likes INT NOT NULL DEFAULT 0,
+  creador INT NOT NULL,
   PRIMARY KEY (id));
 
 -- -----------------------------------------------------
@@ -38,6 +39,9 @@ ADD CONSTRAINT ALIAS_UNICO UNIQUE (alias);
 
 ALTER TABLE AGENDAMLG.USUARIO 
 ADD CONSTRAINT EMAIL_UNICO UNIQUE (email);
+
+ALTER TABLE AGENDAMLG.EVENTO
+ADD CONSTRAINT fk_Evento_Usuario_Creador FOREIGN KEY (creador) REFERENCES AgendaMLG.Usuario (id) ON DELETE CASCADE;
 
 -- -----------------------------------------------------
 -- Table AgendaMLG.Categoria

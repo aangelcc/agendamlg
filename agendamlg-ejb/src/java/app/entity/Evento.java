@@ -15,8 +15,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -90,6 +92,9 @@ public class Evento implements Serializable {
     private int likes;
     @ManyToMany(mappedBy = "eventoCollection")
     private Collection<Categoria> categoriaCollection;
+    @JoinColumn(name = "CREADOR", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Usuario creador;
 
     public Evento() {
     }
@@ -188,6 +193,14 @@ public class Evento implements Serializable {
 
     public void setCategoriaCollection(Collection<Categoria> categoriaCollection) {
         this.categoriaCollection = categoriaCollection;
+    }
+
+    public Usuario getCreador() {
+        return creador;
+    }
+
+    public void setCreador(Usuario creador) {
+        this.creador = creador;
     }
 
     @Override
