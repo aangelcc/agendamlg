@@ -12,5 +12,5 @@
     <endpoint
             name='usuarioService'
             implementation='service.usuarioService'
-            url-pattern='/services/usuarioervice'/>
+            url-pattern='/services/usuarioService'/>
 </endpoints>
