@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://localhost:8080/agendamlg-war/eventoService?wsdl" uri="wsdl/localhost_8080/agendamlg-war/eventoService.wsdl"/>
-    <system systemId="http://localhost:8080/agendamlg-war/eventoService?xsd=1" uri="wsdl/localhost_8080/agendamlg-war/eventoService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/agendamlg-war/usuarioService?wsdl" uri="wsdl/localhost_8080/agendamlg-war/usuarioService.wsdl"/>
-    <system systemId="http://localhost:8080/agendamlg-war/usuarioService?xsd=1" uri="wsdl/localhost_8080/agendamlg-war/usuarioService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/agendamlg-war/categoriaService?wsdl" uri="wsdl/localhost_8080/agendamlg-war/categoriaService.wsdl"/>
-    <system systemId="http://localhost:8080/agendamlg-war/categoriaService?xsd=1" uri="wsdl/localhost_8080/agendamlg-war/categoriaService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/agendamlg-war/services/agendamlg?wsdl" uri="wsdl/localhost_8080/agendamlg-war/services/agendamlg.wsdl"/>
+    <system systemId="http://localhost:8080/agendamlg-war/services/agendamlg?xsd=1" uri="wsdl/localhost_8080/agendamlg-war/services/agendamlg.xsd_1.xsd"/>
 </catalog>

@@ -2,15 +2,7 @@
 
 <endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
     <endpoint
-            name='categoriaService'
-            implementation='service.categoriaService'
-            url-pattern='/services/categoriaService'/>
-    <endpoint
-            name='eventoService'
-            implementation='service.eventoService'
-            url-pattern='/services/eventoService'/>
-    <endpoint
-            name='usuarioService'
-            implementation='service.usuarioService'
-            url-pattern='/services/usuarioervice'/>
+            name='agendamlg'
+            implementation='service.agendamlg'
+            url-pattern='/services/agendamlg'/>
 </endpoints>
