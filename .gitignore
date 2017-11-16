@@ -26,21 +26,7 @@ lib/
 nbproject
 build.xml
 /dist/
-/ejb/dist/
-/web/dist/
+/agendamlg-ejb/dist/
+/agendamlg-war/dist/
+/agendamlg-cliente/dist/
 out/
-
-#commonmark lib for web
-!web/lib/
-web/lib/*
-!web/lib/commonmark-*.jar
-!web/lib/autolink-*.jar
-
-#npm
-node_modules
-
-web/web/assets/css/*
-!web/web/assets/css/maps/
-!web/web/assets/css/*.min.css
-!web/web/assets/styles.css
-/agendamlg_cliente/dist/

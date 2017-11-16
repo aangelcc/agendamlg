@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/Usuario/Usuario?wsdl" uri="src/conf/xml-resources/web-service-references/Usuario/wsdl/localhost_8080/Usuario/Usuario.wsdl"/>
+    <system systemId="http://localhost:8080/Usuario/Usuario?xsd=1" uri="src/conf/xml-resources/web-service-references/Usuario/wsdl/localhost_8080/Usuario/Usuario.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/Evento/Evento?wsdl" uri="src/conf/xml-resources/web-service-references/Evento/wsdl/localhost_8080/Evento/Evento.wsdl"/>
+    <system systemId="http://localhost:8080/Evento/Evento?xsd=1" uri="src/conf/xml-resources/web-service-references/Evento/wsdl/localhost_8080/Evento/Evento.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/Categoria/Categoria?wsdl" uri="src/conf/xml-resources/web-service-references/Categoria/wsdl/localhost_8080/Categoria/Categoria.wsdl"/>
+    <system systemId="http://localhost:8080/Categoria/Categoria?xsd=1" uri="src/conf/xml-resources/web-service-references/Categoria/wsdl/localhost_8080/Categoria/Categoria.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/Agendamlg/Agendamlg?wsdl" uri="src/conf/xml-resources/web-service-references/Agendamlg/wsdl/localhost_8080/Agendamlg/Agendamlg.wsdl"/>
+    <system systemId="http://localhost:8080/Agendamlg/Agendamlg?xsd=1" uri="src/conf/xml-resources/web-service-references/Agendamlg/wsdl/localhost_8080/Agendamlg/Agendamlg.xsd_1.xsd"/>
+</catalog>

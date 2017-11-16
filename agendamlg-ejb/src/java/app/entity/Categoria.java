@@ -6,7 +6,7 @@
 package app.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author johncarlo
+ * @author melchor9000
  */
 @Entity
 @Table(name = "CATEGORIA")
@@ -52,12 +52,12 @@ public class Categoria implements Serializable {
         @JoinColumn(name = "CATEGORIA_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "EVENTO_ID", referencedColumnName = "ID")})
     @ManyToMany
-    private Collection<Evento> eventoCollection;
+    private List<Evento> eventoList;
     @JoinTable(name = "PREFERENCIAS", joinColumns = {
         @JoinColumn(name = "CATEGORIA_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID")})
     @ManyToMany
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
 
     public Categoria() {
     }
@@ -88,21 +88,21 @@ public class Categoria implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Evento> getEventoCollection() {
-        return eventoCollection;
+    public List<Evento> getEventoList() {
+        return eventoList;
     }
 
-    public void setEventoCollection(Collection<Evento> eventoCollection) {
-        this.eventoCollection = eventoCollection;
+    public void setEventoList(List<Evento> eventoList) {
+        this.eventoList = eventoList;
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

@@ -7,8 +7,8 @@ package app.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author johncarlo
+ * @author melchor9000
  */
 @Entity
 @Table(name = "EVENTO")
@@ -90,8 +90,8 @@ public class Evento implements Serializable {
     @NotNull
     @Column(name = "LIKES")
     private int likes;
-    @ManyToMany(mappedBy = "eventoCollection")
-    private Collection<Categoria> categoriaCollection;
+    @ManyToMany(mappedBy = "eventoList")
+    private List<Categoria> categoriaList;
     @JoinColumn(name = "CREADOR", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Usuario creador;
@@ -187,12 +187,12 @@ public class Evento implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Categoria> getCategoriaCollection() {
-        return categoriaCollection;
+    public List<Categoria> getCategoriaList() {
+        return categoriaList;
     }
 
-    public void setCategoriaCollection(Collection<Categoria> categoriaCollection) {
-        this.categoriaCollection = categoriaCollection;
+    public void setCategoriaList(List<Categoria> categoriaList) {
+        this.categoriaList = categoriaList;
     }
 
     public Usuario getCreador() {

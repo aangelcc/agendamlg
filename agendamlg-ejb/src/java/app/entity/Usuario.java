@@ -6,8 +6,8 @@
 package app.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author johncarlo
+ * @author melchor9000
  */
 @Entity
 @Table(name = "USUARIO")
@@ -90,10 +90,10 @@ public class Usuario implements Serializable {
     @Column(name = "FECHANACIMIENTO")
     @Temporal(TemporalType.DATE)
     private Date fechanacimiento;
-    @ManyToMany(mappedBy = "usuarioCollection")
-    private Collection<Categoria> categoriaCollection;
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<Categoria> categoriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "creador")
-    private Collection<Evento> eventoCollection;
+    private List<Evento> eventoList;
 
     public Usuario() {
     }
@@ -186,21 +186,21 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Categoria> getCategoriaCollection() {
-        return categoriaCollection;
+    public List<Categoria> getCategoriaList() {
+        return categoriaList;
     }
 
-    public void setCategoriaCollection(Collection<Categoria> categoriaCollection) {
-        this.categoriaCollection = categoriaCollection;
+    public void setCategoriaList(List<Categoria> categoriaList) {
+        this.categoriaList = categoriaList;
     }
 
     @XmlTransient
-    public Collection<Evento> getEventoCollection() {
-        return eventoCollection;
+    public List<Evento> getEventoList() {
+        return eventoList;
     }
 
-    public void setEventoCollection(Collection<Evento> eventoCollection) {
-        this.eventoCollection = eventoCollection;
+    public void setEventoList(List<Evento> eventoList) {
+        this.eventoList = eventoList;
     }
 
     @Override
