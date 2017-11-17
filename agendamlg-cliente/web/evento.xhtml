@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h3>Datos del Evento</h3>
+        Nombre: #{eventoManagedBean.evento.nombre}
+        <br/>
+        Descripcion: #{eventoManagedBean.evento.descripcion}
+        <br/>
+        Alias: #{eventoManagedBean.evento.creador.alias}
+        <br/>
+        Direccion: #{eventoManagedBean.evento.direccion}
+        <br/>
+        Precio: #{eventoManagedBean.evento.precio}
+        <br/>
+        Likes: #{eventoManagedBean.evento.likes}
+        <br/>
+        Fecha: #{eventoManagedBean.evento.fecha}
+        <br/>
+        <h:link outcome="index">Volver</h:link>
+    </h:body>
+</html>
+

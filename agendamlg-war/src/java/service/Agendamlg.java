@@ -3,6 +3,7 @@ package service;
 import app.ejb.CategoriaFacade;
 import app.ejb.EventoFacade;
 import app.ejb.UsuarioFacade;
+import app.entity.Usuario;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -56,6 +57,11 @@ public class Agendamlg {
         return categoriaFacade.count();
     }
     
+    @WebMethod(operationName = "buscarPreferenciasUsuario")
+    public List<app.entity.Categoria> buscarPreferenciasUsuario(@WebParam(name = "usuario") Usuario usuario) {
+        return categoriaFacade.buscarPreferenciasUsuario(usuario);
+    }
+    
     //////////////////////////////////////////////
     
     @EJB
@@ -97,6 +103,11 @@ public class Agendamlg {
     @WebMethod(operationName = "contarEvento")
     public int contarEvento() {
         return eventoFacade.count();
+    }
+    
+    @WebMethod(operationName = "buscarEventosUsuario")
+    public List<app.entity.Evento> buscarEventosUsuario(@WebParam(name = "id") int id) {
+        return eventoFacade.buscarEventosUsuario(id);
     }
     
     //////////////////////////////////////////////
@@ -141,5 +152,9 @@ public class Agendamlg {
     public int contarUsuarios() {
         return usuarioFacade.count();
     }
-    
+
+    @WebMethod(operationName = "login")
+    public app.entity.Usuario login(@WebParam(name = "alias") String alias, @WebParam(name = "password") String password) {
+        return usuarioFacade.login(alias, password);
+    }
 }

@@ -3,7 +3,7 @@
  xmlns="http://schemas.xmlsoap.org/wsdl/" 
  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
- xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Agendamlg" targetNamespace="http://service/" xmlns:tns="http://service/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Agendamlg" targetNamespace="http://service/" xmlns:tns="http://service/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" 
  >
     <message name="create"/>
     <message name="createResponse"/>
@@ -47,6 +47,10 @@
     <message name="findRangeResponse"/>
     <message name="count"/>
     <message name="countResponse"/>
+    <message name="buscarEventosUsuario"/>
+    <message name="buscarEventosUsuarioResponse"/>
+    <message name="buscarPreferenciasUsuario"/>
+    <message name="buscarPreferenciasUsuarioResponse"/>
     <portType name="Agendamlg">
         <operation name="create">
             <input message="tns:create"/>
@@ -131,6 +135,14 @@
         <operation name="count">
             <input message="tns:count"/>
             <output message="tns:countResponse"/>
+        </operation>
+        <operation name="buscarEventosUsuario">
+            <input message="tns:buscarEventosUsuario"/>
+            <output message="tns:buscarEventosUsuarioResponse"/>
+        </operation>
+        <operation name="buscarPreferenciasUsuario">
+            <input message="tns:buscarPreferenciasUsuario"/>
+            <output message="tns:buscarPreferenciasUsuarioResponse"/>
         </operation>
     </portType>
     <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
@@ -218,8 +230,40 @@
             <input/>
             <output/>
         </operation>
+        <operation name="buscarEventosUsuario">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="buscarPreferenciasUsuario">
+            <input/>
+            <output/>
+        </operation>
     </binding>
     <service name="Agendamlg">
         <port name="AgendamlgPort" binding="tns:AgendamlgPortBinding"/>
     </service>
+    <wsp:Policy wsu:Id="AgendamlgPortBinding_getEventosUsuario_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="AgendamlgPortBinding_getEventosUsuario_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
 </definitions>

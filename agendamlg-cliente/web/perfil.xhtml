@@ -4,13 +4,32 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Listado de Eventos</title>
+        <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h:link outcome="login">Iniciar Sesion</h:link>
+        <h3>Datos del Usuario</h3>
+        Nombre: #{perfilManagedBean.usuario.nombre}
         <br/>
-        <h:link outcome="perfil">Ver Perfil</h:link>
-        <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
+        Apellidos: #{perfilManagedBean.usuario.apellidos}
+        <br/>
+        Alias: #{perfilManagedBean.usuario.alias}
+        <br/>
+        Email: #{perfilManagedBean.usuario.email}
+        <br/>
+        Fecha de Nacimiento: #{perfilManagedBean.usuario.fechanacimiento}
+        <br/>
+        <br/>
+        <h3>Preferencias</h3>
+        <h:dataTable value="#{perfilManagedBean.categorias}" var="categoria">
+            <h:column>
+                <f:facet name="header">
+                    Nombre
+                </f:facet>
+                #{categoria.nombre}
+            </h:column>
+        </h:dataTable>
+        <h3>Eventos Subidos</h3>
+        <h:dataTable value="#{perfilManagedBean.eventos}" var="evento">
             <h:column>
                 <f:facet name="header">
                     Nombre
@@ -53,15 +72,8 @@
                 </f:facet>
                 #{evento.fecha}
             </h:column>
-            <h:column>
-                <h:link outcome="evento" value="Ver">
-                    <f:param name="eventoId" value="#{evento.id}"></f:param>
-                </h:link>
-            </h:column>
         </h:dataTable>
-        <h:link outcome="crearEvento">Subir Evento</h:link>
-        <br/>
-        #{usuarioManagedBean.id}
+        <h:link outcome="index">Volver</h:link>
     </h:body>
 </html>
 

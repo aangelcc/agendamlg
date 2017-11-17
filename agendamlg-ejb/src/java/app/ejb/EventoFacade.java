@@ -6,9 +6,11 @@
 package app.ejb;
 
 import app.entity.Evento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,12 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
     public EventoFacade() {
         super(Evento.class);
+    }
+    
+    public List<Evento> buscarEventosUsuario(int idUsuario){
+        Query q = this.em.createQuery("select e from Evento e where e.creador.id=:id");
+        q.setParameter("id", idUsuario);
+        return (List) q.getResultList();
     }
     
 }
