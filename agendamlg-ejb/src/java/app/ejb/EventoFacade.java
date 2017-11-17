@@ -6,11 +6,13 @@
 package app.ejb;
 
 import app.entity.Evento;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -34,6 +36,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public List<Evento> buscarEventosUsuario(int idUsuario){
         Query q = this.em.createQuery("select e from Evento e where e.creador.id=:id");
         q.setParameter("id", idUsuario);
+        return (List) q.getResultList();
+    }
+    
+    public List<Evento> buscarEventosNoCaducados(){
+        Date ahora = new Date(System.currentTimeMillis());
+        Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy");
+        q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
         return (List) q.getResultList();
     }
     

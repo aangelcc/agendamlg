@@ -37,7 +37,7 @@ public class IndexManagedBean {
     }
     
     public void obtenerListaEventos(){
-        this.eventos = buscarTodosLosEventos();
+        this.eventos = this.buscarEventosNoCaducados();
     }
 
     private java.util.List<servicios.Evento> buscarTodosLosEventos() {
@@ -53,5 +53,12 @@ public class IndexManagedBean {
 
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
+    }
+
+    private java.util.List<servicios.Evento> buscarEventosNoCaducados() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.buscarEventosNoCaducados();
     }
 }

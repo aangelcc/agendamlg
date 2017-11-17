@@ -110,6 +110,11 @@ public class Agendamlg {
         return eventoFacade.buscarEventosUsuario(id);
     }
     
+    @WebMethod(operationName = "buscarEventosNoCaducados")
+    public List<app.entity.Evento> buscarEventosNoCaducados(){
+        return eventoFacade.buscarEventosNoCaducados();
+    }
+    
     //////////////////////////////////////////////
     
     @EJB

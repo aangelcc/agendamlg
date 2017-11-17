@@ -51,6 +51,8 @@
     <message name="buscarEventosUsuarioResponse"/>
     <message name="buscarPreferenciasUsuario"/>
     <message name="buscarPreferenciasUsuarioResponse"/>
+    <message name="buscarEventosNoCaducados"/>
+    <message name="buscarEventosNoCaducadosResponse"/>
     <portType name="Agendamlg">
         <operation name="create">
             <input message="tns:create"/>
@@ -144,6 +146,10 @@
             <input message="tns:buscarPreferenciasUsuario"/>
             <output message="tns:buscarPreferenciasUsuarioResponse"/>
         </operation>
+        <operation name="buscarEventosNoCaducados">
+            <input message="tns:buscarEventosNoCaducados"/>
+            <output message="tns:buscarEventosNoCaducadosResponse"/>
+        </operation>
     </portType>
     <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
         <operation name="create">
@@ -235,6 +241,10 @@
             <output/>
         </operation>
         <operation name="buscarPreferenciasUsuario">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="buscarEventosNoCaducados">
             <input/>
             <output/>
         </operation>
