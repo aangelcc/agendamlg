@@ -4,122 +4,11 @@
 <xsd:import namespace="http://service/" schemaLocation="http://localhost:8080/Agendamlg/Agendamlg?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="login">
-<part name="parameters" element="tns:login"/>
-</message>
-<message name="loginResponse">
-<part name="parameters" element="tns:loginResponse"/>
-</message>
-<message name="crearUsuario">
-<part name="parameters" element="tns:crearUsuario"/>
-</message>
-<message name="editarEvento">
-<part name="parameters" element="tns:editarEvento"/>
-</message>
-<message name="eliminarEvento">
-<part name="parameters" element="tns:eliminarEvento"/>
-</message>
-<message name="editarUsuario">
-<part name="parameters" element="tns:editarUsuario"/>
-</message>
-<message name="editarCategoria">
-<part name="parameters" element="tns:editarCategoria"/>
-</message>
-<message name="contarCategorias">
-<part name="parameters" element="tns:contarCategorias"/>
-</message>
-<message name="contarCategoriasResponse">
-<part name="parameters" element="tns:contarCategoriasResponse"/>
-</message>
-<message name="buscarEvento">
-<part name="parameters" element="tns:buscarEvento"/>
-</message>
-<message name="buscarEventoResponse">
-<part name="parameters" element="tns:buscarEventoResponse"/>
-</message>
-<message name="crearEvento">
-<part name="parameters" element="tns:crearEvento"/>
-</message>
-<message name="eliminarUsuario">
-<part name="parameters" element="tns:eliminarUsuario"/>
-</message>
-<message name="contarUsuarios">
-<part name="parameters" element="tns:contarUsuarios"/>
-</message>
-<message name="contarUsuariosResponse">
-<part name="parameters" element="tns:contarUsuariosResponse"/>
-</message>
-<message name="buscarCategoria">
-<part name="parameters" element="tns:buscarCategoria"/>
-</message>
-<message name="buscarCategoriaResponse">
-<part name="parameters" element="tns:buscarCategoriaResponse"/>
-</message>
-<message name="crearCategoria">
-<part name="parameters" element="tns:crearCategoria"/>
-</message>
-<message name="contarEvento">
-<part name="parameters" element="tns:contarEvento"/>
-</message>
-<message name="contarEventoResponse">
-<part name="parameters" element="tns:contarEventoResponse"/>
-</message>
-<message name="buscarUsuario">
-<part name="parameters" element="tns:buscarUsuario"/>
-</message>
-<message name="buscarUsuarioResponse">
-<part name="parameters" element="tns:buscarUsuarioResponse"/>
-</message>
-<message name="buscarPreferenciasUsuario">
-<part name="parameters" element="tns:buscarPreferenciasUsuario"/>
-</message>
-<message name="buscarPreferenciasUsuarioResponse">
-<part name="parameters" element="tns:buscarPreferenciasUsuarioResponse"/>
-</message>
 <message name="buscarEventosUsuario">
 <part name="parameters" element="tns:buscarEventosUsuario"/>
 </message>
 <message name="buscarEventosUsuarioResponse">
 <part name="parameters" element="tns:buscarEventosUsuarioResponse"/>
-</message>
-<message name="buscarUsuariosPorRango">
-<part name="parameters" element="tns:buscarUsuariosPorRango"/>
-</message>
-<message name="buscarUsuariosPorRangoResponse">
-<part name="parameters" element="tns:buscarUsuariosPorRangoResponse"/>
-</message>
-<message name="buscarTodosLosEventos">
-<part name="parameters" element="tns:buscarTodosLosEventos"/>
-</message>
-<message name="buscarTodosLosEventosResponse">
-<part name="parameters" element="tns:buscarTodosLosEventosResponse"/>
-</message>
-<message name="eliminarCategoria">
-<part name="parameters" element="tns:eliminarCategoria"/>
-</message>
-<message name="buscarTodosLosUsuarios">
-<part name="parameters" element="tns:buscarTodosLosUsuarios"/>
-</message>
-<message name="buscarTodosLosUsuariosResponse">
-<part name="parameters" element="tns:buscarTodosLosUsuariosResponse"/>
-</message>
-<message name="buscarCategoriasPorRango">
-<part name="parameters" element="tns:buscarCategoriasPorRango"/>
-</message>
-<message name="buscarCategoriasPorRangoResponse">
-<part name="parameters" element="tns:buscarCategoriasPorRangoResponse"/>
-</message>
-<message name="buscarEventosPorRango">
-<part name="parameters" element="tns:buscarEventosPorRango"/>
-</message>
-<message name="buscarEventosPorRangoResponse">
-<part name="parameters" element="tns:buscarEventosPorRangoResponse"/>
-</message>
-<message name="buscarTodasLasCategorias">
-<part name="parameters" element="tns:buscarTodasLasCategorias"/>
-</message>
-<message name="buscarTodasLasCategoriasResponse">
-<part name="parameters" element="tns:buscarTodasLasCategoriasResponse"/>
 </message>
 <message name="buscarEventosNoCaducados">
 <part name="parameters" element="tns:buscarEventosNoCaducados"/>
@@ -127,13 +16,153 @@
 <message name="buscarEventosNoCaducadosResponse">
 <part name="parameters" element="tns:buscarEventosNoCaducadosResponse"/>
 </message>
+<message name="contarCategorias">
+<part name="parameters" element="tns:contarCategorias"/>
+</message>
+<message name="contarCategoriasResponse">
+<part name="parameters" element="tns:contarCategoriasResponse"/>
+</message>
+<message name="buscarTodasLasCategorias">
+<part name="parameters" element="tns:buscarTodasLasCategorias"/>
+</message>
+<message name="buscarTodasLasCategoriasResponse">
+<part name="parameters" element="tns:buscarTodasLasCategoriasResponse"/>
+</message>
+<message name="buscarCategoriasPorRango">
+<part name="parameters" element="tns:buscarCategoriasPorRango"/>
+</message>
+<message name="buscarCategoriasPorRangoResponse">
+<part name="parameters" element="tns:buscarCategoriasPorRangoResponse"/>
+</message>
+<message name="crearCategoria">
+<part name="parameters" element="tns:crearCategoria"/>
+</message>
+<message name="editarCategoria">
+<part name="parameters" element="tns:editarCategoria"/>
+</message>
+<message name="eliminarCategoria">
+<part name="parameters" element="tns:eliminarCategoria"/>
+</message>
+<message name="buscarCategoria">
+<part name="parameters" element="tns:buscarCategoria"/>
+</message>
+<message name="buscarCategoriaResponse">
+<part name="parameters" element="tns:buscarCategoriaResponse"/>
+</message>
+<message name="crearEvento">
+<part name="parameters" element="tns:crearEvento"/>
+</message>
+<message name="editarEvento">
+<part name="parameters" element="tns:editarEvento"/>
+</message>
+<message name="eliminarEvento">
+<part name="parameters" element="tns:eliminarEvento"/>
+</message>
+<message name="buscarEvento">
+<part name="parameters" element="tns:buscarEvento"/>
+</message>
+<message name="buscarEventoResponse">
+<part name="parameters" element="tns:buscarEventoResponse"/>
+</message>
+<message name="buscarTodosLosEventos">
+<part name="parameters" element="tns:buscarTodosLosEventos"/>
+</message>
+<message name="buscarTodosLosEventosResponse">
+<part name="parameters" element="tns:buscarTodosLosEventosResponse"/>
+</message>
+<message name="buscarEventosPorRango">
+<part name="parameters" element="tns:buscarEventosPorRango"/>
+</message>
+<message name="buscarEventosPorRangoResponse">
+<part name="parameters" element="tns:buscarEventosPorRangoResponse"/>
+</message>
+<message name="contarEvento">
+<part name="parameters" element="tns:contarEvento"/>
+</message>
+<message name="contarEventoResponse">
+<part name="parameters" element="tns:contarEventoResponse"/>
+</message>
+<message name="crearUsuario">
+<part name="parameters" element="tns:crearUsuario"/>
+</message>
+<message name="editarUsuario">
+<part name="parameters" element="tns:editarUsuario"/>
+</message>
+<message name="eliminarUsuario">
+<part name="parameters" element="tns:eliminarUsuario"/>
+</message>
+<message name="buscarUsuario">
+<part name="parameters" element="tns:buscarUsuario"/>
+</message>
+<message name="buscarUsuarioResponse">
+<part name="parameters" element="tns:buscarUsuarioResponse"/>
+</message>
+<message name="buscarTodosLosUsuarios">
+<part name="parameters" element="tns:buscarTodosLosUsuarios"/>
+</message>
+<message name="buscarTodosLosUsuariosResponse">
+<part name="parameters" element="tns:buscarTodosLosUsuariosResponse"/>
+</message>
+<message name="buscarUsuariosPorRango">
+<part name="parameters" element="tns:buscarUsuariosPorRango"/>
+</message>
+<message name="buscarUsuariosPorRangoResponse">
+<part name="parameters" element="tns:buscarUsuariosPorRangoResponse"/>
+</message>
+<message name="contarUsuarios">
+<part name="parameters" element="tns:contarUsuarios"/>
+</message>
+<message name="contarUsuariosResponse">
+<part name="parameters" element="tns:contarUsuariosResponse"/>
+</message>
+<message name="buscarPreferenciasUsuario">
+<part name="parameters" element="tns:buscarPreferenciasUsuario"/>
+</message>
+<message name="buscarPreferenciasUsuarioResponse">
+<part name="parameters" element="tns:buscarPreferenciasUsuarioResponse"/>
+</message>
+<message name="login">
+<part name="parameters" element="tns:login"/>
+</message>
+<message name="loginResponse">
+<part name="parameters" element="tns:loginResponse"/>
+</message>
 <portType name="Agendamlg">
-<operation name="login">
-<input wsam:Action="http://service/Agendamlg/loginRequest" message="tns:login"/>
-<output wsam:Action="http://service/Agendamlg/loginResponse" message="tns:loginResponse"/>
+<operation name="buscarEventosUsuario">
+<input wsam:Action="http://service/Agendamlg/buscarEventosUsuarioRequest" message="tns:buscarEventosUsuario"/>
+<output wsam:Action="http://service/Agendamlg/buscarEventosUsuarioResponse" message="tns:buscarEventosUsuarioResponse"/>
 </operation>
-<operation name="crearUsuario">
-<input wsam:Action="http://service/Agendamlg/crearUsuario" message="tns:crearUsuario"/>
+<operation name="buscarEventosNoCaducados">
+<input wsam:Action="http://service/Agendamlg/buscarEventosNoCaducadosRequest" message="tns:buscarEventosNoCaducados"/>
+<output wsam:Action="http://service/Agendamlg/buscarEventosNoCaducadosResponse" message="tns:buscarEventosNoCaducadosResponse"/>
+</operation>
+<operation name="contarCategorias">
+<input wsam:Action="http://service/Agendamlg/contarCategoriasRequest" message="tns:contarCategorias"/>
+<output wsam:Action="http://service/Agendamlg/contarCategoriasResponse" message="tns:contarCategoriasResponse"/>
+</operation>
+<operation name="buscarTodasLasCategorias">
+<input wsam:Action="http://service/Agendamlg/buscarTodasLasCategoriasRequest" message="tns:buscarTodasLasCategorias"/>
+<output wsam:Action="http://service/Agendamlg/buscarTodasLasCategoriasResponse" message="tns:buscarTodasLasCategoriasResponse"/>
+</operation>
+<operation name="buscarCategoriasPorRango">
+<input wsam:Action="http://service/Agendamlg/buscarCategoriasPorRangoRequest" message="tns:buscarCategoriasPorRango"/>
+<output wsam:Action="http://service/Agendamlg/buscarCategoriasPorRangoResponse" message="tns:buscarCategoriasPorRangoResponse"/>
+</operation>
+<operation name="crearCategoria">
+<input wsam:Action="http://service/Agendamlg/crearCategoria" message="tns:crearCategoria"/>
+</operation>
+<operation name="editarCategoria">
+<input wsam:Action="http://service/Agendamlg/editarCategoria" message="tns:editarCategoria"/>
+</operation>
+<operation name="eliminarCategoria">
+<input wsam:Action="http://service/Agendamlg/eliminarCategoria" message="tns:eliminarCategoria"/>
+</operation>
+<operation name="buscarCategoria">
+<input wsam:Action="http://service/Agendamlg/buscarCategoriaRequest" message="tns:buscarCategoria"/>
+<output wsam:Action="http://service/Agendamlg/buscarCategoriaResponse" message="tns:buscarCategoriaResponse"/>
+</operation>
+<operation name="crearEvento">
+<input wsam:Action="http://service/Agendamlg/crearEvento" message="tns:crearEvento"/>
 </operation>
 <operation name="editarEvento">
 <input wsam:Action="http://service/Agendamlg/editarEvento" message="tns:editarEvento"/>
@@ -141,88 +170,59 @@
 <operation name="eliminarEvento">
 <input wsam:Action="http://service/Agendamlg/eliminarEvento" message="tns:eliminarEvento"/>
 </operation>
-<operation name="editarUsuario">
-<input wsam:Action="http://service/Agendamlg/editarUsuario" message="tns:editarUsuario"/>
-</operation>
-<operation name="editarCategoria">
-<input wsam:Action="http://service/Agendamlg/editarCategoria" message="tns:editarCategoria"/>
-</operation>
-<operation name="contarCategorias">
-<input wsam:Action="http://service/Agendamlg/contarCategoriasRequest" message="tns:contarCategorias"/>
-<output wsam:Action="http://service/Agendamlg/contarCategoriasResponse" message="tns:contarCategoriasResponse"/>
-</operation>
 <operation name="buscarEvento">
 <input wsam:Action="http://service/Agendamlg/buscarEventoRequest" message="tns:buscarEvento"/>
 <output wsam:Action="http://service/Agendamlg/buscarEventoResponse" message="tns:buscarEventoResponse"/>
-</operation>
-<operation name="crearEvento">
-<input wsam:Action="http://service/Agendamlg/crearEvento" message="tns:crearEvento"/>
-</operation>
-<operation name="eliminarUsuario">
-<input wsam:Action="http://service/Agendamlg/eliminarUsuario" message="tns:eliminarUsuario"/>
-</operation>
-<operation name="contarUsuarios">
-<input wsam:Action="http://service/Agendamlg/contarUsuariosRequest" message="tns:contarUsuarios"/>
-<output wsam:Action="http://service/Agendamlg/contarUsuariosResponse" message="tns:contarUsuariosResponse"/>
-</operation>
-<operation name="buscarCategoria">
-<input wsam:Action="http://service/Agendamlg/buscarCategoriaRequest" message="tns:buscarCategoria"/>
-<output wsam:Action="http://service/Agendamlg/buscarCategoriaResponse" message="tns:buscarCategoriaResponse"/>
-</operation>
-<operation name="crearCategoria">
-<input wsam:Action="http://service/Agendamlg/crearCategoria" message="tns:crearCategoria"/>
-</operation>
-<operation name="contarEvento">
-<input wsam:Action="http://service/Agendamlg/contarEventoRequest" message="tns:contarEvento"/>
-<output wsam:Action="http://service/Agendamlg/contarEventoResponse" message="tns:contarEventoResponse"/>
-</operation>
-<operation name="buscarUsuario">
-<input wsam:Action="http://service/Agendamlg/buscarUsuarioRequest" message="tns:buscarUsuario"/>
-<output wsam:Action="http://service/Agendamlg/buscarUsuarioResponse" message="tns:buscarUsuarioResponse"/>
-</operation>
-<operation name="buscarPreferenciasUsuario">
-<input wsam:Action="http://service/Agendamlg/buscarPreferenciasUsuarioRequest" message="tns:buscarPreferenciasUsuario"/>
-<output wsam:Action="http://service/Agendamlg/buscarPreferenciasUsuarioResponse" message="tns:buscarPreferenciasUsuarioResponse"/>
-</operation>
-<operation name="buscarEventosUsuario">
-<input wsam:Action="http://service/Agendamlg/buscarEventosUsuarioRequest" message="tns:buscarEventosUsuario"/>
-<output wsam:Action="http://service/Agendamlg/buscarEventosUsuarioResponse" message="tns:buscarEventosUsuarioResponse"/>
-</operation>
-<operation name="buscarUsuariosPorRango">
-<input wsam:Action="http://service/Agendamlg/buscarUsuariosPorRangoRequest" message="tns:buscarUsuariosPorRango"/>
-<output wsam:Action="http://service/Agendamlg/buscarUsuariosPorRangoResponse" message="tns:buscarUsuariosPorRangoResponse"/>
 </operation>
 <operation name="buscarTodosLosEventos">
 <input wsam:Action="http://service/Agendamlg/buscarTodosLosEventosRequest" message="tns:buscarTodosLosEventos"/>
 <output wsam:Action="http://service/Agendamlg/buscarTodosLosEventosResponse" message="tns:buscarTodosLosEventosResponse"/>
 </operation>
-<operation name="eliminarCategoria">
-<input wsam:Action="http://service/Agendamlg/eliminarCategoria" message="tns:eliminarCategoria"/>
+<operation name="buscarEventosPorRango">
+<input wsam:Action="http://service/Agendamlg/buscarEventosPorRangoRequest" message="tns:buscarEventosPorRango"/>
+<output wsam:Action="http://service/Agendamlg/buscarEventosPorRangoResponse" message="tns:buscarEventosPorRangoResponse"/>
+</operation>
+<operation name="contarEvento">
+<input wsam:Action="http://service/Agendamlg/contarEventoRequest" message="tns:contarEvento"/>
+<output wsam:Action="http://service/Agendamlg/contarEventoResponse" message="tns:contarEventoResponse"/>
+</operation>
+<operation name="crearUsuario">
+<input wsam:Action="http://service/Agendamlg/crearUsuario" message="tns:crearUsuario"/>
+</operation>
+<operation name="editarUsuario">
+<input wsam:Action="http://service/Agendamlg/editarUsuario" message="tns:editarUsuario"/>
+</operation>
+<operation name="eliminarUsuario">
+<input wsam:Action="http://service/Agendamlg/eliminarUsuario" message="tns:eliminarUsuario"/>
+</operation>
+<operation name="buscarUsuario">
+<input wsam:Action="http://service/Agendamlg/buscarUsuarioRequest" message="tns:buscarUsuario"/>
+<output wsam:Action="http://service/Agendamlg/buscarUsuarioResponse" message="tns:buscarUsuarioResponse"/>
 </operation>
 <operation name="buscarTodosLosUsuarios">
 <input wsam:Action="http://service/Agendamlg/buscarTodosLosUsuariosRequest" message="tns:buscarTodosLosUsuarios"/>
 <output wsam:Action="http://service/Agendamlg/buscarTodosLosUsuariosResponse" message="tns:buscarTodosLosUsuariosResponse"/>
 </operation>
-<operation name="buscarCategoriasPorRango">
-<input wsam:Action="http://service/Agendamlg/buscarCategoriasPorRangoRequest" message="tns:buscarCategoriasPorRango"/>
-<output wsam:Action="http://service/Agendamlg/buscarCategoriasPorRangoResponse" message="tns:buscarCategoriasPorRangoResponse"/>
+<operation name="buscarUsuariosPorRango">
+<input wsam:Action="http://service/Agendamlg/buscarUsuariosPorRangoRequest" message="tns:buscarUsuariosPorRango"/>
+<output wsam:Action="http://service/Agendamlg/buscarUsuariosPorRangoResponse" message="tns:buscarUsuariosPorRangoResponse"/>
 </operation>
-<operation name="buscarEventosPorRango">
-<input wsam:Action="http://service/Agendamlg/buscarEventosPorRangoRequest" message="tns:buscarEventosPorRango"/>
-<output wsam:Action="http://service/Agendamlg/buscarEventosPorRangoResponse" message="tns:buscarEventosPorRangoResponse"/>
+<operation name="contarUsuarios">
+<input wsam:Action="http://service/Agendamlg/contarUsuariosRequest" message="tns:contarUsuarios"/>
+<output wsam:Action="http://service/Agendamlg/contarUsuariosResponse" message="tns:contarUsuariosResponse"/>
 </operation>
-<operation name="buscarTodasLasCategorias">
-<input wsam:Action="http://service/Agendamlg/buscarTodasLasCategoriasRequest" message="tns:buscarTodasLasCategorias"/>
-<output wsam:Action="http://service/Agendamlg/buscarTodasLasCategoriasResponse" message="tns:buscarTodasLasCategoriasResponse"/>
+<operation name="buscarPreferenciasUsuario">
+<input wsam:Action="http://service/Agendamlg/buscarPreferenciasUsuarioRequest" message="tns:buscarPreferenciasUsuario"/>
+<output wsam:Action="http://service/Agendamlg/buscarPreferenciasUsuarioResponse" message="tns:buscarPreferenciasUsuarioResponse"/>
 </operation>
-<operation name="buscarEventosNoCaducados">
-<input wsam:Action="http://service/Agendamlg/buscarEventosNoCaducadosRequest" message="tns:buscarEventosNoCaducados"/>
-<output wsam:Action="http://service/Agendamlg/buscarEventosNoCaducadosResponse" message="tns:buscarEventosNoCaducadosResponse"/>
+<operation name="login">
+<input wsam:Action="http://service/Agendamlg/loginRequest" message="tns:login"/>
+<output wsam:Action="http://service/Agendamlg/loginResponse" message="tns:loginResponse"/>
 </operation>
 </portType>
 <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="login">
+<operation name="buscarEventosUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -231,7 +231,70 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="crearUsuario">
+<operation name="buscarEventosNoCaducados">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="contarCategorias">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="buscarTodasLasCategorias">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="buscarCategoriasPorRango">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="crearCategoria">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="editarCategoria">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="eliminarCategoria">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="buscarCategoria">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="crearEvento">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -249,109 +312,7 @@
 <soap:body use="literal"/>
 </input>
 </operation>
-<operation name="editarUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="editarCategoria">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="contarCategorias">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="buscarEvento">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="crearEvento">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="eliminarUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="contarUsuarios">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="buscarCategoria">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="crearCategoria">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-</operation>
-<operation name="contarEvento">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="buscarUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="buscarPreferenciasUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="buscarEventosUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="buscarUsuariosPorRango">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -369,11 +330,50 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="eliminarCategoria">
+<operation name="buscarEventosPorRango">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
 </input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="contarEvento">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="crearUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="editarUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="eliminarUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+</operation>
+<operation name="buscarUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
 </operation>
 <operation name="buscarTodosLosUsuarios">
 <soap:operation soapAction=""/>
@@ -384,7 +384,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="buscarCategoriasPorRango">
+<operation name="buscarUsuariosPorRango">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -393,7 +393,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="buscarEventosPorRango">
+<operation name="contarUsuarios">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -402,7 +402,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="buscarTodasLasCategorias">
+<operation name="buscarPreferenciasUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -411,7 +411,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="buscarEventosNoCaducados">
+<operation name="login">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
