@@ -6,6 +6,7 @@
 package app.ejb;
 
 import app.entity.Evento;
+import app.entity.Usuario;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -46,4 +47,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return (List) q.getResultList();
     }
     
+    public void validarEvento(int idEvento){
+        Evento evento = this.find(idEvento);
+        evento.setValidado((short)1);
+    }
 }

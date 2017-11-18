@@ -70,7 +70,9 @@ public class Agendamlg {
     @WebMethod(operationName = "crearEvento")
     @Oneway
     public void crearEvento(@WebParam(name = "entity") app.entity.Evento entity) {
-        eventoFacade.create(entity);
+        if(entity.getCreador()!=null){
+            eventoFacade.create(entity);
+        }   
     }
 
     @WebMethod(operationName = "editarEvento")
@@ -113,6 +115,15 @@ public class Agendamlg {
     @WebMethod(operationName = "buscarEventosNoCaducados")
     public List<app.entity.Evento> buscarEventosNoCaducados(){
         return eventoFacade.buscarEventosNoCaducados();
+    }
+    
+    @WebMethod(operationName = "validarEvento")
+    @Oneway
+    public void validarEvento(@WebParam(name = "idEvento")int idEvento,@WebParam(name = "idUsuario")int idUsuario){
+        Usuario usuario = this.usuarioFacade.find(idUsuario);
+        if(usuario.getTipo()==2){
+            eventoFacade.validarEvento(idEvento);
+        }
     }
     
     //////////////////////////////////////////////

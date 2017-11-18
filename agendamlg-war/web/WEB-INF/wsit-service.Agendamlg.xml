@@ -53,6 +53,8 @@
     <message name="buscarPreferenciasUsuarioResponse"/>
     <message name="buscarEventosNoCaducados"/>
     <message name="buscarEventosNoCaducadosResponse"/>
+    <message name="validarEvento"/>
+    <message name="validarEventoResponse"/>
     <portType name="Agendamlg">
         <operation name="create">
             <input message="tns:create"/>
@@ -150,6 +152,10 @@
             <input message="tns:buscarEventosNoCaducados"/>
             <output message="tns:buscarEventosNoCaducadosResponse"/>
         </operation>
+        <operation name="validarEvento">
+            <input message="tns:validarEvento"/>
+            <output message="tns:validarEventoResponse"/>
+        </operation>
     </portType>
     <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
         <operation name="create">
@@ -245,6 +251,10 @@
             <output/>
         </operation>
         <operation name="buscarEventosNoCaducados">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="validarEvento">
             <input/>
             <output/>
         </operation>

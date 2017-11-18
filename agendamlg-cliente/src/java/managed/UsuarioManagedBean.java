@@ -8,6 +8,7 @@ package managed;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.context.FacesContext;
 import javax.xml.ws.WebServiceRef;
 import servicios.Agendamlg_Service;
 import servicios.Usuario;
@@ -59,6 +60,13 @@ public class UsuarioManagedBean implements Serializable {
     public String iniciarSesion(){
         id = this.login(alias, password).getId();
         return "index";
+    }
+    
+    public String cerrarSesion(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        // faces-redirect=true es necesario para actualizar adecuadamente la página
+        // El funcionamiento https://www.mkyong.com/jsf2/jsf-page-forward-vs-page-redirect/
+        return "/index.xhtml?faces-redirect=true";
     }
     
     private Usuario login(java.lang.String alias, java.lang.String password) {

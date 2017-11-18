@@ -6,6 +6,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
+        <h:form>
         <h3>Datos del Evento</h3>
         Nombre: #{eventoManagedBean.evento.nombre}
         <br/>
@@ -21,6 +22,10 @@
         <br/>
         Fecha: #{eventoManagedBean.evento.fecha}
         <br/>
+        
+        <h:inputHidden value="#{eventoManagedBean.evento.id}"></h:inputHidden>
+        <h:commandLink action="#{eventoManagedBean.subirEvento()}" value="Validar"></h:commandLink>
+        </h:form>
         <h:link outcome="index">Volver</h:link>
     </h:body>
 </html>

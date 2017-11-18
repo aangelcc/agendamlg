@@ -88,6 +88,8 @@
 
 <xs:element name="usuario" type="tns:usuario"/>
 
+<xs:element name="validarEvento" type="tns:validarEvento"/>
+
 <xs:complexType name="editarUsuario">
 <xs:sequence>
 <xs:element name="entity" type="tns:usuario" minOccurs="0"/>
@@ -105,16 +107,6 @@
 <xs:element name="nombre" type="xs:string" minOccurs="0"/>
 <xs:element name="password" type="xs:string" minOccurs="0"/>
 <xs:element name="tipo" type="xs:short"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="contarCategorias">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="contarCategoriasResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -143,21 +135,19 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="contarCategorias">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="contarCategoriasResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="crearEvento">
 <xs:sequence>
 <xs:element name="entity" type="tns:evento" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="buscarEvento">
-<xs:sequence>
-<xs:element name="id" type="xs:anyType" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="buscarEventoResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -180,15 +170,15 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="buscarEventosPorRango">
+<xs:complexType name="buscarEvento">
 <xs:sequence>
-<xs:element name="range" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="id" type="xs:anyType" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="buscarEventosPorRangoResponse">
+<xs:complexType name="buscarEventoResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="tns:evento" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -202,6 +192,18 @@
 <xs:complexType name="loginResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:usuario" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarEventosPorRango">
+<xs:sequence>
+<xs:element name="range" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarEventosPorRangoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -227,12 +229,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="eliminarEvento">
-<xs:sequence>
-<xs:element name="entity" type="tns:evento" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="buscarTodosLosUsuarios">
 <xs:sequence/>
 </xs:complexType>
@@ -240,6 +236,12 @@
 <xs:complexType name="buscarTodosLosUsuariosResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:usuario" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="eliminarEvento">
+<xs:sequence>
+<xs:element name="entity" type="tns:evento" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -297,6 +299,13 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="validarEvento">
+<xs:sequence>
+<xs:element name="idEvento" type="xs:int"/>
+<xs:element name="idUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="contarUsuarios">
 <xs:sequence/>
 </xs:complexType>
@@ -339,15 +348,15 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="editarEvento">
-<xs:sequence>
-<xs:element name="entity" type="tns:evento" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="crearUsuario">
 <xs:sequence>
 <xs:element name="entity" type="tns:usuario" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="editarEvento">
+<xs:sequence>
+<xs:element name="entity" type="tns:evento" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

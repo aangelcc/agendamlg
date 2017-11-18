@@ -9,7 +9,12 @@
     <h:body>
         <h:link outcome="login">Iniciar Sesion</h:link>
         <br/>
+        <h:form>
+        <h:commandLink action="#{usuarioManagedBean.cerrarSesion()}" value="Cerrar Sesion"></h:commandLink>
+        </h:form>
         <h:link outcome="perfil">Ver Perfil</h:link>
+        <br/>
+        <h:form>
         <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
             <h:column>
                 <f:facet name="header">
@@ -54,11 +59,10 @@
                 #{evento.fecha}
             </h:column>
             <h:column>
-                <h:link outcome="evento" value="Ver">
-                    <f:param name="eventoId" value="#{evento.id}"></f:param>
-                </h:link>
+                    <h:commandLink action="#{eventoManagedBean.ver(evento)}" value="Ver"></h:commandLink>
             </h:column>
         </h:dataTable>
+        </h:form>
         <h:link outcome="crearEvento">Subir Evento</h:link>
         <br/>
         #{usuarioManagedBean.id}
