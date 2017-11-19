@@ -5,6 +5,7 @@
  */
 package app.ejb;
 
+import app.entity.Categoria;
 import app.entity.Evento;
 import app.entity.Usuario;
 import java.util.Date;
@@ -45,6 +46,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
         Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy");
         q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
         return (List) q.getResultList();
+    }
+    
+    public List<Evento> buscarEventoCategorias(List<Categoria> categorias){
+        
+        Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias");
+        q.setParameter("categorias", categorias);
+        return q.getResultList();
     }
     
     public void validarEvento(int idEvento){

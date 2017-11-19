@@ -3,6 +3,7 @@ package service;
 import app.ejb.CategoriaFacade;
 import app.ejb.EventoFacade;
 import app.ejb.UsuarioFacade;
+import app.entity.Categoria;
 import app.entity.Usuario;
 import java.util.List;
 import javax.ejb.EJB;
@@ -121,9 +122,14 @@ public class Agendamlg {
     @Oneway
     public void validarEvento(@WebParam(name = "idEvento")int idEvento,@WebParam(name = "idUsuario")int idUsuario){
         Usuario usuario = this.usuarioFacade.find(idUsuario);
-        if(usuario.getTipo()==2){
+        if(usuario.getTipo()== 3){
             eventoFacade.validarEvento(idEvento);
         }
+    }
+    
+    @WebMethod(operationName = "buscarEventoCategorias")
+    public List<app.entity.Evento> buscarEventoCategorias(@WebParam(name = "categorias")List<app.entity.Categoria> categorias){
+        return eventoFacade.buscarEventoCategorias(categorias);
     }
     
     //////////////////////////////////////////////

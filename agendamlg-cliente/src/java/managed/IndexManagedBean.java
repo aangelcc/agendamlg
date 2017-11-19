@@ -61,4 +61,5 @@ public class IndexManagedBean {
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.buscarEventosNoCaducados();
     }
+    
 }
