@@ -112,9 +112,14 @@ public class Agendamlg {
         return eventoFacade.buscarEventosUsuario(id);
     }
     
-    @WebMethod(operationName = "buscarEventosNoCaducados")
-    public List<app.entity.Evento> buscarEventosNoCaducados(){
-        return eventoFacade.buscarEventosNoCaducados();
+    @WebMethod(operationName = "buscarEventosTipoUsuario")
+    public List<app.entity.Evento> buscarEventosTipoUsuario(@WebParam(name = "idUsuario")int idUsuario){
+        if(idUsuario==-1){
+            return eventoFacade.buscarEventosTipoUsuario(null);
+        }else{
+            Usuario usuario = this.usuarioFacade.find(idUsuario);
+            return eventoFacade.buscarEventosTipoUsuario(usuario);
+        }
     }
     
     @WebMethod(operationName = "validarEvento")

@@ -42,11 +42,17 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return (List) q.getResultList();
     }
     
-    public List<Evento> buscarEventosNoCaducados(){
+    public List<Evento> buscarEventosTipoUsuario(Usuario usuario){
         Date ahora = new Date(System.currentTimeMillis());
-        Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy");
-        q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
-        return (List) q.getResultList();
+        if(usuario!=null&&usuario.getTipo()==3){
+            Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy");
+            q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
+            return (List) q.getResultList();
+        }else{
+            Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy and e.validado = 1");
+            q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
+            return (List) q.getResultList();
+        }
     }
     
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {

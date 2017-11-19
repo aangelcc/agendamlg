@@ -18,6 +18,9 @@
         <h:form>
         <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
             <h:column>
+                ${evento.validado==0?"*":""}
+            </h:column>
+            <h:column>
                 <f:facet name="header">
                     Nombre
                 </f:facet>
