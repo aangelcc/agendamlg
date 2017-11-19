@@ -26,6 +26,7 @@ public class UsuarioManagedBean implements Serializable {
     private Agendamlg_Service service;
 
     private String alias;
+    private String mensajeDeError = null;
 
     public String getAlias() {
         return alias;
@@ -59,8 +60,19 @@ public class UsuarioManagedBean implements Serializable {
     }
 
     public String iniciarSesion(){
-        id = this.login(alias, password).getId();
-        return "index";
+        Usuario usuario = login(alias, password);
+        if(usuario != null) {
+            try {
+                mensajeDeError = null;
+                id = usuario.getId();
+                return "index";
+            } catch(Exception e) {
+                mensajeDeError = "Ha habido un error desconocido: " + e.getMessage() + ".";
+            }
+        } else {
+            mensajeDeError = "El usuario no existe o la contraseña es incorrecta.";
+        }
+        return null;
     }
     
     public String cerrarSesion(){
@@ -77,7 +89,8 @@ public class UsuarioManagedBean implements Serializable {
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.login(alias, password);
     }
-    
-    
-    
+
+    public String getMensajeDeError() {
+        return mensajeDeError;
+    }
 }
