@@ -4,13 +4,15 @@ import app.ejb.CategoriaFacade;
 import app.ejb.EventoFacade;
 import app.ejb.UsuarioFacade;
 import app.entity.Usuario;
-import java.util.List;
+import app.exception.AgendamlgException;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import java.util.List;
 
 @WebService(serviceName = "Agendamlg")
 @Stateless()
@@ -70,9 +72,7 @@ public class Agendamlg {
     @WebMethod(operationName = "crearEvento")
     @Oneway
     public void crearEvento(@WebParam(name = "entity") app.entity.Evento entity) {
-        if(entity.getCreador()!=null){
-            eventoFacade.create(entity);
-        }   
+        eventoFacade.create(entity);
     }
 
     @WebMethod(operationName = "editarEvento")
@@ -118,12 +118,9 @@ public class Agendamlg {
     }
     
     @WebMethod(operationName = "validarEvento")
-    @Oneway
-    public void validarEvento(@WebParam(name = "idEvento")int idEvento,@WebParam(name = "idUsuario")int idUsuario){
+    public void validarEvento(@WebParam(name = "idEvento")int idEvento,@WebParam(name = "idUsuario")int idUsuario) throws AgendamlgException {
         Usuario usuario = this.usuarioFacade.find(idUsuario);
-        if(usuario.getTipo()==2){
-            eventoFacade.validarEvento(idEvento);
-        }
+        eventoFacade.validarEvento(usuario, idEvento);
     }
     
     //////////////////////////////////////////////

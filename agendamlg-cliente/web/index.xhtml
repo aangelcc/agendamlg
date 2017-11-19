@@ -15,8 +15,6 @@
         <h:form>
         <h:commandLink action="#{usuarioManagedBean.cerrarSesion()}" rendered="#{usuarioManagedBean.id != -1}" value="Cerrar Sesion" />
         </h:form>
-        <h:link outcome="perfil">Ver Perfil</h:link>
-        <br/>
         <h:form>
         <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
             <h:column>
@@ -66,8 +64,12 @@
             </h:column>
         </h:dataTable>
         </h:form>
-        <h:link outcome="crearEvento">Subir Evento</h:link>
-        <br/>
+        <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+            <p>
+                <h:link outcome="perfil">Ver Perfil</h:link> -
+                <h:link outcome="crearEvento">Subir Evento</h:link>
+            </p>
+        </ui:fragment>
         ${usuarioManagedBean.id}
     </h:body>
 </html>

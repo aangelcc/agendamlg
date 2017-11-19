@@ -7,13 +7,15 @@ package app.ejb;
 
 import app.entity.Evento;
 import app.entity.Usuario;
-import java.util.Date;
-import java.util.List;
+import app.exception.AgendamlgException;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -47,8 +49,16 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return (List) q.getResultList();
     }
     
-    public void validarEvento(int idEvento){
-        Evento evento = this.find(idEvento);
-        evento.setValidado((short)1);
+    public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
+        if(usuario.getTipo() == 3) {
+            Evento evento = this.find(idEvento);
+            if(evento.getValidado() == 0) {
+                evento.setValidado((short) 1);
+            } else {
+                throw new AgendamlgException("El evento ya ha sido validado");
+            }
+        } else {
+            throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
+        }
     }
 }
