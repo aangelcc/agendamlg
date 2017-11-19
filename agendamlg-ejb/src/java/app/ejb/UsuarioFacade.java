@@ -6,10 +6,12 @@
 package app.ejb;
 
 import app.entity.Usuario;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -29,11 +31,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public Usuario login(String alias, String password){
         Query q = em.createQuery("select u from Usuario u where u.alias = :alias and u.password = :password");
         q.setParameter("alias", alias);
         q.setParameter("password", password);
-        return (Usuario) q.getSingleResult();
+        List<Usuario> usuarioONoUsuario = q.getResultList();
+        return usuarioONoUsuario.isEmpty() ? null : usuarioONoUsuario.get(0);
     }
 }

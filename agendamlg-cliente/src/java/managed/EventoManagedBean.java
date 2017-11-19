@@ -5,14 +5,15 @@
  */
 package managed;
 
-import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.xml.ws.WebServiceRef;
+import servicios.AgendamlgException_Exception;
 import servicios.Agendamlg_Service;
 import servicios.Evento;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.xml.ws.WebServiceRef;
+import java.io.Serializable;
 
 /**
  *
@@ -27,6 +28,8 @@ public class EventoManagedBean implements Serializable{
     
     @Inject
     private UsuarioManagedBean usuarioManagedBean;
+
+    private String mensajeDeError = null;
     
     private Evento evento = new Evento();
 
@@ -51,7 +54,13 @@ public class EventoManagedBean implements Serializable{
     
     public String subirEvento(){
         this.evento=this.buscarEvento(this.evento.getId());
-        this.validarEvento(this.evento.getId(),this.usuarioManagedBean.getId());
+        try {
+            this.validarEvento(this.evento.getId(), this.usuarioManagedBean.getId());
+        } catch(AgendamlgException_Exception other) {
+            mensajeDeError = other.getMessage() + ".";
+        } catch(Exception e) {
+            mensajeDeError = "Ha habido un error interno al validar el evento.";
+        }
         return "evento";
     }
     
@@ -64,10 +73,15 @@ public class EventoManagedBean implements Serializable{
         return port.buscarEvento(id);
     }
 
-    private void validarEvento(int idEvento, int idUsuario) {
+    private void validarEvento(int idEvento, int idUsuario) throws AgendamlgException_Exception {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
         port.validarEvento(idEvento, idUsuario);
     }
+
+    public String getMensajeDeError() {
+        return mensajeDeError;
+    }
+
 }

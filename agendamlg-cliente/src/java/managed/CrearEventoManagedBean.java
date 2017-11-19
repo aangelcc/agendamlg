@@ -21,6 +21,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
+import servicios.AgendamlgException_Exception;
 import servicios.Agendamlg_Service;
 import servicios.Evento;
 import servicios.Usuario;
@@ -114,7 +115,7 @@ public class CrearEventoManagedBean {
        this.setIdCreador(usuarioManagedBean.getId());
     }
     
-    public String subirEvento() throws ParseException, DatatypeConfigurationException{
+    public String subirEvento() throws ParseException, DatatypeConfigurationException, AgendamlgException_Exception{
         Evento evento = new Evento();
         evento.setTipo(tipo);
         evento.setNombre(nombre);
@@ -130,23 +131,22 @@ public class CrearEventoManagedBean {
         evento.setPrecio(precio);
         evento.setDireccion(direccion);
         evento.setCreador(buscarUsuario(idCreador));
-        this.crearEvento(evento);
+        this.crearEventoTipoUsuario(evento);
         return "index";
     }
-
     
-    private void crearEvento(servicios.Evento entity) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        servicios.Agendamlg port = service.getAgendamlgPort();
-        port.crearEvento(entity);
-    }
-
     private Usuario buscarUsuario(java.lang.Object id) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.buscarUsuario(id);
+    }
+
+    private void crearEventoTipoUsuario(servicios.Evento evento) throws AgendamlgException_Exception {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        port.crearEventoTipoUsuario(evento);
     }
     
 }

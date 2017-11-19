@@ -55,6 +55,8 @@
     <message name="buscarEventosNoCaducadosResponse"/>
     <message name="validarEvento"/>
     <message name="validarEventoResponse"/>
+    <message name="crearEventoTipoUsuario"/>
+    <message name="crearEventoTipoUsuarioResponse"/>
     <portType name="Agendamlg">
         <operation name="create">
             <input message="tns:create"/>
@@ -155,6 +157,10 @@
         <operation name="validarEvento">
             <input message="tns:validarEvento"/>
             <output message="tns:validarEventoResponse"/>
+        </operation>
+        <operation name="crearEventoTipoUsuario">
+            <input message="tns:crearEventoTipoUsuario"/>
+            <output message="tns:crearEventoTipoUsuarioResponse"/>
         </operation>
     </portType>
     <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
@@ -257,6 +263,11 @@
         <operation name="validarEvento">
             <input/>
             <output/>
+        </operation>
+        <operation name="crearEventoTipoUsuario">
+            <input/>
+            <output/>
+            <fault/>
         </operation>
     </binding>
     <service name="Agendamlg">

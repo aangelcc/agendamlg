@@ -5,13 +5,14 @@
  */
 package managed;
 
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import java.io.Serializable;
-import javax.faces.context.FacesContext;
-import javax.xml.ws.WebServiceRef;
 import servicios.Agendamlg_Service;
 import servicios.Usuario;
+
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.xml.ws.WebServiceRef;
+import java.io.Serializable;
 
 /**
  *
@@ -25,6 +26,7 @@ public class UsuarioManagedBean implements Serializable {
     private Agendamlg_Service service;
 
     private String alias;
+    private String mensajeDeError = null;
 
     public String getAlias() {
         return alias;
@@ -50,7 +52,7 @@ public class UsuarioManagedBean implements Serializable {
         this.id = id;
     }
     private String password;
-    private int id;
+    private int id = -1;
     /**
      * Creates a new instance of UsuarioManagedBean
      */
@@ -58,12 +60,24 @@ public class UsuarioManagedBean implements Serializable {
     }
 
     public String iniciarSesion(){
-        id = this.login(alias, password).getId();
-        return "index";
+        Usuario usuario = login(alias, password);
+        if(usuario != null) {
+            try {
+                mensajeDeError = null;
+                id = usuario.getId();
+                return "index";
+            } catch(Exception e) {
+                mensajeDeError = "Ha habido un error desconocido: " + e.getMessage() + ".";
+            }
+        } else {
+            mensajeDeError = "El usuario no existe o la contraseña es incorrecta.";
+        }
+        return null;
     }
     
     public String cerrarSesion(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        id = -1;
         // faces-redirect=true es necesario para actualizar adecuadamente la página
         // El funcionamiento https://www.mkyong.com/jsf2/jsf-page-forward-vs-page-redirect/
         return "/index.xhtml?faces-redirect=true";
@@ -75,7 +89,8 @@ public class UsuarioManagedBean implements Serializable {
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.login(alias, password);
     }
-    
-    
-    
+
+    public String getMensajeDeError() {
+        return mensajeDeError;
+    }
 }

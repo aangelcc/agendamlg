@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.xml.ws.WebServiceRef;
 import servicios.Agendamlg_Service;
 import servicios.Evento;
@@ -24,6 +25,9 @@ public class IndexManagedBean {
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/Agendamlg/Agendamlg.wsdl")
     private Agendamlg_Service service;
 
+    @Inject
+    private UsuarioManagedBean usuarioManagedBean;
+    
     private List<Evento> eventos;
     /**
      * Creates a new instance of IndexManagedBean
@@ -37,14 +41,7 @@ public class IndexManagedBean {
     }
     
     public void obtenerListaEventos(){
-        this.eventos = this.buscarEventosNoCaducados();
-    }
-
-    private java.util.List<servicios.Evento> buscarTodosLosEventos() {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        servicios.Agendamlg port = service.getAgendamlgPort();
-        return port.buscarTodosLosEventos();
+        this.eventos = this.buscarEventosTipoUsuario(this.usuarioManagedBean.getId());
     }
 
     public List<Evento> getEventos() {
@@ -55,11 +52,10 @@ public class IndexManagedBean {
         this.eventos = eventos;
     }
 
-    private java.util.List<servicios.Evento> buscarEventosNoCaducados() {
+    private java.util.List<servicios.Evento> buscarEventosTipoUsuario(int idUsuario) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
-        return port.buscarEventosNoCaducados();
+        return port.buscarEventosTipoUsuario(idUsuario);
     }
-    
 }

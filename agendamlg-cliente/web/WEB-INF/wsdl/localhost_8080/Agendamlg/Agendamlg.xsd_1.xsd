@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://service/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service/">
 
+<xs:element name="AgendamlgException" type="tns:AgendamlgException"/>
+
 <xs:element name="buscarCategoria" type="tns:buscarCategoria"/>
 
 <xs:element name="buscarCategoriaResponse" type="tns:buscarCategoriaResponse"/>
@@ -12,13 +14,13 @@
 
 <xs:element name="buscarEventoResponse" type="tns:buscarEventoResponse"/>
 
-<xs:element name="buscarEventosNoCaducados" type="tns:buscarEventosNoCaducados"/>
-
-<xs:element name="buscarEventosNoCaducadosResponse" type="tns:buscarEventosNoCaducadosResponse"/>
-
 <xs:element name="buscarEventosPorRango" type="tns:buscarEventosPorRango"/>
 
 <xs:element name="buscarEventosPorRangoResponse" type="tns:buscarEventosPorRangoResponse"/>
+
+<xs:element name="buscarEventosTipoUsuario" type="tns:buscarEventosTipoUsuario"/>
+
+<xs:element name="buscarEventosTipoUsuarioResponse" type="tns:buscarEventosTipoUsuarioResponse"/>
 
 <xs:element name="buscarEventosUsuario" type="tns:buscarEventosUsuario"/>
 
@@ -66,6 +68,10 @@
 
 <xs:element name="crearEvento" type="tns:crearEvento"/>
 
+<xs:element name="crearEventoTipoUsuario" type="tns:crearEventoTipoUsuario"/>
+
+<xs:element name="crearEventoTipoUsuarioResponse" type="tns:crearEventoTipoUsuarioResponse"/>
+
 <xs:element name="crearUsuario" type="tns:crearUsuario"/>
 
 <xs:element name="editarCategoria" type="tns:editarCategoria"/>
@@ -89,6 +95,8 @@
 <xs:element name="usuario" type="tns:usuario"/>
 
 <xs:element name="validarEvento" type="tns:validarEvento"/>
+
+<xs:element name="validarEventoResponse" type="tns:validarEventoResponse"/>
 
 <xs:complexType name="editarUsuario">
 <xs:sequence>
@@ -182,6 +190,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="buscarEventosPorRango">
+<xs:sequence>
+<xs:element name="range" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarEventosPorRangoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="login">
 <xs:sequence>
 <xs:element name="alias" type="xs:string" minOccurs="0"/>
@@ -195,18 +215,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="buscarEventosPorRango">
-<xs:sequence>
-<xs:element name="range" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="buscarEventosPorRangoResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="buscarUsuariosPorRango">
 <xs:sequence>
 <xs:element name="range" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
@@ -216,16 +224,6 @@
 <xs:complexType name="buscarUsuariosPorRangoResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:usuario" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="buscarEventosNoCaducados">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="buscarEventosNoCaducadosResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -254,6 +252,34 @@
 <xs:complexType name="buscarUsuarioResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:usuario" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarEventosTipoUsuario">
+<xs:sequence>
+<xs:element name="idUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarEventosTipoUsuarioResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:evento" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearEventoTipoUsuario">
+<xs:sequence>
+<xs:element name="evento" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearEventoTipoUsuarioResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="AgendamlgException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -287,6 +313,17 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="validarEvento">
+<xs:sequence>
+<xs:element name="idEvento" type="xs:int"/>
+<xs:element name="idUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="validarEventoResponse">
+<xs:sequence/>
+</xs:complexType>
+
 <xs:complexType name="buscarCategoria">
 <xs:sequence>
 <xs:element name="id" type="xs:anyType" minOccurs="0"/>
@@ -296,13 +333,6 @@
 <xs:complexType name="buscarCategoriaResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:categoria" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="validarEvento">
-<xs:sequence>
-<xs:element name="idEvento" type="xs:int"/>
-<xs:element name="idUsuario" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 
