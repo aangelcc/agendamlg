@@ -68,6 +68,10 @@
 
 <xs:element name="crearEvento" type="tns:crearEvento"/>
 
+<xs:element name="crearEventoTipoUsuario" type="tns:crearEventoTipoUsuario"/>
+
+<xs:element name="crearEventoTipoUsuarioResponse" type="tns:crearEventoTipoUsuarioResponse"/>
+
 <xs:element name="crearUsuario" type="tns:crearUsuario"/>
 
 <xs:element name="editarCategoria" type="tns:editarCategoria"/>
@@ -263,6 +267,22 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="crearEventoTipoUsuario">
+<xs:sequence>
+<xs:element name="evento" type="tns:evento" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearEventoTipoUsuarioResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="AgendamlgException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="crearCategoria">
 <xs:sequence>
 <xs:element name="entity" type="tns:categoria" minOccurs="0"/>
@@ -302,12 +322,6 @@
 
 <xs:complexType name="validarEventoResponse">
 <xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="AgendamlgException">
-<xs:sequence>
-<xs:element name="message" type="xs:string" minOccurs="0"/>
-</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="buscarCategoria">

@@ -128,6 +128,11 @@ public class Agendamlg {
         eventoFacade.validarEvento(usuario, idEvento);
     }
     
+    @WebMethod(operationName = "crearEventoTipoUsuario")
+    public void crearEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento) throws AgendamlgException{
+        eventoFacade.crearEventoTipoUsuario(evento);
+    }
+    
     //////////////////////////////////////////////
     
     @EJB

@@ -136,6 +136,12 @@
 <message name="buscarEventosTipoUsuarioResponse">
 <part name="parameters" element="tns:buscarEventosTipoUsuarioResponse"/>
 </message>
+<message name="crearEventoTipoUsuario">
+<part name="parameters" element="tns:crearEventoTipoUsuario"/>
+</message>
+<message name="crearEventoTipoUsuarioResponse">
+<part name="parameters" element="tns:crearEventoTipoUsuarioResponse"/>
+</message>
 <portType name="Agendamlg">
 <operation name="buscarEventosUsuario">
 <input wsam:Action="http://service/Agendamlg/buscarEventosUsuarioRequest" message="tns:buscarEventosUsuario"/>
@@ -232,6 +238,11 @@
 <operation name="buscarEventosTipoUsuario">
 <input wsam:Action="http://service/Agendamlg/buscarEventosTipoUsuarioRequest" message="tns:buscarEventosTipoUsuario"/>
 <output wsam:Action="http://service/Agendamlg/buscarEventosTipoUsuarioResponse" message="tns:buscarEventosTipoUsuarioResponse"/>
+</operation>
+<operation name="crearEventoTipoUsuario">
+<input wsam:Action="http://service/Agendamlg/crearEventoTipoUsuarioRequest" message="tns:crearEventoTipoUsuario"/>
+<output wsam:Action="http://service/Agendamlg/crearEventoTipoUsuarioResponse" message="tns:crearEventoTipoUsuarioResponse"/>
+<fault message="tns:AgendamlgException" name="AgendamlgException" wsam:Action="http://service/Agendamlg/crearEventoTipoUsuario/Fault/AgendamlgException"/>
 </operation>
 </portType>
 <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
@@ -445,6 +456,18 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="crearEventoTipoUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="AgendamlgException">
+<soap:fault name="AgendamlgException" use="literal"/>
+</fault>
 </operation>
 </binding>
 <service name="Agendamlg">

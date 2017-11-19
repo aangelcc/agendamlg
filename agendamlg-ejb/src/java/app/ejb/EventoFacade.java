@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -35,30 +36,48 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public EventoFacade() {
         super(Evento.class);
     }
-    
-    public List<Evento> buscarEventosUsuario(int idUsuario){
+
+    public void crearEventoTipoUsuario(Evento evento) throws AgendamlgException {
+        try {
+            Usuario usuario = evento.getCreador();
+            if (usuario == null) {
+                throw new AgendamlgException("Usuario anónimo no puede crear eventos");
+            } else if (usuario.getTipo() == 1) {
+                evento.setValidado((short) 0);
+                this.create(evento);
+            } else if (usuario.getTipo() > 1) {
+                evento.setValidado((short) 1);
+                this.create(evento);
+            }
+        }catch(ConstraintViolationException e){
+            throw new AgendamlgException("Hay campos invalidos",e);
+        }
+
+    }
+
+    public List<Evento> buscarEventosUsuario(int idUsuario) {
         Query q = this.em.createQuery("select e from Evento e where e.creador.id=:id");
         q.setParameter("id", idUsuario);
         return (List) q.getResultList();
     }
-    
-    public List<Evento> buscarEventosTipoUsuario(Usuario usuario){
+
+    public List<Evento> buscarEventosTipoUsuario(Usuario usuario) {
         Date ahora = new Date(System.currentTimeMillis());
-        if(usuario!=null&&usuario.getTipo()==3){
+        if (usuario != null && usuario.getTipo() == 3) {
             Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy");
-            q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
+            q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             return (List) q.getResultList();
-        }else{
+        } else {
             Query q = this.em.createQuery("select e from Evento e where e.fecha > :hoy and e.validado = 1");
-            q.setParameter("hoy",ahora,TemporalType.TIMESTAMP);
+            q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             return (List) q.getResultList();
         }
     }
-    
+
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
-        if(usuario.getTipo() == 3) {
+        if (usuario.getTipo() == 3) {
             Evento evento = this.find(idEvento);
-            if(evento.getValidado() == 0) {
+            if (evento.getValidado() == 0) {
                 evento.setValidado((short) 1);
             } else {
                 throw new AgendamlgException("El evento ya ha sido validado");
