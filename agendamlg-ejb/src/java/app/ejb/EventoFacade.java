@@ -110,6 +110,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
             return (List) q.getResultList();
         }
     }
+    
+    public List<Evento> buscarEventoCategorias(List<Categoria> categorias){
+        
+        Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias");
+        q.setParameter("categorias", categorias);
+        return q.getResultList();
+    }
 
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
         if (usuario.getTipo() == 3) {

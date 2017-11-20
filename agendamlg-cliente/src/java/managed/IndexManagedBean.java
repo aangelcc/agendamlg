@@ -58,5 +58,4 @@ public class IndexManagedBean {
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.buscarEventosTipoUsuario(idUsuario);
     }
-
 }

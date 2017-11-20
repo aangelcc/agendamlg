@@ -134,6 +134,11 @@ public class Agendamlg {
         eventoFacade.crearEventoTipoUsuario(evento,categoriasEvento);
     }
     
+    @WebMethod(operationName = "buscarEventoCategorias")
+    public List<app.entity.Evento> buscarEventoCategorias(@WebParam(name = "categorias")List<app.entity.Categoria> categorias){
+        return eventoFacade.buscarEventoCategorias(categorias);
+    }
+    
     //////////////////////////////////////////////
     
     @EJB
