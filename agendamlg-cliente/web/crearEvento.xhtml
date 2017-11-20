@@ -18,9 +18,9 @@
             Precio: <h:inputText value="#{crearEventoManagedBean.precio}"></h:inputText> <br/>
             Direccion: <h:inputText value="#{crearEventoManagedBean.direccion}"></h:inputText> <br/>
             <h:inputHidden value="#{usuarioManagedBean.id}"></h:inputHidden>
-            <h:selectManyListbox value="#{crearEventoManagedBean.categoriasSeleccionadas}">
+            Categorias: <h:selectManyListbox value="#{crearEventoManagedBean.categoriasSeleccionadas}">
                 <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
-            </h:selectManyListbox>
+            </h:selectManyListbox> <br/>
             <h:commandButton action="#{crearEventoManagedBean.subirEvento()}" value="Subir"></h:commandButton>
         </h:form>
     </h:body>
