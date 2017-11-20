@@ -51,8 +51,14 @@ public class EventoFacade extends AbstractFacade<Evento> {
         super(Evento.class);
     }
 
-    public void enviarCorreo(Evento evento) {
+    public void enviarCorreoInteresados(Evento evento) {
         gmailBean.sendMail(usuarioFacade.buscarUsuariosPreferencias(evento.getCategoriaList()), "Hay un evento que te puede gustar", evento.getNombre() + " es un evento de tu preferencia");
+    }
+    
+    public void enviarCorreoCreador(Evento evento, Usuario creador){
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(creador);
+        gmailBean.sendMail(usuarios, "Tu evento ha sido publicado", "El evento "+evento.getNombre()+" ha sido publicado");
     }
 
     public void anadirCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) {
@@ -77,7 +83,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
                 evento.setValidado((short) 1);
                 this.create(evento);
                 this.anadirCategoriaEvento(evento, categoriasEvento);
-                this.enviarCorreo(evento);
+                this.enviarCorreoInteresados(evento);
             }
             //Tenemos que coger el id del evento que se acaba de añadir (yo no sé si esto es thread safe)
         } catch (ConstraintViolationException e) {
@@ -110,7 +116,6 @@ public class EventoFacade extends AbstractFacade<Evento> {
     }
     
     public List<Evento> buscarEventoCategorias(List<Categoria> categorias){
-        
         Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias");
         q.setParameter("categorias", categorias);
         return q.getResultList();
@@ -121,7 +126,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
             Evento evento = this.find(idEvento);
             if (evento.getValidado() == 0) {
                 evento.setValidado((short) 1);
-                enviarCorreo(evento);
+                enviarCorreoInteresados(evento);
+                enviarCorreoCreador(evento,evento.getCreador());
             } else {
                 throw new AgendamlgException("El evento ya ha sido validado");
             }
