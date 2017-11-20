@@ -52,9 +52,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
     }
 
     public void enviarCorreo(Evento evento) {
-        for (Usuario u : usuarioFacade.buscarUsuariosPreferencias(evento.getCategoriaList())) {
-            gmailBean.sendMail(u.getEmail(), "Hay un evento que te puede gustar", evento.getNombre() + " es un evento de tu preferencia");
-        }
+        gmailBean.sendMail(usuarioFacade.buscarUsuariosPreferencias(evento.getCategoriaList()), "Hay un evento que te puede gustar", evento.getNombre() + " es un evento de tu preferencia");
     }
 
     public void anadirCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) {
