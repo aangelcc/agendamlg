@@ -130,8 +130,8 @@ public class Agendamlg {
     }
     
     @WebMethod(operationName = "crearEventoTipoUsuario")
-    public void crearEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento) throws AgendamlgException{
-        eventoFacade.crearEventoTipoUsuario(evento);
+    public void crearEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento,@WebParam(name="categoriasEvento") List<app.entity.Categoria> categoriasEvento) throws AgendamlgException{
+        eventoFacade.crearEventoTipoUsuario(evento,categoriasEvento);
     }
     
     @WebMethod(operationName = "buscarEventoCategorias")

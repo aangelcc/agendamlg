@@ -34,3 +34,9 @@ out/
 # Ignorar algunos archivos creados por netbeans
 src/conf/original_original_MANIFEST.MF
 src/conf/original_original_application.xml
+
+# Ignorar archivos del cliente, solucion: regenerar cliente
+agendamlg-cliente/src/conf/xml-resources/web-service-references/Agendamlg/wsdl/localhost_8080/Agendamlg/Agendamlg.wsdl
+agendamlg-cliente/src/conf/xml-resources/web-service-references/Agendamlg/wsdl/localhost_8080/Agendamlg/Agendamlg.xsd_1.xsd
+agendamlg-cliente/web/WEB-INF/wsdl/localhost_8080/Agendamlg/Agendamlg.wsdl
+agendamlg-cliente/web/WEB-INF/wsdl/localhost_8080/Agendamlg/Agendamlg.xsd_1.xsd

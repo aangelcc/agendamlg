@@ -10,8 +10,10 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -23,9 +25,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 import servicios.AgendamlgException_Exception;
 import servicios.Agendamlg_Service;
+import servicios.Categoria;
 import servicios.Evento;
 import servicios.Usuario;
-
 /**
  *
  * @author johncarlo
@@ -47,6 +49,33 @@ public class CrearEventoManagedBean {
     private BigDecimal precio;
     private String direccion;
     private int idCreador;
+    private List<Categoria> categorias;
+    private List<Categoria> categoriasEvento = new ArrayList<>();
+    private List<String> categoriasSeleccionadas = new ArrayList<>();
+
+    public List<String> getCategoriasSeleccionadas() {
+        return categoriasSeleccionadas;
+    }
+
+    public void setCategoriasSeleccionadas(List<String> categoriasSeleccionadas) {
+        this.categoriasSeleccionadas = categoriasSeleccionadas;
+    }
+
+    public List<Categoria> getCategoriasEvento() {
+        return categoriasEvento;
+    }
+
+    public void setCategoriasEvento(List<Categoria> categoriasEvento) {
+        this.categoriasEvento = categoriasEvento;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
 
     public int getIdCreador() {
         return idCreador;
@@ -113,6 +142,7 @@ public class CrearEventoManagedBean {
     @PostConstruct
     public void init() {
        this.setIdCreador(usuarioManagedBean.getId());
+       this.categorias = this.buscarTodasLasCategorias();
     }
     
     public String subirEvento() throws ParseException, DatatypeConfigurationException, AgendamlgException_Exception{
@@ -131,7 +161,12 @@ public class CrearEventoManagedBean {
         evento.setPrecio(precio);
         evento.setDireccion(direccion);
         evento.setCreador(buscarUsuario(idCreador));
-        this.crearEventoTipoUsuario(evento);
+        
+        this.categoriasSeleccionadas.forEach((i) -> {
+            this.categoriasEvento.add(this.buscarCategoria(Integer.parseInt(i)));
+        });
+        
+        this.crearEventoTipoUsuario(evento,categoriasEvento);
         return "index";
     }
     
@@ -142,11 +177,26 @@ public class CrearEventoManagedBean {
         return port.buscarUsuario(id);
     }
 
-    private void crearEventoTipoUsuario(servicios.Evento evento) throws AgendamlgException_Exception {
+    private java.util.List<servicios.Categoria> buscarTodasLasCategorias() {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
-        port.crearEventoTipoUsuario(evento);
+        return port.buscarTodasLasCategorias();
     }
+
+    private Categoria buscarCategoria(java.lang.Object id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.buscarCategoria(id);
+    }
+
+    private void crearEventoTipoUsuario(servicios.Evento evento, java.util.List<servicios.Categoria> categoriasEvento) throws AgendamlgException_Exception {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        port.crearEventoTipoUsuario(evento, categoriasEvento);
+    }
+    
     
 }

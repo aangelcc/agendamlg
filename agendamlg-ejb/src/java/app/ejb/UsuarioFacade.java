@@ -5,6 +5,7 @@
  */
 package app.ejb;
 
+import app.entity.Categoria;
 import app.entity.Usuario;
 
 import javax.ejb.Stateless;
@@ -32,6 +33,13 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
 
+    public List<Usuario> buscarUsuariosPreferencias(List<Categoria> categorias){
+        //select i from Item i join i.categoryList category where category in :categories
+        Query q = this.em.createQuery("select distinct u from Usuario u join u.categoriaList c where c in :categorias");
+        q.setParameter("categorias", categorias);
+        return (List) q.getResultList();
+    }
+    
     @SuppressWarnings("unchecked")
     public Usuario login(String alias, String password){
         Query q = em.createQuery("select u from Usuario u where u.alias = :alias and u.password = :password");
