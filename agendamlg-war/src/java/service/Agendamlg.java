@@ -3,6 +3,7 @@ package service;
 import app.ejb.CategoriaFacade;
 import app.ejb.EventoFacade;
 import app.ejb.UsuarioFacade;
+import app.entity.Categoria;
 import app.entity.Usuario;
 import app.exception.AgendamlgException;
 
@@ -129,8 +130,8 @@ public class Agendamlg {
     }
     
     @WebMethod(operationName = "crearEventoTipoUsuario")
-    public void crearEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento) throws AgendamlgException{
-        eventoFacade.crearEventoTipoUsuario(evento);
+    public void crearEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento,@WebParam(name="categoriasEvento") List<app.entity.Categoria> categoriasEvento) throws AgendamlgException{
+        eventoFacade.crearEventoTipoUsuario(evento,categoriasEvento);
     }
     
     //////////////////////////////////////////////

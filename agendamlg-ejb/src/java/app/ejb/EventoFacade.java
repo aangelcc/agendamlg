@@ -5,9 +5,11 @@
  */
 package app.ejb;
 
+import app.entity.Categoria;
 import app.entity.Evento;
 import app.entity.Usuario;
 import app.exception.AgendamlgException;
+import java.util.ArrayList;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,6 +18,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.validation.ConstraintViolationException;
 
 /**
@@ -24,6 +27,17 @@ import javax.validation.ConstraintViolationException;
  */
 @Stateless
 public class EventoFacade extends AbstractFacade<Evento> {
+
+    @EJB
+    private CategoriaFacade categoriaFacade;
+
+    @EJB
+    private GmailBean gmailBean;
+
+    @EJB
+    private UsuarioFacade usuarioFacade;
+    
+    
 
     @PersistenceContext(unitName = "agendamlg-ejbPU")
     private EntityManager em;
@@ -37,7 +51,22 @@ public class EventoFacade extends AbstractFacade<Evento> {
         super(Evento.class);
     }
 
-    public void crearEventoTipoUsuario(Evento evento) throws AgendamlgException {
+    public void enviarCorreo(Evento evento) {
+        for (Usuario u : usuarioFacade.buscarUsuariosPreferencias(evento.getCategoriaList())) {
+            gmailBean.sendMail(u.getEmail(), "Hay un evento que te puede gustar", evento.getNombre() + " es un evento de tu preferencia");
+        }
+    }
+
+    public void anadirCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) {
+        evento.setId(this.findLastId());
+        evento.getCategoriaList().addAll(categoriasEvento);
+        for(Categoria categoria: evento.getCategoriaList()){
+            categoria = categoriaFacade.find(categoria.getId());
+            categoria.getEventoList().add(evento);
+        }
+    }
+
+    public void crearEventoTipoUsuario(Evento evento, List<Categoria> categoriasEvento) throws AgendamlgException {
         try {
             Usuario usuario = evento.getCreador();
             if (usuario == null) {
@@ -45,14 +74,22 @@ public class EventoFacade extends AbstractFacade<Evento> {
             } else if (usuario.getTipo() == 1) {
                 evento.setValidado((short) 0);
                 this.create(evento);
+                this.anadirCategoriaEvento(evento, categoriasEvento);
             } else if (usuario.getTipo() > 1) {
                 evento.setValidado((short) 1);
                 this.create(evento);
+                this.anadirCategoriaEvento(evento, categoriasEvento);
+                this.enviarCorreo(evento);
             }
-        }catch(ConstraintViolationException e){
-            throw new AgendamlgException("Hay campos invalidos",e);
+            //Tenemos que coger el id del evento que se acaba de añadir (yo no sé si esto es thread safe)
+        } catch (ConstraintViolationException e) {
+            throw new AgendamlgException("Hay campos invalidos", e);
         }
+    }
 
+    public int findLastId() {
+        Query q = this.em.createQuery("select max(e.id) from Evento e");
+        return (int) q.getSingleResult();
     }
 
     public List<Evento> buscarEventosUsuario(int idUsuario) {
@@ -79,6 +116,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
             Evento evento = this.find(idEvento);
             if (evento.getValidado() == 0) {
                 evento.setValidado((short) 1);
+                enviarCorreo(evento);
             } else {
                 throw new AgendamlgException("El evento ya ha sido validado");
             }
