@@ -16,6 +16,28 @@
         <h:commandLink action="#{usuarioManagedBean.cerrarSesion()}" rendered="#{usuarioManagedBean.id != -1}" value="Cerrar Sesion" />
         </h:form>
         <h:form>
+            <hr></hr>
+            <h3>Si lo deseas, introduce una ubicación (coordenadas cartesianas) y un radio en torno a ella en el cual buscar eventos</h3>
+            <p><b>Serán ordenados de más cercano a más lejano</b></p>
+            <h:selectBooleanCheckbox value="#{indexManagedBean.ordenarPorDistancia}"></h:selectBooleanCheckbox> Ordenar por distancia <br></br>
+            <b>Posición:</b><br></br>
+            X: <h:inputText value="#{indexManagedBean.dx}"></h:inputText> <b>,</b> Y: <h:inputText value="#{indexManagedBean.dy}"></h:inputText>
+            <br></br><br></br>
+            Radio: <h:inputText value="#{indexManagedBean.radio}"></h:inputText> Unidades
+            <hr></hr>
+            
+            <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+            <h3>Mostrar eventos de mi preferencia (mis categorias favoritas)</h3>
+            <h:commandButton value="Mostrar eventos de mi preferencia" action="#{indexManagedBean.mostrarDeMiInteres()}"></h:commandButton>
+            </ui:fragment>
+            
+            <h3>Mostrar eventos de las categorias que selecciones</h3>
+            <h:selectManyListbox value="#{indexManagedBean.seleccionCategorias}">
+                <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
+            </h:selectManyListbox>
+            <br></br>
+            <h:commandButton value="Mostrar de categorias seleccionadas" action="#{indexManagedBean.mostrarDeCategoriasSeleccionadas()}"></h:commandButton>
+            <hr></hr>
         <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
             <h:column>
                 ${evento.validado==0?"*":""}
