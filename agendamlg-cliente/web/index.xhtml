@@ -18,12 +18,12 @@
         <h:form>
             <hr/>
             <h3>Si lo deseas, introduce una ubicación (coordenadas cartesianas) y un radio en torno a ella en el cual buscar eventos</h3>
-            <p><strong>Serán ordenados de más cercano a más lejano</strong></p>
+            <p><strong>Serán ordenados de más cercano a más lejano, si no se escoge esta ordenación la ordenación por defecto es de más próximo a más lejano</strong></p>
             <h:selectBooleanCheckbox value="#{indexManagedBean.ordenarPorDistancia}" /> Ordenar por distancia <br/>
             <strong>Posición:</strong><br/>
             X: <h:inputText value="#{indexManagedBean.dx}" /> <strong>,</strong> Y: <h:inputText value="#{indexManagedBean.dy}" />
             <br/><br/>
-            Radio: <h:inputText value="#{indexManagedBean.radio}" /> Unidades
+            Radio: <h:inputText value="#{indexManagedBean.radio}" /> Unidades 
             <hr/>
             
             <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
@@ -33,6 +33,11 @@
             </ui:fragment>
             
             <h3>Mostrar eventos de las categorias que selecciones</h3>
+            <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+                <p>
+                    Si no seleccionas ninguna se mostrarán los eventos de tu preferencia
+                </p>
+            </ui:fragment>
             <h:selectManyListbox value="#{indexManagedBean.seleccionCategorias}">
                 <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
             </h:selectManyListbox>

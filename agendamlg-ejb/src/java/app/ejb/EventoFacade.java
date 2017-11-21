@@ -125,20 +125,26 @@ public class EventoFacade extends AbstractFacade<Evento> {
         
         Date ahora = new Date(System.currentTimeMillis());
         if (usuario != null && usuario.getTipo() == 3) {
-            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy ORDER BY e.fecha DESC");
+            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy ORDER BY e.fecha ASC");
             q.setParameter("categorias", categorias);
             q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             listaEventos = q.getResultList();
         } else {
-            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy and e.validado = 1 ORDER BY e.fecha DESC");
+            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy and e.validado = 1 ORDER BY e.fecha ASC");
             q.setParameter("categorias", categorias);
             q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             listaEventos = q.getResultList();
         }
         
         // Remover duplicados
-        Set<Evento> conjuntoEventos = new TreeSet<>(listaEventos);
-        List<Evento> duplicadosEliminados = new ArrayList<>(conjuntoEventos);
+        List<Evento> duplicadosEliminados = new ArrayList<>();
+        
+        for(Evento evento : listaEventos){
+            if(!duplicadosEliminados.contains(evento)){
+                duplicadosEliminados.add(evento);
+            }
+        }
+        
         return duplicadosEliminados;
     }
 
