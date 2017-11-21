@@ -9,20 +9,15 @@ import app.entity.Categoria;
 import app.entity.Evento;
 import app.entity.Usuario;
 import app.exception.AgendamlgException;
-import java.util.ArrayList;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import javax.ejb.EJB;
 import javax.validation.ConstraintViolationException;
-import org.jboss.weld.util.collections.ArraySet;
+import java.util.*;
 
 /**
  *
@@ -142,8 +137,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
         }
         
         // Remover duplicados
-        Set<Evento> conjuntoEventos = new ArraySet<>(listaEventos);
-       List<Evento> duplicadosEliminados = new ArrayList<>(conjuntoEventos);
+        Set<Evento> conjuntoEventos = new TreeSet<>(listaEventos);
+        List<Evento> duplicadosEliminados = new ArrayList<>(conjuntoEventos);
         return duplicadosEliminados;
     }
 
