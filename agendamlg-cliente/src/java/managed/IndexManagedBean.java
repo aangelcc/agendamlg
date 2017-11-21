@@ -5,6 +5,8 @@
  */
 package managed;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -14,6 +16,7 @@ import javax.xml.ws.WebServiceRef;
 import servicios.Agendamlg_Service;
 import servicios.Categoria;
 import servicios.Evento;
+import servicios.Usuario;
 
 /**
  *
@@ -32,6 +35,14 @@ public class IndexManagedBean {
     // Lista de eventos a mostrar en el index
     private List<Evento> eventos;
     
+    // Una cadena que es una representacion de las categorias en las que el usuario
+    // esta interesado
+    private String categoriasInteresado = "";
+    
+    
+    // Una cadena que describe las categorias que el usuario ha seleccionado
+    private String categoriasSeleccionadasString = "";
+    
     // El usuario ha seleccionado ordenar por distancia?
     private boolean ordenarPorDistancia;
     
@@ -48,7 +59,7 @@ public class IndexManagedBean {
     private List<Categoria> categorias;
     
     // Categorias seleccionadas para filtrar
-    private List<Categoria> seleccionCategorias;
+    private Categoria[] seleccionCategorias;
    
     
     /**
@@ -60,6 +71,22 @@ public class IndexManagedBean {
     @PostConstruct
     public void init() {
         this.obtenerListaEventos();
+        
+        // Si el usuario ha iniciado sesion
+        if(this.usuarioManagedBean.getId() != -1){
+            List<Categoria> categoriasList = buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId()));
+            
+            for(Categoria categoria : categoriasList){
+                this.categoriasInteresado += " <"+categoria.getNombre()+">";
+            }
+            
+            if(this.seleccionCategorias != null){
+            for(Categoria categoria: this.seleccionCategorias){
+                this.categoriasSeleccionadasString += " <"+categoria.getNombre()+">";
+            }
+            }
+        }
+        
     }
     
     public void obtenerListaEventos(){
@@ -85,13 +112,21 @@ public class IndexManagedBean {
     
     // Mostrar de mi interes
     public String mostrarDeMiInteres(){
-        
-        return null;
+        this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), buscarUsuario(usuarioManagedBean.getId()));
+    return null;
     }
     
     // Mostrar de categorias seleccionadas
     public String mostrarDeCategoriasSeleccionadas(){
-        
+        // Si no se han seleccionado categorias se muestran las preferencias de usuario
+        Usuario usuarioSesion = buscarUsuario(usuarioManagedBean.getId());
+        if(this.seleccionCategorias.length == 0){
+        this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), usuarioSesion);
+        }
+        else{
+            List<Categoria> listaCategoriasMetodo = new ArrayList<Categoria>(Arrays.asList(this.seleccionCategorias));
+            this.eventos = buscarEventoCategorias(listaCategoriasMetodo, usuarioSesion);
+        }
         return null;
     }
     
@@ -109,9 +144,15 @@ public class IndexManagedBean {
         return dy;
     }
 
-    public List<Categoria> getSeleccionCategorias() {
+    public Categoria[] getSeleccionCategorias() {
         return seleccionCategorias;
     }
+
+    public void setSeleccionCategorias(Categoria[] seleccionCategorias) {
+        this.seleccionCategorias = seleccionCategorias;
+    }
+
+    
 
     public boolean getOrdenarPorDistancia() {
         return this.ordenarPorDistancia;
@@ -143,9 +184,49 @@ public class IndexManagedBean {
         this.ordenarPorDistancia = ordenarPorDistancia;
     }
 
-    public void setSeleccionCategorias(List<Categoria> seleccionCategorias) {
-        this.seleccionCategorias = seleccionCategorias;
+    
+
+    
+
+    private java.util.List<servicios.Categoria> buscarPreferenciasUsuario(servicios.Usuario usuario) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.buscarPreferenciasUsuario(usuario);
     }
+
+    private Usuario buscarUsuario(java.lang.Object id) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.buscarUsuario(id);
+    }
+
+    public void setCategoriasInteresado(String categoriasInteresado) {
+        this.categoriasInteresado = categoriasInteresado;
+    }
+
+    public String getCategoriasInteresado() {
+        return categoriasInteresado;
+    }
+
+    private java.util.List<servicios.Evento> buscarEventoCategorias(java.util.List<servicios.Categoria> categorias, servicios.Usuario usuario) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.buscarEventoCategorias(categorias, usuario);
+    }
+
+    public String getCategoriasSeleccionadasString() {
+        return categoriasSeleccionadasString;
+    }
+
+    public void setCategoriasSeleccionadasString(String categoriasSeleccionadasString) {
+        this.categoriasSeleccionadasString = categoriasSeleccionadasString;
+    }
+    
+    
+    
     
     
 }

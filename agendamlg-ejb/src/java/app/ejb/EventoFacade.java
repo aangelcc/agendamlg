@@ -18,8 +18,11 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.ejb.EJB;
 import javax.validation.ConstraintViolationException;
+import org.jboss.weld.util.collections.ArraySet;
 
 /**
  *
@@ -115,10 +118,33 @@ public class EventoFacade extends AbstractFacade<Evento> {
         }
     }
     
-    public List<Evento> buscarEventoCategorias(List<Categoria> categorias){
-        Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias");
+    public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario){
+        /* Query q = this.em.createQuery("select distinct e from Evento e join e.categoriaList c where c in :categorias");
         q.setParameter("categorias", categorias);
-        return q.getResultList();
+        return q.getResultList(); */
+        
+        // Dado que una de las columnas es de tipo LONGVARCHAR, JPQL no permite usar
+        // distinct para evitar obtener filas repetidas, de ahí que se
+        // haga el procesamiento a mano para lograr esto
+        List<Evento> listaEventos;
+        
+        Date ahora = new Date(System.currentTimeMillis());
+        if (usuario != null && usuario.getTipo() == 3) {
+            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy ORDER BY e.fecha DESC");
+            q.setParameter("categorias", categorias);
+            q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
+            listaEventos = q.getResultList();
+        } else {
+            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy and e.validado = 1 ORDER BY e.fecha DESC");
+            q.setParameter("categorias", categorias);
+            q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
+            listaEventos = q.getResultList();
+        }
+        
+        // Remover duplicados
+        Set<Evento> conjuntoEventos = new ArraySet<>(listaEventos);
+       List<Evento> duplicadosEliminados = new ArrayList<>(conjuntoEventos);
+        return duplicadosEliminados;
     }
 
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
