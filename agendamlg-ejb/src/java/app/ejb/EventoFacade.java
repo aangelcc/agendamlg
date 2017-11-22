@@ -151,7 +151,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
         if(usuario == null) {
-            throw new AgendamlgException("Un usuario anónimo no puede crear eventos");
+            throw new AgendamlgException("Un usuario anónimo no puede validar eventos");
         } else if(usuario.getTipo() == 3) {
             Evento evento = this.find(idEvento);
             if (evento.getValidado() == 0) {
