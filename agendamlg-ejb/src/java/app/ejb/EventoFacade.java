@@ -112,8 +112,10 @@ public class EventoFacade extends AbstractFacade<Evento> {
             return (List) q.getResultList();
         }
     }
+
     
     public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario, boolean filtroCercania, int x, int y, int radio){
+
         /* Query q = this.em.createQuery("select distinct e from Evento e join e.categoriaList c where c in :categorias");
         q.setParameter("categorias", categorias);
         return q.getResultList(); */
@@ -177,7 +179,9 @@ public class EventoFacade extends AbstractFacade<Evento> {
     }
 
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
-        if (usuario.getTipo() == 3) {
+        if(usuario == null) {
+            throw new AgendamlgException("Un usuario anónimo no puede validar eventos");
+        } else if(usuario.getTipo() == 3) {
             Evento evento = this.find(idEvento);
             if (evento.getValidado() == 0) {
                 evento.setValidado((short) 1);
@@ -190,6 +194,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
         }
     }
+<<<<<<< HEAD
     
     // Métodos auxiliares
     
@@ -204,5 +209,16 @@ public class EventoFacade extends AbstractFacade<Evento> {
     // Dados dos punto de la forma (x1,y1),(x2,y2) calcula la distancia entre ambos
     private double distanciaEntreDosPuntos(int x1, int y1, int x2, int y2) {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+=======
+
+    public void borrarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
+        if(usuario == null) {
+            throw new AgendamlgException("Un usuario anónimo no puede crear eventos");
+        } else if(usuario.getTipo() == 3) {
+            remove(find(idEvento));
+        } else {
+            throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para borrar eventos");
+        }
+>>>>>>> a3615601ed2704c52dc66f2761dc2650626d2a97
     }
 }

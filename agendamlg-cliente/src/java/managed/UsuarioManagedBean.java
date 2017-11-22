@@ -53,6 +53,9 @@ public class UsuarioManagedBean implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public Usuario getUsuario() { return service.getAgendamlgPort().buscarUsuario(id); }
+
     private String password;
     private int id = -1;
     /**

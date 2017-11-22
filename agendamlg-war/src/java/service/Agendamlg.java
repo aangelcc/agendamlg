@@ -3,7 +3,6 @@ package service;
 import app.ejb.CategoriaFacade;
 import app.ejb.EventoFacade;
 import app.ejb.UsuarioFacade;
-import app.entity.Categoria;
 import app.entity.Usuario;
 import app.exception.AgendamlgException;
 
@@ -83,9 +82,8 @@ public class Agendamlg {
     }
 
     @WebMethod(operationName = "eliminarEvento")
-    @Oneway
-    public void eliminarEvento(@WebParam(name = "entity") app.entity.Evento entity) {
-        eventoFacade.remove(entity);
+    public void eliminarEvento(@WebParam(name = "usuarioQueElimina") int usuarioId, @WebParam(name = "entity") app.entity.Evento entity) throws AgendamlgException {
+        eventoFacade.borrarEvento(usuarioFacade.find(usuarioId), entity.getId());
     }
 
     @WebMethod(operationName = "buscarEvento")
