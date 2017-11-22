@@ -135,8 +135,8 @@ public class Agendamlg {
     }
     
     @WebMethod(operationName = "buscarEventoCategorias")
-    public List<app.entity.Evento> buscarEventoCategorias(@WebParam(name = "categorias")List<app.entity.Categoria> categorias, @WebParam(name = "usuario")app.entity.Usuario usuario){
-        return eventoFacade.buscarEventoCategorias(categorias, usuario);
+    public List<app.entity.Evento> buscarEventoCategorias(@WebParam(name = "categorias")List<app.entity.Categoria> categorias, @WebParam(name = "usuario")app.entity.Usuario usuario, @WebParam(name = "filtrarCategorias")boolean filtroCercania, @WebParam(name = "coordenadaX")int x, @WebParam(name = "coordenadaY")int y, @WebParam(name = "radio")int radio){
+        return eventoFacade.buscarEventoCategorias(categorias, usuario, filtroCercania, x, y, radio);
     }
     
     //////////////////////////////////////////////
