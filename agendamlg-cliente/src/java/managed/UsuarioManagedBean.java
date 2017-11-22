@@ -27,6 +27,8 @@ public class UsuarioManagedBean implements Serializable {
 
     private String alias;
     private String mensajeDeError = null;
+    // Es periodista? Se usa para saber los permisos que se tienen
+    private boolean periodista = false;
 
     public String getAlias() {
         return alias;
@@ -63,6 +65,8 @@ public class UsuarioManagedBean implements Serializable {
         Usuario usuario = login(alias, password);
         if(usuario != null) {
             try {
+                // asumismo que el periodista es el TIPO 3
+                this.periodista = usuario.getTipo() == 3;
                 mensajeDeError = null;
                 id = usuario.getId();
                 return "index";
@@ -93,4 +97,14 @@ public class UsuarioManagedBean implements Serializable {
     public String getMensajeDeError() {
         return mensajeDeError;
     }
+
+    public boolean getPeriodista() {
+        return periodista;
+    }
+
+    public void setPeriodista(boolean periodista) {
+        this.periodista = periodista;
+    }
+    
+    
 }
