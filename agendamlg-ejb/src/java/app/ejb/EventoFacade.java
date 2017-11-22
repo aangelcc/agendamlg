@@ -117,8 +117,9 @@ public class EventoFacade extends AbstractFacade<Evento> {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario){
+    
+    public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario, boolean filtroCercania, int x, int y, int radio){
+
         /* Query q = this.em.createQuery("select distinct e from Evento e join e.categoriaList c where c in :categorias");
         q.setParameter("categorias", categorias);
         return q.getResultList(); */
@@ -150,6 +151,34 @@ public class EventoFacade extends AbstractFacade<Evento> {
             }
         }
         
+        
+        // Llevar a cabo la ordenacion por distancia en la lista de duplicadosEliminados
+        // si asi se ha solicitado en el cliente y en base a los parámetros aportados por este
+        
+        if(filtroCercania){
+            // Se almacenan los eventos ordenados por distancia (de cercano a lejano)
+            // La clave del mapa es la que se usa para la ordenacion
+            Map<Double, Evento> mapa = new TreeMap<>();
+
+            // Se procede a rellnar el mapa
+            for (Evento evento : duplicadosEliminados) {
+                double distAEvento = distanciaAEvento(x, y, evento);
+                
+                // Solo se meten en el mapa aquellos eventos que esten dentro del radio
+                if(distAEvento <= radio){
+                mapa.put(distAEvento, evento);
+                }
+            }
+
+            // A continuacion se obtiene una lista ordenada de los eventos que se han introducido en el map
+            // Se vacia la lista de eventos
+            duplicadosEliminados.clear();
+
+            for (Map.Entry<Double, Evento> entrada : mapa.entrySet()) {
+                duplicadosEliminados.add(entrada.getValue());
+            }
+        }
+        
         return duplicadosEliminados;
     }
 
@@ -168,6 +197,21 @@ public class EventoFacade extends AbstractFacade<Evento> {
         } else {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
         }
+    }
+    
+    // Métodos auxiliares
+    
+    // Dada una ubicacion (x,y) y un evento devuelve la distancia hasta ese evento
+    private double distanciaAEvento(int x, int y, Evento evento) {
+        // Obtener coordenadas x e y del evento
+        String[] coordenadas = evento.getDireccion().split(",");
+        int eventoX = Integer.parseInt(coordenadas[0]);
+        int eventoY = Integer.parseInt(coordenadas[1]);
+        return distanciaEntreDosPuntos(x, y, eventoX, eventoY);
+    }
+    // Dados dos punto de la forma (x1,y1),(x2,y2) calcula la distancia entre ambos
+    private double distanciaEntreDosPuntos(int x1, int y1, int x2, int y2) {
+        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
     public void borrarEvento(Usuario usuario, int idEvento) throws AgendamlgException {

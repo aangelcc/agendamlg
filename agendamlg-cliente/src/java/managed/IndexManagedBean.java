@@ -103,42 +103,10 @@ public class IndexManagedBean {
         return port.buscarEventosTipoUsuario(idUsuario);
     }
 
-    // Este metodo gestiona la ordenacion de eventos por distancia si asi se ha solicitado
-    private void hacerOrdenacionPorDistancia(){
-        if (this.ordenarPorDistancia) {
-            // Se almacenan los eventos ordenados por distancia (de cercano a lejano)
-            // La clave del mapa es la que se usa para la ordenacion
-            Map<Double, Evento> mapa = new TreeMap<>();
-
-            // Se procede a rellnar el mapa
-            for (Evento evento : this.eventos) {
-                double distAEvento = distanciaAEvento(this.dx, this.dy, evento);
-                
-                // Solo se meten en el mapa aquellos eventos que esten dentro del radio
-                if(distAEvento < this.radio){
-                mapa.put(distAEvento, evento);
-                }
-            }
-
-            // A continuacion se obtiene una lista ordenada de los eventos que se han introducido en el map
-            // Se vacia la lista de eventos
-            this.eventos.clear();
-
-            for (Map.Entry<Double, Evento> entrada : mapa.entrySet()) {
-                this.eventos.add(entrada.getValue());
-            }
-
-        }
-    }
-    
     // Metodos que obedezcan al filtrado de eventos
     // Mostrar de mi interes
     public String mostrarDeMiInteres() {
-        this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), buscarUsuario(usuarioManagedBean.getId()));
-
-        // El usuario decide ordenar los eventos de mas cercano a mas lejano
-        hacerOrdenacionPorDistancia();
-
+        this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), buscarUsuario(usuarioManagedBean.getId()), this.ordenarPorDistancia, this.dx,this.dy, this.radio);
         return null;
     }
 
@@ -148,8 +116,7 @@ public class IndexManagedBean {
         Usuario usuarioSesion = buscarUsuario(usuarioManagedBean.getId());
         if (this.seleccionCategorias.isEmpty()) {
             if (usuarioSesion != null) {
-                this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), usuarioSesion);
-                hacerOrdenacionPorDistancia();
+                this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), usuarioSesion, this.ordenarPorDistancia, this.dx,this.dy, this.radio);
             }
         } else {
 
@@ -161,24 +128,10 @@ public class IndexManagedBean {
                 categoriasSeleccionadas.add(buscarCategoria(Integer.parseInt(categoriaID)));
             }
 
-            this.eventos = buscarEventoCategorias(categoriasSeleccionadas, usuarioSesion);
-            hacerOrdenacionPorDistancia();
+            this.eventos = buscarEventoCategorias(categoriasSeleccionadas, usuarioSesion, this.ordenarPorDistancia, this.dx,this.dy, this.radio);
         }
         
         return null;
-    }
-
-    // Dada una ubicacion (x,y) y un evento devuelve la distancia hasta ese evento
-    private double distanciaAEvento(int x, int y, Evento evento) {
-        // Obtener coordenadas x e y del evento
-        String[] coordenadas = evento.getDireccion().split(",");
-        int eventoX = Integer.parseInt(coordenadas[0]);
-        int eventoY = Integer.parseInt(coordenadas[1]);
-        return distanciaEntreDosPuntos(x, y, eventoX, eventoY);
-    }
-
-    private double distanciaEntreDosPuntos(int x1, int y1, int x2, int y2) {
-        return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
     }
 
     // Setters y getters para el filtrado de eventos
@@ -252,12 +205,7 @@ public class IndexManagedBean {
         return categoriasInteresado;
     }
 
-    private java.util.List<servicios.Evento> buscarEventoCategorias(java.util.List<servicios.Categoria> categorias, servicios.Usuario usuario) {
-        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
-        // If the calling of port operations may lead to race condition some synchronization is required.
-        servicios.Agendamlg port = service.getAgendamlgPort();
-        return port.buscarEventoCategorias(categorias, usuario);
-    }
+    
 
     public String getCategoriasSeleccionadasString() {
         return categoriasSeleccionadasString;
@@ -272,6 +220,13 @@ public class IndexManagedBean {
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.buscarCategoria(id);
+    }
+
+    private java.util.List<servicios.Evento> buscarEventoCategorias(java.util.List<servicios.Categoria> categorias, servicios.Usuario usuario, boolean filtrarCategorias, int coordenadaX, int coordenadaY, int radio) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.buscarEventoCategorias(categorias, usuario, filtrarCategorias, coordenadaX, coordenadaY, radio);
     }
 
 }
