@@ -194,7 +194,6 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
         }
     }
-<<<<<<< HEAD
     
     // Métodos auxiliares
     
@@ -209,7 +208,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
     // Dados dos punto de la forma (x1,y1),(x2,y2) calcula la distancia entre ambos
     private double distanciaEntreDosPuntos(int x1, int y1, int x2, int y2) {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
-=======
+    }
 
     public void borrarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
         if(usuario == null) {
@@ -219,6 +218,5 @@ public class EventoFacade extends AbstractFacade<Evento> {
         } else {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para borrar eventos");
         }
->>>>>>> a3615601ed2704c52dc66f2761dc2650626d2a97
     }
 }
