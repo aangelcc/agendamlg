@@ -112,7 +112,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
             return (List) q.getResultList();
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario){
         /* Query q = this.em.createQuery("select distinct e from Evento e join e.categoriaList c where c in :categorias");
         q.setParameter("categorias", categorias);
@@ -149,7 +150,9 @@ public class EventoFacade extends AbstractFacade<Evento> {
     }
 
     public void validarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
-        if (usuario.getTipo() == 3) {
+        if(usuario == null) {
+            throw new AgendamlgException("Un usuario anónimo no puede crear eventos");
+        } else if(usuario.getTipo() == 3) {
             Evento evento = this.find(idEvento);
             if (evento.getValidado() == 0) {
                 evento.setValidado((short) 1);
@@ -160,6 +163,16 @@ public class EventoFacade extends AbstractFacade<Evento> {
             }
         } else {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
+        }
+    }
+
+    public void borrarEvento(Usuario usuario, int idEvento) throws AgendamlgException {
+        if(usuario == null) {
+            throw new AgendamlgException("Un usuario anónimo no puede crear eventos");
+        } else if(usuario.getTipo() == 3) {
+            remove(find(idEvento));
+        } else {
+            throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para borrar eventos");
         }
     }
 }

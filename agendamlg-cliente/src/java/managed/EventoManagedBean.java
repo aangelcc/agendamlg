@@ -83,20 +83,25 @@ public class EventoManagedBean implements Serializable{
     // Borrar evento, se encarga de borrar un evento dado este
     public String borrarEvento(Evento evento){
         // Se llama a la debida operacion del servicio
-        eliminarEvento(evento);
-        // Asi nos aseguramos que aparece la lista actualizada
-        return "index?faces-redirect=true";
+        try {
+            eliminarEvento(evento);
+            // Asi nos aseguramos que aparece la lista actualizada
+            return "index?faces-redirect=true";
+        } catch (AgendamlgException_Exception e) {
+            mensajeDeError = e.getMessage() + ".";
+            return null;
+        }
     }
 
     public String getMensajeDeError() {
         return mensajeDeError;
     }
 
-    private void eliminarEvento(servicios.Evento entity) {
+    private void eliminarEvento(servicios.Evento entity) throws AgendamlgException_Exception {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
-        port.eliminarEvento(entity);
+        port.eliminarEvento(usuarioManagedBean.getId(), entity);
     }
 
 }
