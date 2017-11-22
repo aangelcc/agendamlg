@@ -49,12 +49,12 @@ public class IndexManagedBean {
 
     // Distancia entrada por el usuario
     // Posicion x
-    private int dx;
+    private double dx;
     // Posicion y
-    private int dy;
+    private double dy;
 
     // Radio escogido para hacer la busqueda de eventos
-    private int radio;
+    private double radio;
 
     // Categorias disponibles para ser mostradas en el formulario
     private List<Categoria> categorias;
@@ -139,11 +139,11 @@ public class IndexManagedBean {
         return categorias;
     }
 
-    public int getDx() {
+    public double getDx() {
         return dx;
     }
 
-    public int getDy() {
+    public double getDy() {
         return dy;
     }
 
@@ -159,11 +159,11 @@ public class IndexManagedBean {
         return this.ordenarPorDistancia;
     }
 
-    public int getRadio() {
+    public double getRadio() {
         return radio;
     }
 
-    public void setRadio(int radio) {
+    public void setRadio(double radio) {
         this.radio = radio;
     }
 
@@ -171,11 +171,11 @@ public class IndexManagedBean {
         this.categorias = categorias;
     }
 
-    public void setDx(int dx) {
+    public void setDx(double dx) {
         this.dx = dx;
     }
 
-    public void setDy(int dy) {
+    public void setDy(double dy) {
         this.dy = dy;
     }
 
@@ -222,11 +222,13 @@ public class IndexManagedBean {
         return port.buscarCategoria(id);
     }
 
-    private java.util.List<servicios.Evento> buscarEventoCategorias(java.util.List<servicios.Categoria> categorias, servicios.Usuario usuario, boolean filtrarCategorias, int coordenadaX, int coordenadaY, int radio) {
+    private java.util.List<servicios.Evento> buscarEventoCategorias(java.util.List<servicios.Categoria> categorias, servicios.Usuario usuario, boolean filtrarCategorias, double coordenadaX, double coordenadaY, double radio) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
         return port.buscarEventoCategorias(categorias, usuario, filtrarCategorias, coordenadaX, coordenadaY, radio);
     }
+
+    
 
 }
