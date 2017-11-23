@@ -76,7 +76,7 @@
             <h:column>
                     <h:commandLink action="#{eventoManagedBean.ver(evento)}" value="Ver" />
                     <ui:fragment rendered="#{usuarioManagedBean.periodista}">
-                        <!-- <h:commandButton action="bo" value="Borrar"></h:commandButton> -->
+                        <h:commandButton action="#{usuarioManagedBean.editarEvento(evento)}" value="Editar"></h:commandButton>
                         <h:commandButton action="#{eventoManagedBean.borrarEvento(evento)}" value="Borrar"></h:commandButton>
                     </ui:fragment>
             </h:column>

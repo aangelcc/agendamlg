@@ -57,6 +57,8 @@
     <message name="validarEventoResponse"/>
     <message name="crearEventoTipoUsuario"/>
     <message name="crearEventoTipoUsuarioResponse"/>
+    <message name="actualizarEventoTipoUsuario"/>
+    <message name="actualizarEventoTipoUsuarioResponse"/>
     <portType name="Agendamlg">
         <operation name="create">
             <input message="tns:create"/>
@@ -162,6 +164,10 @@
             <input message="tns:crearEventoTipoUsuario"/>
             <output message="tns:crearEventoTipoUsuarioResponse"/>
         </operation>
+        <operation name="actualizarEventoTipoUsuario">
+            <input message="tns:actualizarEventoTipoUsuario"/>
+            <output message="tns:actualizarEventoTipoUsuarioResponse"/>
+        </operation>
     </portType>
     <binding name="AgendamlgPortBinding" type="tns:Agendamlg">
         <operation name="create">
@@ -265,6 +271,11 @@
             <output/>
         </operation>
         <operation name="crearEventoTipoUsuario">
+            <input/>
+            <output/>
+            <fault/>
+        </operation>
+        <operation name="actualizarEventoTipoUsuario">
             <input/>
             <output/>
             <fault/>

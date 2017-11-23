@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.xml.ws.WebServiceRef;
 import java.io.Serializable;
+import servicios.Evento;
 
 /**
  *
@@ -29,6 +30,10 @@ public class UsuarioManagedBean implements Serializable {
     private String mensajeDeError = null;
     // Es periodista? Se usa para saber los permisos que se tienen
     private boolean periodista = false;
+    
+    // El que sea un bean de sesion facilita el paso de datos entre vista, en el siguiente
+    // campo se establece el evento objeto de edicion
+    private Evento eventoEditado;
 
     public String getAlias() {
         return alias;
@@ -97,6 +102,12 @@ public class UsuarioManagedBean implements Serializable {
         return port.login(alias, password);
     }
 
+    // Permite fijar el valor de la variable eventoEdicion y navegar a la vista de edicion
+    public String editarEvento(Evento evento){
+        this.eventoEditado = evento;
+        return "editarEvento";
+    }
+    
     public String getMensajeDeError() {
         return mensajeDeError;
     }
@@ -108,6 +119,15 @@ public class UsuarioManagedBean implements Serializable {
     public void setPeriodista(boolean periodista) {
         this.periodista = periodista;
     }
+
+    public Evento getEventoEditado() {
+        return eventoEditado;
+    }
+
+    public void setEventoEditado(Evento eventoEdicion) {
+        this.eventoEditado = eventoEdicion;
+    }
+    
     
     
 }

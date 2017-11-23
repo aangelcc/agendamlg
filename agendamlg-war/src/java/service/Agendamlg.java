@@ -3,6 +3,7 @@ package service;
 import app.ejb.CategoriaFacade;
 import app.ejb.EventoFacade;
 import app.ejb.UsuarioFacade;
+import app.entity.Categoria;
 import app.entity.Usuario;
 import app.exception.AgendamlgException;
 
@@ -62,6 +63,11 @@ public class Agendamlg {
     @WebMethod(operationName = "buscarPreferenciasUsuario")
     public List<app.entity.Categoria> buscarPreferenciasUsuario(@WebParam(name = "usuario") Usuario usuario) {
         return categoriaFacade.buscarPreferenciasUsuario(usuario);
+    }
+    
+    @WebMethod(operationName = "obtenerCategoriasEvento")
+    public List<Categoria> obtenerCategoriasEvento(@WebParam(name="evento") app.entity.Evento evento){
+        return categoriaFacade.buscarCategoriasEvento(evento);
     }
     
     //////////////////////////////////////////////
@@ -140,6 +146,15 @@ public class Agendamlg {
     public List<app.entity.Evento> buscarEventoCategorias(@WebParam(name = "categorias")List<app.entity.Categoria> categorias, @WebParam(name = "usuario")app.entity.Usuario usuario, @WebParam(name = "filtrarCategorias")boolean filtroCercania, @WebParam(name = "coordenadaX")double x, @WebParam(name = "coordenadaY")double y, @WebParam(name = "radio")double radio){
         if(usuario != null) usuario = usuarioFacade.find(usuario.getId());
         return eventoFacade.buscarEventoCategorias(categorias, usuario, filtroCercania, x, y, radio);
+    }
+   
+    @WebMethod(operationName = "actualizarEventoTipoUsuario")
+    public void actualizarEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento,@WebParam(name="categoriasEvento") List<app.entity.Categoria> categoriasEvento) throws AgendamlgException{
+        if(evento.getCreador() != null) {
+            Usuario usuario = usuarioFacade.find(evento.getCreador().getId());
+            evento.setCreador(usuario);
+        }
+        eventoFacade.editarEventoTipoUsuario(evento,categoriasEvento);
     }
     
     //////////////////////////////////////////////

@@ -223,4 +223,65 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para borrar eventos");
         }
     }
+    
+    // Este metodo permite actualizar un evento, dado el evento y una lista de categorias
+    
+    public void editarEventoTipoUsuario(Evento evento, List<Categoria> categoriasEvento) throws AgendamlgException {
+        try {
+            Usuario usuario = evento.getCreador();
+            // Se obtiene una lista de Categorias "de verdad"
+            // No es necesario ya que sobre estos objetos no se invoca
+            // una propiedad como la de getEventoList, de ser asi si habria que hacer este paso
+            // como pasa en Evento, que el evento que llega desde el cliente tiene
+            // categoriaList a null y es por ello que hay que obtener desde el entity manager
+            // un evento "de verdad"
+           /* List<Categoria> listaCategorias = new ArrayList<>();
+            
+            for(Categoria categoria : categoriasEvento){
+                listaCategorias.add(categoriaFacade.find(categoria.getId()));
+            } */
+           
+           List<Categoria> listaCategorias = categoriasEvento;
+            
+            if(evento.getTipo() < 1 || evento.getTipo() > 3) {
+                throw new AgendamlgException("Tipo inválido: " + evento.getTipo());
+            }
+            if (usuario == null) {
+                throw new AgendamlgException("Usuario anónimo no puede crear eventos");
+            } else if (usuario.getTipo() == 1) {
+                this.actualizarCategoriaEvento(this.find(evento.getId()), listaCategorias);
+                // this.edit(evento);
+            } else if (usuario.getTipo() > 1) {
+                this.actualizarCategoriaEvento(evento, listaCategorias);
+                // this.edit(evento);
+            }
+            //Tenemos que coger el id del evento que se acaba de añadir (yo no sé si esto es thread safe)
+        } catch (ConstraintViolationException e) {
+            throw new AgendamlgException("Hay campos invalidos", e);
+        }
+    }
+    
+    // Este metodo permite actualizar las categorias del evento que se le ofrece
+    public void actualizarCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) {
+        // Desvincular evento de categorias
+        
+        
+        for(Categoria categoria: evento.getCategoriaList()){
+            categoria = categoriaFacade.find(categoria.getId());
+            categoria.getEventoList().remove(evento);
+            categoriaFacade.edit(categoria);
+        }
+        
+        evento.getCategoriaList().clear();
+        evento.getCategoriaList().addAll(categoriasEvento);
+        this.edit(evento);
+        
+      // Añadir evento a las correspondientes categorias
+        for(Categoria categoria: evento.getCategoriaList()){
+            categoria = categoriaFacade.find(categoria.getId());
+            categoria.getEventoList().add(evento);
+            categoriaFacade.edit(categoria);
+        }
+        
+    }
 }

@@ -6,6 +6,7 @@
 package app.ejb;
 
 import app.entity.Categoria;
+import app.entity.Evento;
 import app.entity.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -36,5 +37,12 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
         Query q = this.em.createQuery("select c from Categoria c where :usuario member of c.usuarioList");
         q.setParameter("usuario", usuario);
         return (List) q.getResultList();
+    }
+    
+    // Devuelve las categorias de un evento dado
+    public List<Categoria> buscarCategoriasEvento(Evento evento){
+        Query q = this.em.createQuery("select c from Categoria c where :evento member of c.eventoList");
+        q.setParameter("evento", evento);
+        return q.getResultList();
     }
 }
