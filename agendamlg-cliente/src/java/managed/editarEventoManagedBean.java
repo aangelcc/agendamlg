@@ -5,21 +5,22 @@
  */
 package managed;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.inject.Inject;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.ws.WebServiceRef;
 import servicios.AgendamlgException_Exception;
 import servicios.Agendamlg_Service;
 import servicios.Categoria;
 import servicios.Evento;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.ws.WebServiceRef;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  *
@@ -36,9 +37,6 @@ public class editarEventoManagedBean {
     // Inyecciones correspondientes
     @Inject
     private UsuarioManagedBean usuarioManagedBean;
-    
-    @Inject
-    private EventoManagedBean eventoManagedBean;
     
     
     // Lista de categorias a las que asociar un evento, para mostrar en el formulario
@@ -126,12 +124,12 @@ public class editarEventoManagedBean {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
-        port.actualizarEventoTipoUsuario(evento, categoriasEvento);
+        port.actualizarEventoTipoUsuario(evento, categoriasEvento, usuarioManagedBean.getUsuario());
     }
  
     public Date getEventoFecha() {
         Evento evento = usuarioManagedBean.getEventoEditado();
-        return usuarioManagedBean.getEventoEditado().getFecha() == null ? null : usuarioManagedBean.getEventoEditado().getFecha().toGregorianCalendar().getTime();
+        return evento.getFecha() == null ? null : evento.getFecha().toGregorianCalendar().getTime();
     }
 
     public void setEventoFecha(Date date) throws DatatypeConfigurationException {

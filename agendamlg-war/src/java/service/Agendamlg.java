@@ -99,12 +99,9 @@ public class Agendamlg {
     }
    
     @WebMethod(operationName = "actualizarEventoTipoUsuario")
-    public void actualizarEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento,@WebParam(name="categoriasEvento") List<app.entity.Categoria> categoriasEvento) throws AgendamlgException{
-        if(evento.getCreador() != null) {
-            Usuario usuario = usuarioFacade.find(evento.getCreador().getId());
-            evento.setCreador(usuario);
-        }
-        eventoFacade.editarEventoTipoUsuario(evento,categoriasEvento);
+    public void actualizarEventoTipoUsuario(@WebParam(name="evento") app.entity.Evento evento,@WebParam(name="categoriasEvento") List<app.entity.Categoria> categoriasEvento,@WebParam(name="usuarioQueEdita") Usuario usuarioQueEdita) throws AgendamlgException{
+        if(usuarioQueEdita != null) usuarioQueEdita = usuarioFacade.find(usuarioQueEdita.getId());
+        eventoFacade.editarEventoTipoUsuario(evento, categoriasEvento, usuarioQueEdita);
     }
     
     //////////////////////////////////////////////
