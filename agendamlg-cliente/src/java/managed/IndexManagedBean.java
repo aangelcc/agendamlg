@@ -95,6 +95,11 @@ public class IndexManagedBean {
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
     }
+    
+    public String mostrarTodosLosEventos(){
+        this.eventos = this.buscarEventosTipoUsuario(this.usuarioManagedBean.getId());
+        return null;
+    }
 
     private java.util.List<servicios.Evento> buscarEventosTipoUsuario(int idUsuario) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.

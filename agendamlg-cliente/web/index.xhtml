@@ -45,8 +45,11 @@
             #{indexManagedBean.categoriasSeleccionadasString}
             <br/>
             <h:commandButton value="Mostrar de categorias seleccionadas" action="#{indexManagedBean.mostrarDeCategoriasSeleccionadas()}" />
+            <br/>
+            <h:commandButton value="Mostrar todos los eventos" action="#{indexManagedBean.mostrarTodosLosEventos()}"></h:commandButton>
             <hr/>
         </h:form>
+        <h3>Lista de Eventos</h3>
         <h:form>
         <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
             <h:column>
@@ -60,33 +63,9 @@
             </h:column>
             <h:column>
                 <f:facet name="header">
-                    Descripcion
-                </f:facet>
-                ${evento.descripcion}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Creador
-                </f:facet>
-                ${evento.creador.alias}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
                     Direccion
                 </f:facet>
                 ${evento.direccion}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Precio
-                </f:facet>
-                ${evento.precio}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Likes
-                </f:facet>
-                ${evento.likes}
             </h:column>
             <h:column>
                 <f:facet name="header">
@@ -94,8 +73,6 @@
                 </f:facet>
                 ${evento.fecha}
             </h:column>
-            
-            
             <h:column>
                     <h:commandLink action="#{eventoManagedBean.ver(evento)}" value="Ver" />
                     <ui:fragment rendered="#{usuarioManagedBean.periodista}">
@@ -111,8 +88,6 @@
                 <h:link outcome="crearEvento">Subir Evento</h:link>
             </p>
         </ui:fragment>
-        ${usuarioManagedBean.id}
-        #{usuarioManagedBean.periodista}
     </h:body>
 </html>
 

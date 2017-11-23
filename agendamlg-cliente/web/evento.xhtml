@@ -8,19 +8,24 @@
     <h:body>
         <h:form>
             <h3>Datos del Evento</h3>
-            Nombre: #{eventoManagedBean.evento.nombre}
+            <h4>Nombre:</h4>
+            #{eventoManagedBean.evento.nombre}
             <br/>
-            Descripcion: #{eventoManagedBean.evento.descripcion}
+            <h4>Descripcion:</h4>
+            #{eventoManagedBean.evento.descripcion}
             <br/>
-            Alias: #{eventoManagedBean.evento.creador.alias}
+            <h4>Alias:</h4>
+            #{eventoManagedBean.evento.creador.alias}
             <br/>
-            Direccion: #{eventoManagedBean.evento.direccion}
+            <h4>Direccion:</h4>
+            #{eventoManagedBean.evento.direccion}
             <br/>
-            Precio: #{eventoManagedBean.evento.precio}
+            <h4>Precio:</h4>
+            #{eventoManagedBean.evento.precio}
             <br/>
-            Likes: #{eventoManagedBean.evento.likes}
+            <h4>Fecha:</h4>
+            #{eventoManagedBean.evento.fecha}
             <br/>
-            Fecha: #{eventoManagedBean.evento.fecha}
             <br/>
 
             <h:inputHidden value="#{eventoManagedBean.evento.id}" />
