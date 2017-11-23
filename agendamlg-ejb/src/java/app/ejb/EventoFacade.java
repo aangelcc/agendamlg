@@ -243,14 +243,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
             // como pasa en Evento, que el evento que llega desde el cliente tiene
             // categoriaList a null y es por ello que hay que obtener desde el entity manager
             // un evento "de verdad"
-
             if(evento.getTipo() < 1 || evento.getTipo() > 3) {
                 throw new AgendamlgException("Tipo inválido: " + evento.getTipo());
             }
-            if (usuarioQueEdita == null) {
+            if(usuarioQueEdita == null) {
                 throw new AgendamlgException("Usuario anónimo no puede crear eventos");
             } else if (usuarioQueEdita.getTipo() == 3) {
-                this.actualizarCategoriaEvento(this.find(evento.getId()), categoriasEvento);
+                this.actualizarCategoriaEvento(evento/*this.find(evento.getId())*/, categoriasEvento);
             } else {
                 throw new AgendamlgException("El usuario '" + usuarioQueEdita.getAlias() + "' no tiene permisos para editar eventos");
             }
@@ -267,6 +266,11 @@ public class EventoFacade extends AbstractFacade<Evento> {
             categoria.getEventoList().remove(evento);
             categoriaFacade.edit(categoria);
         }
+
+        //No se puede modificar el creador ni el validado
+        Evento original = find(evento.getId());
+        evento.setCreador(original.getCreador());
+        evento.setValidado(original.getValidado());
         
         evento.getCategoriaList().clear();
         evento.getCategoriaList().addAll(categoriasEvento);
