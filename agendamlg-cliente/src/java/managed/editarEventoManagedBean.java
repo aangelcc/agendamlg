@@ -142,4 +142,8 @@ public class editarEventoManagedBean {
         }
     }
     
+    // Permite volver al index sin llevar a cabo cambios
+    public String volver(){
+        return "index";
+    }
 }

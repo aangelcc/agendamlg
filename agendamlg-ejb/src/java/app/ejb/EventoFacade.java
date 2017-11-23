@@ -34,8 +34,6 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
     @EJB
     private UsuarioFacade usuarioFacade;
-    
-    
 
     @PersistenceContext(unitName = "agendamlg-ejbPU")
     private EntityManager em;
@@ -52,17 +50,17 @@ public class EventoFacade extends AbstractFacade<Evento> {
     private void enviarCorreoInteresados(Evento evento) {
         gmailBean.sendMail(usuarioFacade.buscarUsuariosPreferencias(evento.getCategoriaList()), "Hay un evento que te puede gustar", evento.getNombre() + " es un evento de tu preferencia");
     }
-    
-    private void enviarCorreoCreador(Evento evento, Usuario creador){
+
+    private void enviarCorreoCreador(Evento evento, Usuario creador) {
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(creador);
-        gmailBean.sendMail(usuarios, "Tu evento ha sido publicado", "El evento "+evento.getNombre()+" ha sido publicado");
+        gmailBean.sendMail(usuarios, "Tu evento ha sido publicado", "El evento " + evento.getNombre() + " ha sido publicado");
     }
 
     private void anadirCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) {
         evento.setId(this.findLastId());
         evento.getCategoriaList().addAll(categoriasEvento);
-        for(Categoria categoria: evento.getCategoriaList()){
+        for(Categoria categoria : evento.getCategoriaList()) {
             categoria = categoriaFacade.find(categoria.getId());
             categoria.getEventoList().add(evento);
         }
@@ -122,14 +120,13 @@ public class EventoFacade extends AbstractFacade<Evento> {
         }
     }
 
-
     @SuppressWarnings("unchecked")
-    public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario, boolean filtroCercania, double x, double y, double radio){
+    public List<Evento> buscarEventoCategorias(List<Categoria> categorias, Usuario usuario, boolean filtroCercania, double x, double y, double radio) {
         // Dado que una de las columnas es de tipo LONGVARCHAR, JPQL no permite usar
         // distinct para evitar obtener filas repetidas, de ahí que se
         // haga el procesamiento a mano para lograr esto
         List<Evento> listaEventos;
-        
+
         Date ahora = new Date(System.currentTimeMillis());
         if (usuario != null && usuario.getTipo() == 3) {
             Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy ORDER BY e.fecha ASC");
@@ -142,32 +139,30 @@ public class EventoFacade extends AbstractFacade<Evento> {
             q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             listaEventos = q.getResultList();
         }
-        
+
         // Remover duplicados
         List<Evento> duplicadosEliminados = new ArrayList<>();
-        
-        for(Evento evento : listaEventos){
-            if(!duplicadosEliminados.contains(evento)){
+
+        for(Evento evento : listaEventos) {
+            if(!duplicadosEliminados.contains(evento)) {
                 duplicadosEliminados.add(evento);
             }
         }
-        
-        
+
         // Llevar a cabo la ordenacion por distancia en la lista de duplicadosEliminados
         // si asi se ha solicitado en el cliente y en base a los parámetros aportados por este
-        
-        if(filtroCercania){
+        if(filtroCercania) {
             // Se almacenan los eventos ordenados por distancia (de cercano a lejano)
             // La clave del mapa es la que se usa para la ordenacion
             Map<Double, Evento> mapa = new TreeMap<>();
 
             // Se procede a rellnar el mapa
-            for (Evento evento : duplicadosEliminados) {
+            for(Evento evento : duplicadosEliminados) {
                 double distAEvento = distanciaAEvento(x, y, evento);
-                
+
                 // Solo se meten en el mapa aquellos eventos que esten dentro del radio
-                if(distAEvento <= radio){
-                mapa.put(distAEvento, evento);
+                if(distAEvento <= radio) {
+                    mapa.put(distAEvento, evento);
                 }
             }
 
@@ -179,7 +174,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
                 duplicadosEliminados.add(entrada.getValue());
             }
         }
-        
+
         return duplicadosEliminados;
     }
 
@@ -203,9 +198,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
         }
     }
-    
+
     // Métodos auxiliares
-    
     // Dada una ubicacion (x,y) y un evento devuelve la distancia hasta ese evento
     private double distanciaAEvento(double x, double y, Evento evento) {
         // Obtener coordenadas x e y del evento
@@ -214,6 +208,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
         double eventoY = Double.parseDouble(coordenadas[1]);
         return distanciaEntreDosPuntos(x, y, eventoX, eventoY);
     }
+
     // Dados dos punto de la forma (x1,y1),(x2,y2) calcula la distancia entre ambos
     private double distanciaEntreDosPuntos(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
@@ -232,9 +227,8 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("El usuario '" + usuario.getAlias() + "' no tiene permisos para borrar eventos");
         }
     }
-    
+
     // Este metodo permite actualizar un evento, dado el evento y una lista de categorias
-    
     public void editarEventoTipoUsuario(Evento evento, List<Categoria> categoriasEvento, Usuario usuarioQueEdita) throws AgendamlgException {
         try {
             // Se obtiene una lista de Categorias "de verdad"
@@ -257,7 +251,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("Hay campos invalidos", e);
         }
     }
-    
+
     // Este metodo permite actualizar las categorias del evento que se le ofrece
     private void actualizarCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) throws AgendamlgException {
         //No se puede modificar el creador ni el validado

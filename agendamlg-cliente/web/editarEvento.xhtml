@@ -6,67 +6,65 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:head>
         <title>Editar evento</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"></link>
     </h:head>
     <h:body>
-        
-        <h:form>
-            <h3>Tipo</h3>
-                        
-                        <h:selectOneMenu value="#{usuarioManagedBean.eventoEditado.tipo}">
-                                <f:selectItem itemValue="0" itemLabel="Selecciona un tipo" itemDisabled="true" />
-                                <f:selectItem itemValue="1" itemLabel="Una vez" />
-                                <f:selectItem itemValue="2" itemLabel="Recurrente" />
-                                <f:selectItem itemValue="3" itemLabel="Persistente" />
-                                <f:selectItem itemValue="4" itemLabel="Tipo inválido (va a fallar)" />
-                            </h:selectOneMenu>
-                        
-                    
-                        <br></br>
-                        <h3>Nombre</h3>
-                        
-                        <input type="text" jsf:value="#{usuarioManagedBean.eventoEditado.nombre}" />
-                       
-                            <br></br>
-                            <h3>Descripcion</h3>
-                        <h:inputTextarea value="#{usuarioManagedBean.eventoEditado.descripcion}" />
-                    
-                        <br></br>
-                        <h3>Fecha</h3>
-                        
-                        <input class="form-control" type="datetime-local" jsf:value="#{editarEventoManagedBean.eventoFecha}" placeholder="aaaa-MM-ddThh:mm:ssZ">
-                                <f:convertDateTime pattern="yyyy-MM-dd'T'HH:mm:ss"/>
-                            </input>
-                        
-                        <br></br>
-                        <h3>Precio</h3>
-                       
-                        <input type="number" jsf:value="#{usuarioManagedBean.eventoEditado.precio}" min="0" step="0.01" />
-                            €
-                        
-                            <br></br>
-                            <h3>Dirección</h3>
-                        
-                        <input type="text" jsf:value="#{usuarioManagedBean.eventoEditado.direccion}" />
-                        
-                    
-                        <h3>Creador</h3>
-                       
-                            <!-- <h:selectOneMenu value="#{usuarioBean.usuarioId}" id="crearEventoTipoUsuario-creador">
-                                <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
-                            </h:selectOneMenu> -->
-                        
-                    
-                       <h3>Categorias</h3>
-                        
-                       <h:selectManyCheckbox value="#{editarEventoManagedBean.categoriasId}">
-                           <f:selectItems value="#{editarEventoManagedBean.categorias}" var="categoria" itemValue="#{categoria.id}" itemLabel="#{categoria.nombre}" />
-                            </h:selectManyCheckbox>
-                        
-                        <br></br>
-                        <h:commandButton action="#{editarEventoManagedBean.submitEvento()}" value="Editar evento"></h:commandButton>
-                       
-                </h:form>
-        
+
+        <div class="container" style="margin-top: 2%; background-color: #f9f9f9; padding: 4%">
+            <h1>Editando evento</h1>
+            <hr></hr>
+            <h:form>
+                <div class="form-group">
+                    <label for="tipoEvento">Tipo de evento</label>
+                    <h:selectOneMenu styleClass="form-control" id="tipoEvento" value="#{usuarioManagedBean.eventoEditado.tipo}">
+                        <f:selectItem itemValue="0" itemLabel="Selecciona un tipo" itemDisabled="true" />
+                        <f:selectItem itemValue="1" itemLabel="Una vez" />
+                        <f:selectItem itemValue="2" itemLabel="Recurrente" />
+                        <f:selectItem itemValue="3" itemLabel="Persistente" />
+                        <f:selectItem itemValue="4" itemLabel="Tipo inválido (va a fallar)" />
+                    </h:selectOneMenu>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="nombreEvento">Nombre</label>
+                    <input type="text" id="nombreEvento" class="form-control" jsf:value="#{usuarioManagedBean.eventoEditado.nombre}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcionEvento">Descripción</label>
+                    <h:inputTextarea styleClass="form-control" id="descripcionEvento" value="#{usuarioManagedBean.eventoEditado.descripcion}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaEvento">Fecha</label>
+                    <input id="fechaEvento" class="form-control" type="datetime-local" jsf:value="#{editarEventoManagedBean.eventoFecha}" placeholder="aaaa-MM-ddThh:mm:ssZ">
+                        <f:convertDateTime pattern="yyyy-MM-dd'T'HH:mm:ss"/>
+                    </input>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="precioEvento">Precio (€)</label>
+                    <input id="precioEvento" class="form-control" type="number" jsf:value="#{usuarioManagedBean.eventoEditado.precio}" min="0" step="0.01" />
+                </div>
+
+                <div class="form-group">
+                    <label for="direccionEvento">Dirección</label>
+                    <input class="form-control" id="direccionEvento" type="text" jsf:value="#{usuarioManagedBean.eventoEditado.direccion}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="categoriasEvento">Categorias</label>
+                    <h:selectManyCheckbox value="#{editarEventoManagedBean.categoriasId}">
+                        <f:selectItems value="#{editarEventoManagedBean.categorias}" var="categoria" itemValue="#{categoria.id}" itemLabel="#{categoria.nombre}"/>
+                    </h:selectManyCheckbox>
+                </div>
+
+                <h:commandButton styleClass="btn btn-outline-success" style="margin-right: 1%;" action="#{editarEventoManagedBean.volver()}" value="Volver"></h:commandButton><h:commandButton styleClass="btn btn-primary" action="#{editarEventoManagedBean.submitEvento()}" value="Editar evento"></h:commandButton>
+                
+            </h:form>
+        </div>
     </h:body>
 </html>
 
