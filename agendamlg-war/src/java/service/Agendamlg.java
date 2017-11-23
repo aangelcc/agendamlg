@@ -9,7 +9,6 @@ import app.exception.AgendamlgException;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -22,24 +21,6 @@ public class Agendamlg {
     @EJB
     private CategoriaFacade categoriaFacade;
 
-    @WebMethod(operationName = "crearCategoria")
-    @Oneway
-    public void crearCategoria(@WebParam(name = "entity") app.entity.Categoria entity) {
-        categoriaFacade.create(entity);
-    }
-
-    @WebMethod(operationName = "editarCategoria")
-    @Oneway
-    public void editarCategoria(@WebParam(name = "entity") app.entity.Categoria entity) {
-        categoriaFacade.edit(entity);
-    }
-
-    @WebMethod(operationName = "eliminarCategoria")
-    @Oneway
-    public void eliminarCategoria(@WebParam(name = "entity") app.entity.Categoria entity) {
-        categoriaFacade.remove(entity);
-    }
-
     @WebMethod(operationName = "buscarCategoria")
     public app.entity.Categoria buscarCategoria(@WebParam(name = "id") Object id) {
         return categoriaFacade.find(id);
@@ -50,18 +31,9 @@ public class Agendamlg {
         return categoriaFacade.findAll();
     }
 
-    @WebMethod(operationName = "buscarCategoriasPorRango")
-    public List<app.entity.Categoria> buscarCategoriasPorRango(@WebParam(name = "range") int[] range) {
-        return categoriaFacade.findRange(range);
-    }
-
-    @WebMethod(operationName = "contarCategorias")
-    public int contarCategorias() {
-        return categoriaFacade.count();
-    }
-    
     @WebMethod(operationName = "buscarPreferenciasUsuario")
-    public List<app.entity.Categoria> buscarPreferenciasUsuario(@WebParam(name = "usuario") Usuario usuario) {
+    public List<app.entity.Categoria> buscarPreferenciasUsuario(@WebParam(name = "usuario") Usuario usuario) throws AgendamlgException {
+        if(usuario != null) usuario = usuarioFacade.find(usuario.getId());
         return categoriaFacade.buscarPreferenciasUsuario(usuario);
     }
     
@@ -74,18 +46,6 @@ public class Agendamlg {
     
     @EJB
     private EventoFacade eventoFacade;
-
-    @WebMethod(operationName = "crearEvento")
-    @Oneway
-    public void crearEvento(@WebParam(name = "entity") app.entity.Evento entity) {
-        eventoFacade.create(entity);
-    }
-
-    @WebMethod(operationName = "editarEvento")
-    @Oneway
-    public void editarEvento(@WebParam(name = "entity") app.entity.Evento entity) {
-        eventoFacade.edit(entity);
-    }
 
     @WebMethod(operationName = "eliminarEvento")
     public void eliminarEvento(@WebParam(name = "usuarioQueElimina") int usuarioId, @WebParam(name = "entity") app.entity.Evento entity) throws AgendamlgException {
@@ -102,19 +62,9 @@ public class Agendamlg {
         return eventoFacade.findAll();
     }
 
-    @WebMethod(operationName = "buscarEventosPorRango")
-    public List<app.entity.Evento> buscarEventosPorRango(@WebParam(name = "range") int[] range) {
-        return eventoFacade.findRange(range);
-    }
-
-    @WebMethod(operationName = "contarEvento")
-    public int contarEvento() {
-        return eventoFacade.count();
-    }
-    
     @WebMethod(operationName = "buscarEventosUsuario")
-    public List<app.entity.Evento> buscarEventosUsuario(@WebParam(name = "id") int id) {
-        return eventoFacade.buscarEventosUsuario(id);
+    public List<app.entity.Evento> buscarEventosUsuario(@WebParam(name = "id") int id) throws AgendamlgException {
+        return eventoFacade.buscarEventosUsuario(usuarioFacade.find(id));
     }
     
     @WebMethod(operationName = "buscarEventosTipoUsuario")
@@ -162,24 +112,6 @@ public class Agendamlg {
     @EJB
     private UsuarioFacade usuarioFacade;
 
-    @WebMethod(operationName = "crearUsuario")
-    @Oneway
-    public void crearUsuario(@WebParam(name = "entity") app.entity.Usuario entity) {
-        usuarioFacade.create(entity);
-    }
-
-    @WebMethod(operationName = "editarUsuario")
-    @Oneway
-    public void editarUsuario(@WebParam(name = "entity") app.entity.Usuario entity) {
-        usuarioFacade.edit(entity);
-    }
-
-    @WebMethod(operationName = "eliminarUsuario")
-    @Oneway
-    public void eliminarUsuario(@WebParam(name = "entity") app.entity.Usuario entity) {
-        usuarioFacade.remove(entity);
-    }
-
     @WebMethod(operationName = "buscarUsuario")
     public app.entity.Usuario buscarUsuario(@WebParam(name = "id") Object id) {
         return usuarioFacade.find(id);
@@ -188,16 +120,6 @@ public class Agendamlg {
     @WebMethod(operationName = "buscarTodosLosUsuarios")
     public List<app.entity.Usuario> buscarTodosLosUsuarios() {
         return usuarioFacade.findAll();
-    }
-
-    @WebMethod(operationName = "buscarUsuariosPorRango")
-    public List<app.entity.Usuario> buscarUsuariosPorRango(@WebParam(name = "range") int[] range) {
-        return usuarioFacade.findRange(range);
-    }
-
-    @WebMethod(operationName = "contarUsuarios")
-    public int contarUsuarios() {
-        return usuarioFacade.count();
     }
 
     @WebMethod(operationName = "login")

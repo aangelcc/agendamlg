@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author melchor9000
+ * @author john
  */
 @Entity
 @Table(name = "USUARIO")
@@ -43,7 +43,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
-    , @NamedQuery(name = "Usuario.findByFoto", query = "SELECT u FROM Usuario u WHERE u.foto = :foto")
     , @NamedQuery(name = "Usuario.findByFechanacimiento", query = "SELECT u FROM Usuario u WHERE u.fechanacimiento = :fechanacimiento")})
 public class Usuario implements Serializable {
 
@@ -83,8 +82,6 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 500)
     @Column(name = "PASSWORD")
     private String password;
-    @Column(name = "FOTO")
-    private Integer foto;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHANACIMIENTO")
@@ -167,14 +164,6 @@ public class Usuario implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Integer getFoto() {
-        return foto;
-    }
-
-    public void setFoto(Integer foto) {
-        this.foto = foto;
     }
 
     public Date getFechanacimiento() {

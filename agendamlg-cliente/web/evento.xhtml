@@ -29,7 +29,9 @@
             <br/>
 
             <h:inputHidden value="#{eventoManagedBean.evento.id}" />
-            <h:commandLink action="#{eventoManagedBean.subirEvento()}" value="Validar" />
+            <ui:fragment rendered="#{usuarioManagedBean.periodista==true}">
+                <h:commandLink action="#{eventoManagedBean.subirEvento()}" value="Validar" />
+            </ui:fragment>
             <ui:fragment rendered="#{eventoManagedBean.mensajeDeError != null}">
                 <p style="color: rgb(255,90,88);">#{eventoManagedBean.mensajeDeError}</p>
             </ui:fragment>

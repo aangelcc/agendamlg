@@ -8,11 +8,13 @@ package app.ejb;
 import app.entity.Categoria;
 import app.entity.Evento;
 import app.entity.Usuario;
-import java.util.List;
+import app.exception.AgendamlgException;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  *
@@ -33,10 +35,14 @@ public class CategoriaFacade extends AbstractFacade<Categoria> {
         super(Categoria.class);
     }
     
-    public List<Categoria> buscarPreferenciasUsuario(Usuario usuario){
-        Query q = this.em.createQuery("select c from Categoria c where :usuario member of c.usuarioList");
-        q.setParameter("usuario", usuario);
-        return (List) q.getResultList();
+    public List<Categoria> buscarPreferenciasUsuario(Usuario usuario) throws AgendamlgException {
+        if(usuario != null) {
+            Query q = this.em.createQuery("select c from Categoria c where :usuario member of c.usuarioList");
+            q.setParameter("usuario", usuario);
+            return (List) q.getResultList();
+        } else {
+            throw new AgendamlgException("El usuario anónimo no tiene preferencias");
+        }
     }
     
     // Devuelve las categorias de un evento dado

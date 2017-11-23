@@ -5,20 +5,15 @@
  */
 package managed;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import servicios.*;
+
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.ws.WebServiceRef;
-import servicios.Agendamlg_Service;
-import servicios.Categoria;
-import servicios.Evento;
-import servicios.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -74,12 +69,13 @@ public class IndexManagedBean {
 
         // Si el usuario ha iniciado sesion
         if (this.usuarioManagedBean.getId() != -1) {
-            List<Categoria> categoriasList = buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId()));
+            try {
+                List<Categoria> categoriasList = buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId()));
 
-            for (Categoria categoria : categoriasList) {
-                this.categoriasInteresado += " <" + categoria.getNombre() + ">";
-            }
-
+                for (Categoria categoria : categoriasList) {
+                    this.categoriasInteresado += " <" + categoria.getNombre() + ">";
+                }
+            } catch(AgendamlgException_Exception ignore) {} //No va a pasar, es un usuario que ha iniciado sesion
         }
 
     }
@@ -110,13 +106,13 @@ public class IndexManagedBean {
 
     // Metodos que obedezcan al filtrado de eventos
     // Mostrar de mi interes
-    public String mostrarDeMiInteres() {
+    public String mostrarDeMiInteres() throws AgendamlgException_Exception {
         this.eventos = buscarEventoCategorias(buscarPreferenciasUsuario(buscarUsuario(usuarioManagedBean.getId())), buscarUsuario(usuarioManagedBean.getId()), this.ordenarPorDistancia, this.dx,this.dy, this.radio);
         return null;
     }
 
     // Mostrar de categorias seleccionadas
-    public String mostrarDeCategoriasSeleccionadas() {
+    public String mostrarDeCategoriasSeleccionadas() throws AgendamlgException_Exception {
         // Si no se han seleccionado categorias se muestran las preferencias de usuario
         Usuario usuarioSesion = buscarUsuario(usuarioManagedBean.getId());
         if (this.seleccionCategorias.isEmpty()) {
@@ -188,7 +184,7 @@ public class IndexManagedBean {
         this.ordenarPorDistancia = ordenarPorDistancia;
     }
 
-    private java.util.List<servicios.Categoria> buscarPreferenciasUsuario(servicios.Usuario usuario) {
+    private java.util.List<servicios.Categoria> buscarPreferenciasUsuario(servicios.Usuario usuario) throws AgendamlgException_Exception {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();

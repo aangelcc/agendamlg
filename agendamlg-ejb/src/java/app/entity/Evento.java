@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author melchor9000
+ * @author john
  */
 @Entity
 @Table(name = "EVENTO")
@@ -44,8 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByFecha", query = "SELECT e FROM Evento e WHERE e.fecha = :fecha")
     , @NamedQuery(name = "Evento.findByPrecio", query = "SELECT e FROM Evento e WHERE e.precio = :precio")
     , @NamedQuery(name = "Evento.findByDireccion", query = "SELECT e FROM Evento e WHERE e.direccion = :direccion")
-    , @NamedQuery(name = "Evento.findByValidado", query = "SELECT e FROM Evento e WHERE e.validado = :validado")
-    , @NamedQuery(name = "Evento.findByLikes", query = "SELECT e FROM Evento e WHERE e.likes = :likes")})
+    , @NamedQuery(name = "Evento.findByValidado", query = "SELECT e FROM Evento e WHERE e.validado = :validado")})
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,10 +85,6 @@ public class Evento implements Serializable {
     @NotNull
     @Column(name = "VALIDADO")
     private short validado;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "LIKES")
-    private int likes;
     @ManyToMany(mappedBy = "eventoList")
     private List<Categoria> categoriaList;
     @JoinColumn(name = "CREADOR", referencedColumnName = "ID")
@@ -103,7 +98,7 @@ public class Evento implements Serializable {
         this.id = id;
     }
 
-    public Evento(Integer id, short tipo, String nombre, String descripcion, Date fecha, String direccion, short validado, int likes) {
+    public Evento(Integer id, short tipo, String nombre, String descripcion, Date fecha, String direccion, short validado) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -111,7 +106,6 @@ public class Evento implements Serializable {
         this.fecha = fecha;
         this.direccion = direccion;
         this.validado = validado;
-        this.likes = likes;
     }
 
     public Integer getId() {
@@ -176,14 +170,6 @@ public class Evento implements Serializable {
 
     public void setValidado(short validado) {
         this.validado = validado;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     @XmlTransient
