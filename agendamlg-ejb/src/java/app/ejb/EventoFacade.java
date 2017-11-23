@@ -247,9 +247,9 @@ public class EventoFacade extends AbstractFacade<Evento> {
                 throw new AgendamlgException("Tipo inválido: " + evento.getTipo());
             }
             if(usuarioQueEdita == null) {
-                throw new AgendamlgException("Usuario anónimo no puede crear eventos");
+                throw new AgendamlgException("Usuario anónimo no puede editar eventos");
             } else if (usuarioQueEdita.getTipo() == 3) {
-                this.actualizarCategoriaEvento(evento/*this.find(evento.getId())*/, categoriasEvento);
+                this.actualizarCategoriaEvento(evento, categoriasEvento);
             } else {
                 throw new AgendamlgException("El usuario '" + usuarioQueEdita.getAlias() + "' no tiene permisos para editar eventos");
             }
@@ -259,29 +259,16 @@ public class EventoFacade extends AbstractFacade<Evento> {
     }
     
     // Este metodo permite actualizar las categorias del evento que se le ofrece
-    private void actualizarCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) {
-        // Desvincular evento de categorias
-        for(Categoria categoria: evento.getCategoriaList()){
-            categoria = categoriaFacade.find(categoria.getId());
-            categoria.getEventoList().remove(evento);
-            categoriaFacade.edit(categoria);
-        }
-
+    private void actualizarCategoriaEvento(Evento evento, List<Categoria> categoriasEvento) throws AgendamlgException {
         //No se puede modificar el creador ni el validado
         Evento original = find(evento.getId());
+        if(original == null) throw new AgendamlgException("El evento original debe existir");
         evento.setCreador(original.getCreador());
         evento.setValidado(original.getValidado());
         
-        evento.getCategoriaList().clear();
+        evento.setCategoriaList(new ArrayList<>());
+        evento.getCategoriaList().addAll(original.getCategoriaList());
         evento.getCategoriaList().addAll(categoriasEvento);
         this.edit(evento);
-        
-        // Añadir evento a las correspondientes categorias
-        for(Categoria categoria: evento.getCategoriaList()){
-            categoria = categoriaFacade.find(categoria.getId());
-            categoria.getEventoList().add(evento);
-            categoriaFacade.edit(categoria);
-        }
-        
     }
 }
