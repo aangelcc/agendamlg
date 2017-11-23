@@ -5,23 +5,27 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Crear Evento</title>
     </h:head>
     <h:body>
+        <h3>Crear un Evento</h3>
         <h:form>
             Tipo: <h:inputText value="#{crearEventoManagedBean.tipo}"></h:inputText> <br/>
             Nombre: <h:inputText value="#{crearEventoManagedBean.nombre}"></h:inputText> <br/>
-            Descripcion: <h:inputText value="#{crearEventoManagedBean.descripcion}"></h:inputText> <br/>
+            Descripcion:<br/> 
+            <h:inputTextarea cols="30" rows="10" value="#{crearEventoManagedBean.descripcion}"></h:inputTextarea> <br/>
             Fecha: <h:inputText p:type="date" value="#{crearEventoManagedBean.fecha}"> 
                 <f:convertDateTime pattern="yyyy-MM-dd"></f:convertDateTime>
             </h:inputText> <br/>
             Precio: <h:inputText value="#{crearEventoManagedBean.precio}"></h:inputText> <br/>
             Direccion: <h:inputText value="#{crearEventoManagedBean.direccion}"></h:inputText> <br/>
             <h:inputHidden value="#{usuarioManagedBean.id}"></h:inputHidden>
-            Categorias: <h:selectManyListbox value="#{crearEventoManagedBean.categoriasSeleccionadas}">
+            Categorias:<br/>
+            <h:selectManyListbox value="#{crearEventoManagedBean.categoriasSeleccionadas}">
                 <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
-            </h:selectManyListbox> <br/>
-            <h:commandButton action="#{crearEventoManagedBean.subirEvento()}" value="Subir"></h:commandButton>
+            </h:selectManyListbox> <br/><br/>
+            <h:commandButton action="#{crearEventoManagedBean.subirEvento()}" value="Subir"></h:commandButton> 
+            <h:link outcome="index">Volver</h:link>
         </h:form>
     </h:body>
 </html>
