@@ -259,10 +259,27 @@ public class EventoFacade extends AbstractFacade<Evento> {
         if(original == null) throw new AgendamlgException("El evento original debe existir");
         evento.setCreador(original.getCreador());
         evento.setValidado(original.getValidado());
+        List<Categoria> categoriasOriginal = original.getCategoriaList();
         
         evento.setCategoriaList(new ArrayList<>());
-        evento.getCategoriaList().addAll(original.getCategoriaList());
         evento.getCategoriaList().addAll(categoriasEvento);
         this.edit(evento);
+
+        //Añadir las categorias nuevas
+        categoriasEvento.stream()
+                .map(categoria -> categoriaFacade.find(categoria.getId()))
+                .filter(categoria -> !categoria.getEventoList().contains(evento))
+                .forEach(categoria -> {
+                    categoria.getEventoList().add(evento);
+                    categoriaFacade.edit(categoria);
+                });
+
+        //Eliminar las viejas
+        categoriasOriginal.stream()
+                .filter(categoria -> !evento.getCategoriaList().contains(categoria))
+                .forEach(categoria -> {
+                    categoria.getEventoList().remove(evento);
+                    categoriaFacade.edit(categoria);
+                });
     }
 }
