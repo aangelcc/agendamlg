@@ -14,7 +14,6 @@ CREATE TABLE Evento (
   precio DECIMAL(9,2),
   direccion VARCHAR(200) NOT NULL,
   validado DECIMAL(1,0) NOT NULL DEFAULT 0,
-  likes INT NOT NULL DEFAULT 0,
   creador INT NOT NULL,
   PRIMARY KEY (id));
 
@@ -30,7 +29,6 @@ CREATE TABLE Usuario (
   apellidos VARCHAR(90) NOT NULL,
   email VARCHAR(45) NOT NULL,
   password VARCHAR(500) NOT NULL,
-  foto INT,
   fechaNacimiento DATE NOT NULL,
   PRIMARY KEY (id));
 
