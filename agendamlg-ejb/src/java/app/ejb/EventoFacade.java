@@ -71,7 +71,6 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public void crearEventoTipoUsuario(Evento evento, List<Categoria> categoriasEvento) throws AgendamlgException {
         try {
             Usuario usuario = evento.getCreador();
-            evento.setLikes(0);
             if(evento.getTipo() < 1 || evento.getTipo() > 3) {
                 throw new AgendamlgException("Tipo inválido: " + evento.getTipo());
             }
