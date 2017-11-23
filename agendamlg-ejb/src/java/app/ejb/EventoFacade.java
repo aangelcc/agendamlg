@@ -253,17 +253,26 @@ public class EventoFacade extends AbstractFacade<Evento> {
             } */
            
            List<Categoria> listaCategorias = categoriasEvento;
-            
+           Evento eventoVerdadero = this.find(evento.getId());
+           
+           // Rellenar debidamente el evento de verdad
+           eventoVerdadero.setDescripcion(evento.getDescripcion());
+           eventoVerdadero.setDireccion(evento.getDireccion());
+           eventoVerdadero.setFecha(evento.getFecha());
+           eventoVerdadero.setNombre(evento.getNombre());
+           eventoVerdadero.setPrecio(evento.getPrecio());
+           eventoVerdadero.setTipo(evento.getTipo());
+           
             if(evento.getTipo() < 1 || evento.getTipo() > 3) {
                 throw new AgendamlgException("Tipo inválido: " + evento.getTipo());
             }
             if (usuario == null) {
                 throw new AgendamlgException("Usuario anónimo no puede crear eventos");
             } else if (usuario.getTipo() == 1) {
-                this.actualizarCategoriaEvento(this.find(evento.getId()), listaCategorias);
+                this.actualizarCategoriaEvento(eventoVerdadero, listaCategorias);
                 // this.edit(evento);
             } else if (usuario.getTipo() > 1) {
-                this.actualizarCategoriaEvento(evento, listaCategorias);
+                this.actualizarCategoriaEvento(eventoVerdadero, listaCategorias);
                 // this.edit(evento);
             }
             //Tenemos que coger el id del evento que se acaba de añadir (yo no sé si esto es thread safe)
