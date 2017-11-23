@@ -98,10 +98,14 @@ public class EventoFacade extends AbstractFacade<Evento> {
         return (int) q.getSingleResult();
     }
 
-    public List<Evento> buscarEventosUsuario(int idUsuario) {
-        Query q = this.em.createQuery("select e from Evento e where e.creador.id=:id");
-        q.setParameter("id", idUsuario);
-        return (List) q.getResultList();
+    public List<Evento> buscarEventosUsuario(Usuario usuario) throws AgendamlgException {
+        if(usuario != null) {
+            Query q = this.em.createQuery("select e from Evento e where e.creador.id=:id");
+            q.setParameter("id", usuario.getId());
+            return (List) q.getResultList();
+        } else {
+            throw new AgendamlgException("No existe ese usuario");
+        }
     }
 
     public List<Evento> buscarEventosTipoUsuario(Usuario usuario) {
@@ -187,12 +191,16 @@ public class EventoFacade extends AbstractFacade<Evento> {
             throw new AgendamlgException("Un usuario anónimo no puede validar eventos");
         } else if(usuario.getTipo() == 3) {
             Evento evento = this.find(idEvento);
-            if (evento.getValidado() == 0) {
-                evento.setValidado((short) 1);
-                enviarCorreoInteresados(evento);
-                enviarCorreoCreador(evento,evento.getCreador());
+            if(evento != null) {
+                if (evento.getValidado() == 0) {
+                    evento.setValidado((short) 1);
+                    enviarCorreoInteresados(evento);
+                    enviarCorreoCreador(evento, evento.getCreador());
+                } else {
+                    throw new AgendamlgException("El evento ya ha sido validado");
+                }
             } else {
-                throw new AgendamlgException("El evento ya ha sido validado");
+                throw new AgendamlgException("No existe un evento con el identificador " + idEvento);
             }
         } else {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para realizar esta acción");
@@ -218,7 +226,11 @@ public class EventoFacade extends AbstractFacade<Evento> {
         if(usuario == null) {
             throw new AgendamlgException("Un usuario anónimo no puede crear eventos");
         } else if(usuario.getTipo() == 3) {
-            remove(find(idEvento));
+            Evento evento = find(idEvento);
+            if(evento == null) {
+                throw new AgendamlgException("No existe el evento con identificador " + idEvento);
+            }
+            remove(evento);
         } else {
             throw new AgendamlgException("El usuario " + usuario.getAlias() + " no tiene permisos para borrar eventos");
         }

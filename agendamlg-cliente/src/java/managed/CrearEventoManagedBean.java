@@ -6,28 +6,21 @@ package managed;
  * and open the template in the editor.
  */
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
+import servicios.*;
+
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
-import servicios.AgendamlgException_Exception;
-import servicios.Agendamlg_Service;
-import servicios.Categoria;
-import servicios.Evento;
-import servicios.Usuario;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 /**
  *
  * @author johncarlo
@@ -162,9 +155,7 @@ public class CrearEventoManagedBean {
         evento.setDireccion(direccion);
         evento.setCreador(buscarUsuario(idCreador));
         
-        this.categoriasSeleccionadas.forEach((i) -> {
-            this.categoriasEvento.add(this.buscarCategoria(Integer.parseInt(i)));
-        });
+        this.categoriasSeleccionadas.forEach((i) -> categoriasEvento.add(this.buscarCategoria(Integer.parseInt(i))));
         
         this.crearEventoTipoUsuario(evento,categoriasEvento);
         return "index";
