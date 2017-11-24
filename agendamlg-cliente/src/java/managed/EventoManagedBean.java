@@ -92,7 +92,7 @@ public class EventoManagedBean implements Serializable{
             return "index?faces-redirect=true";
         } catch (AgendamlgException_Exception e) {
             mensajeDeError = e.getMessage() + ".";
-            return null;
+            return "index?faces-redirect=true";
         }
     }
 

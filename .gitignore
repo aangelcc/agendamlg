@@ -45,3 +45,4 @@ agendamlg-test/catalog.xml
 agendamlg-test/conf/
 agendamlg-test/web/WEB-INF/jax-ws-catalog.xml
 agendamlg-test/web/WEB-INF/wsdl/
+/agendamlg-test/dist/

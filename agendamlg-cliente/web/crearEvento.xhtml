@@ -6,27 +6,62 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Crear Evento</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"></link>
     </h:head>
     <h:body>
-        <h3>Crear un Evento</h3>
-        <h:form>
-            Tipo: <h:inputText value="#{crearEventoManagedBean.tipo}"></h:inputText> <br/>
-            Nombre: <h:inputText value="#{crearEventoManagedBean.nombre}"></h:inputText> <br/>
-            Descripcion:<br/> 
-            <h:inputTextarea cols="30" rows="10" value="#{crearEventoManagedBean.descripcion}"></h:inputTextarea> <br/>
-            Fecha: <h:inputText p:type="date" value="#{crearEventoManagedBean.fecha}"> 
-                <f:convertDateTime pattern="yyyy-MM-dd"></f:convertDateTime>
-            </h:inputText> <br/>
-            Precio: <h:inputText value="#{crearEventoManagedBean.precio}"></h:inputText> <br/>
-            Direccion: <h:inputText value="#{crearEventoManagedBean.direccion}"></h:inputText> <br/>
-            <h:inputHidden value="#{usuarioManagedBean.id}"></h:inputHidden>
-            Categorias:<br/>
-            <h:selectManyListbox value="#{crearEventoManagedBean.categoriasSeleccionadas}">
-                <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
-            </h:selectManyListbox> <br/><br/>
-            <h:commandButton action="#{crearEventoManagedBean.subirEvento()}" value="Subir"></h:commandButton> 
-            <h:link outcome="index">Volver</h:link>
-        </h:form>
+        <div class="container" style="margin-top: 2%; background-color: #f9f9f9; padding: 4%">
+            <h1>Creando evento</h1>
+            <hr></hr>
+            <h:form>
+                <div class="form-group">
+                    <label for="tipoEvento">Tipo de evento</label>
+                    <h:selectOneMenu styleClass="form-control" id="tipoEvento" value="#{crearEventoManagedBean.tipo}">
+                        <f:selectItem itemValue="0" itemLabel="Selecciona un tipo" itemDisabled="true" />
+                        <f:selectItem itemValue="1" itemLabel="Una vez" />
+                        <f:selectItem itemValue="2" itemLabel="Recurrente" />
+                        <f:selectItem itemValue="3" itemLabel="Persistente" />
+                    </h:selectOneMenu>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombreEvento">Nombre</label>
+                    <h:inputText styleClass="form-control" id="nombreEvento" value="#{crearEventoManagedBean.nombre}"></h:inputText>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventoDescripcion">Descripcion</label>
+                    <h:inputTextarea id="eventoDescripcion" styleClass="form-control" cols="30" rows="10" value="#{crearEventoManagedBean.descripcion}"></h:inputTextarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventoFecha">Fecha</label>
+                    <h:inputText id="eventoFecha" styleClass="form-control" p:type="datetime-local" value="#{crearEventoManagedBean.eventoFecha}"> 
+                        <f:convertDateTime pattern="yyyy-MM-dd'T'HH:mm:ss"/>
+                    </h:inputText>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventoPrecio">Precio (€)</label>
+                    <h:inputText id="eventoPrecio" styleClass="form-control" value="#{crearEventoManagedBean.precio}"></h:inputText>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventoDireccion">Direccion (<b>x</b>,<b>y</b>, <b>calle...etc</b>)</label>
+                    <h:inputText id="eventoDireccion" styleClass="form-control" value="#{crearEventoManagedBean.direccion}"></h:inputText>
+                    <h:inputHidden value="#{usuarioManagedBean.id}"></h:inputHidden>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoriasSeleccionadas">Categorias</label>
+                    <h:selectManyListbox id="categoriasSeleccionadas" styleClass="form-control" value="#{crearEventoManagedBean.categoriasSeleccionadas}">
+                        <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
+                    </h:selectManyListbox>
+                </div>
+
+                <h:link styleClass="btn btn-outline-success" outcome="index">Volver</h:link>
+                <h:commandButton styleClass="btn btn-primary" style="margin-left: 1%;" action="#{crearEventoManagedBean.subirEvento()}" value="Subir"></h:commandButton> 
+            </h:form>
+        </div>
     </h:body>
 </html>
 

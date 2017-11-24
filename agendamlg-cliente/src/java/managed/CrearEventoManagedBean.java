@@ -38,14 +38,16 @@ public class CrearEventoManagedBean {
     private short tipo;
     private String nombre;
     private String descripcion;
-    private String fecha;
     private BigDecimal precio;
     private String direccion;
     private int idCreador;
     private List<Categoria> categorias;
     private List<Categoria> categoriasEvento = new ArrayList<>();
     private List<String> categoriasSeleccionadas = new ArrayList<>();
-
+    // Evento que se esta creando en cuestion
+    private Evento eventoCreacion;
+    
+    
     public List<String> getCategoriasSeleccionadas() {
         return categoriasSeleccionadas;
     }
@@ -102,14 +104,6 @@ public class CrearEventoManagedBean {
         this.descripcion = descripcion;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     public BigDecimal getPrecio() {
         return precio;
     }
@@ -136,20 +130,23 @@ public class CrearEventoManagedBean {
     public void init() {
        this.setIdCreador(usuarioManagedBean.getId());
        this.categorias = this.buscarTodasLasCategorias();
+       this.eventoCreacion = new Evento();
     }
     
     public String subirEvento() throws ParseException, DatatypeConfigurationException, AgendamlgException_Exception{
-        Evento evento = new Evento();
+        Evento evento = this.eventoCreacion;
         evento.setTipo(tipo);
         evento.setNombre(nombre);
         evento.setDescripcion(descripcion);
         
+        /* 
+        La asognacion de fecha y hora se hace ahora en el correspondiente setter
         DateFormat format = new SimpleDateFormat( "EEE MMM dd HH:mm:ss z yyyy", Locale.US);
         Date date = format.parse(fecha);
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
         XMLGregorianCalendar xmlGregCal =  DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
-        evento.setFecha(xmlGregCal);
+        evento.setFecha(xmlGregCal); */
         
         evento.setPrecio(precio);
         evento.setDireccion(direccion);
@@ -158,7 +155,7 @@ public class CrearEventoManagedBean {
         this.categoriasSeleccionadas.forEach((i) -> categoriasEvento.add(this.buscarCategoria(Integer.parseInt(i))));
         
         this.crearEventoTipoUsuario(evento,categoriasEvento);
-        return "index";
+        return "index?faces-redirect=true";
     }
     
     private Usuario buscarUsuario(java.lang.Object id) {
@@ -189,5 +186,19 @@ public class CrearEventoManagedBean {
         port.crearEventoTipoUsuario(evento, categoriasEvento);
     }
     
+    // Getter y setter de fecha
+    public Date getEventoFecha() {
+    return new Date();   
+    }
+
+    public void setEventoFecha(Date date) throws DatatypeConfigurationException {
+        if(date != null) {
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(date);
+            this.eventoCreacion.setFecha(DatatypeFactory.newInstance().newXMLGregorianCalendar(gc));
+        } else {
+            this.eventoCreacion.setFecha(null);
+        }
+    }
     
 }
