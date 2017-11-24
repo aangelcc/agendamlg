@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+                        <ui:fragment rendered="#{usuarioManagedBean.id != -1 and not empty indexManagedBean.categoriasInteresado}">
                             <h3>Mostrar eventos de mi preferencia (mis categorias favoritas)</h3>
                             <p>Estás interesado en las siguientes categorías: #{indexManagedBean.categoriasInteresado}</p>
                             <h:commandButton value="Mostrar eventos de mi preferencia" action="#{indexManagedBean.mostrarDeMiInteres()}" styleClass="btn btn-success" />
