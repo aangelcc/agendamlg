@@ -17,6 +17,8 @@ import javax.xml.ws.WebServiceRef;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.List;
+import servicios.Categoria;
 
 /**
  *
@@ -35,6 +37,7 @@ public class EventoManagedBean implements Serializable{
     private String mensajeDeError = null;
     
     private Evento evento = new Evento();
+    private List<Categoria> categorias;
 
     public Evento getEvento() {
         return evento;
@@ -52,11 +55,13 @@ public class EventoManagedBean implements Serializable{
     
     public String ver(Evento evento){
         this.evento = evento;
+        this.categorias = this.obtenerCategoriasEvento(evento);
         return "evento";
     }
     
     public String subirEvento(){
         this.evento=this.buscarEvento(this.evento.getId());
+        this.categorias = this.obtenerCategoriasEvento(evento);
         try {
             this.validarEvento(this.evento.getId(), this.usuarioManagedBean.getId());
         } catch(AgendamlgException_Exception other) {
@@ -65,6 +70,14 @@ public class EventoManagedBean implements Serializable{
             mensajeDeError = "Ha habido un error interno al validar el evento.";
         }
         return "evento";
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
     
     
@@ -113,6 +126,13 @@ public class EventoManagedBean implements Serializable{
         // If the calling of port operations may lead to race condition some synchronization is required.
         servicios.Agendamlg port = service.getAgendamlgPort();
         port.eliminarEvento(usuarioManagedBean.getId(), entity);
+    }
+
+    private java.util.List<servicios.Categoria> obtenerCategoriasEvento(servicios.Evento evento) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicios.Agendamlg port = service.getAgendamlgPort();
+        return port.obtenerCategoriasEvento(evento);
     }
 
 }

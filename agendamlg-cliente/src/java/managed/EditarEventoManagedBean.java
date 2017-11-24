@@ -29,7 +29,7 @@ import java.util.List;
 @Named(value = "editarEventoManagedBean")
 // Es viewscoped para poder mantener adecuadamente los valores del formulario
 @RequestScoped
-public class editarEventoManagedBean {
+public class EditarEventoManagedBean {
 
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/Agendamlg/Agendamlg.wsdl")
     private Agendamlg_Service service;

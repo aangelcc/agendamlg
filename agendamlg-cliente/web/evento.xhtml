@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>#{eventoManagedBean.evento.nombre}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -34,6 +35,17 @@
             <hr/>
             <h5>Fecha:</h5>
             #{eventoManagedBean.evento.fecha}
+            <hr/>
+            
+            <h5>Categorías del Evento:</h5>
+            <h:dataTable value="#{eventoManagedBean.categorias}" var="categoria" styleClass="table table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        Nombre
+                    </f:facet>
+                    #{categoria.nombre}
+                </h:column>
+            </h:dataTable>
             <hr/>
 
             <h:inputHidden value="#{eventoManagedBean.evento.id}" />
