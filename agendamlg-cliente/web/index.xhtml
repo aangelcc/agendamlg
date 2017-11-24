@@ -3,91 +3,135 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Listado de Eventos</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+        <style type="text/css">
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #eee;
+            }
+        </style>
     </h:head>
     <h:body>
-        <ui:fragment rendered="#{usuarioManagedBean.id == -1}">
-            <h:link outcome="login">Iniciar Sesion</h:link>
-            <br/>
-        </ui:fragment>
-        <h:form>
-        <h:commandLink action="#{usuarioManagedBean.cerrarSesion()}" rendered="#{usuarioManagedBean.id != -1}" value="Cerrar Sesion" />
-        </h:form>
-        <h:form>
-            <hr/>
-            <h3>Si lo deseas, introduce una ubicación (coordenadas cartesianas) y un radio en torno a ella en el cual buscar eventos</h3>
-            <p><strong>Serán ordenados de más cercano a más lejano, si no se escoge esta ordenación la ordenación por defecto es de más próximo a más lejano</strong></p>
-            <h:selectBooleanCheckbox value="#{indexManagedBean.ordenarPorDistancia}" /> Ordenar por distancia <br/>
-            <strong>Posición:</strong><br/>
-            X: <h:inputText value="#{indexManagedBean.dx}" /> <strong>,</strong> Y: <h:inputText value="#{indexManagedBean.dy}" />
-            <br/><br/>
-            Radio: <h:inputText value="#{indexManagedBean.radio}" /> Unidades 
-            <hr/>
-            
-            <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
-            <h3>Mostrar eventos de mi preferencia (mis categorias favoritas)</h3>
-            <p>Estás interesado en las siguientes categorías: #{indexManagedBean.categoriasInteresado}</p>
-            <h:commandButton value="Mostrar eventos de mi preferencia" action="#{indexManagedBean.mostrarDeMiInteres()}" />
-            </ui:fragment>
-            
-            <h3>Mostrar eventos de las categorias que selecciones</h3>
-            <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
-                <p>
-                    Si no seleccionas ninguna se mostrarán los eventos de tu preferencia
-                </p>
-            </ui:fragment>
-            <h:selectManyListbox value="#{indexManagedBean.seleccionCategorias}">
-                <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
-            </h:selectManyListbox>
-            <br/>
-            #{indexManagedBean.categoriasSeleccionadasString}
-            <br/>
-            <h:commandButton value="Mostrar de categorias seleccionadas" action="#{indexManagedBean.mostrarDeCategoriasSeleccionadas()}" />
-            <br/>
-            <h:commandButton value="Mostrar todos los eventos" action="#{indexManagedBean.mostrarTodosLosEventos()}"></h:commandButton>
-            <hr/>
-        </h:form>
-        <h3>Lista de Eventos</h3>
-        <h:form>
-        <h:dataTable value="#{indexManagedBean.eventos}" var="evento">
-            <h:column>
-                ${evento.validado==0?"*":""}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Nombre
-                </f:facet>
-                ${evento.nombre}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Direccion
-                </f:facet>
-                ${evento.direccion}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Fecha
-                </f:facet>
-                ${evento.fecha}
-            </h:column>
-            <h:column>
-                    <h:commandLink action="#{eventoManagedBean.ver(evento)}" value="Ver" />
-                    <ui:fragment rendered="#{usuarioManagedBean.periodista}">
-                        <h:commandButton action="#{usuarioManagedBean.editarEvento(evento)}" value="Editar"></h:commandButton>
-                        <h:commandButton action="#{eventoManagedBean.borrarEvento(evento)}" value="Borrar"></h:commandButton>
+        <div class="container">
+            <div class="clearfix">
+                <div class="float-left">
+                    <ui:fragment rendered="#{usuarioManagedBean.id == -1}">
+                        <h:link outcome="login" styleClass="btn btn-primary btn-sm">Iniciar Sesion</h:link>
                     </ui:fragment>
-            </h:column>
-        </h:dataTable>
-        </h:form>
-        <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
-            <p>
-                <h:link outcome="perfil">Ver Perfil</h:link> -
-                <h:link outcome="crearEvento">Subir Evento</h:link>
-            </p>
-        </ui:fragment>
+                    <h:form>
+                        <h:commandLink action="#{usuarioManagedBean.cerrarSesion()}" rendered="#{usuarioManagedBean.id != -1}" value="Cerrar Sesion" styleClass="btn btn-warning btn-sm" />
+                    </h:form>
+                </div>
+                <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+                    <div class="float-right">
+                        <h:link outcome="perfil" styleClass="btn btn-link btn-sm">Ver Perfil</h:link>&nbsp;
+                        <h:link outcome="crearEvento" styleClass="btn btn-link btn-sm">Subir Evento</h:link>
+                    </div>
+                </ui:fragment>
+            </div>
+            <hr/>
+            <h:form>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3>Si lo deseas, introduce una ubicación (coordenadas cartesianas) y un radio en torno a ella en el cual buscar eventos</h3>
+                        <p><strong>Serán ordenados de más cercano a más lejano, si no se escoge esta ordenación la ordenación por defecto es de más próximo a más lejano</strong></p>
+                        <div class="row">
+                            <label for="ordenarPorDistancia" class="col-sm-12 col-form-label form-check-label">
+                                <h:selectBooleanCheckbox value="#{indexManagedBean.ordenarPorDistancia}" id="ordenarPorDistancia" styleClass="form-check-input" />
+                                Ordenar por distancia
+                            </label>
+                            <div class="col-12 row">
+                                <div class="col-12"><label><strong>Posición</strong></label></div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">X</div>
+                                        <h:inputText p:type="number" p:min="-180" p:max="180" p:step="0.00001" id="x" value="#{indexManagedBean.dx}" styleClass="form-control" />
+                                        <div class="input-group-addon">º</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Y</div>
+                                        <h:inputText p:type="number" p:min="-90" p:max="90" p:step="0.00001" id="y" value="#{indexManagedBean.dy}" styleClass="form-control" />
+                                        <div class="input-group-addon">º</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 row">
+                                <div class="col-12"><label for="radio"><strong>Radio</strong></label></div>
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <h:inputText p:type="number" p:min="0" p:step="0.0001" value="#{indexManagedBean.radio}" id="radio" styleClass="form-control" />
+                                        <div class="input-group-addon">Unidades</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+                            <h3>Mostrar eventos de mi preferencia (mis categorias favoritas)</h3>
+                            <p>Estás interesado en las siguientes categorías: #{indexManagedBean.categoriasInteresado}</p>
+                            <h:commandButton value="Mostrar eventos de mi preferencia" action="#{indexManagedBean.mostrarDeMiInteres()}" styleClass="btn btn-success" />
+                        </ui:fragment>
+
+                        <h3>Mostrar eventos de las categorias que selecciones</h3>
+                        <ui:fragment rendered="#{usuarioManagedBean.id != -1}">
+                            <p>
+                                Si no seleccionas ninguna se mostrarán los eventos de tu preferencia
+                            </p>
+                        </ui:fragment>
+                        <h:selectManyListbox value="#{indexManagedBean.seleccionCategorias}" styleClass="form-control">
+                            <f:selectItems value="#{crearEventoManagedBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria.id}" />
+                        </h:selectManyListbox>
+                        <br />
+                        <h:commandButton value="Mostrar de categorias seleccionadas" action="#{indexManagedBean.mostrarDeCategoriasSeleccionadas()}" styleClass="btn btn-success" />
+                        &nbsp;
+                        <h:commandButton value="Mostrar todos los eventos" action="#{indexManagedBean.mostrarTodosLosEventos()}" styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </h:form>
+            <hr/>
+            <h3>Lista de Eventos</h3>
+            <h:form>
+                <h:dataTable value="#{indexManagedBean.eventos}" var="evento" styleClass="table table-hover table-sm">
+                    <h:column>
+                        ${evento.validado==0?"*":""}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Nombre
+                        </f:facet>
+                        ${evento.nombre}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Direccion
+                        </f:facet>
+                        ${evento.direccion}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Fecha
+                        </f:facet>
+                        ${eventoManagedBean.getFechaDeFormaBonita(evento)}
+                    </h:column>
+                    <h:column>
+                        <h:commandLink action="#{eventoManagedBean.ver(evento)}" value="Ver" styleClass="btn btn-primary btn-sm" />&nbsp;
+                        <ui:fragment rendered="#{usuarioManagedBean.periodista}">
+                            <h:commandButton action="#{usuarioManagedBean.editarEvento(evento)}" value="Editar" styleClass="btn btn-warning btn-sm" />
+                            &nbsp;
+                            <h:commandButton action="#{eventoManagedBean.borrarEvento(evento)}" value="Borrar" styleClass="btn btn-danger btn-sm" />
+                        </ui:fragment>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

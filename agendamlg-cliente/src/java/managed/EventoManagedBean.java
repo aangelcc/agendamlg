@@ -12,8 +12,11 @@ import servicios.Evento;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -95,6 +98,14 @@ public class EventoManagedBean implements Serializable{
 
     public String getMensajeDeError() {
         return mensajeDeError;
+    }
+
+    public String getFechaDeFormaBonita(Evento e) {
+        XMLGregorianCalendar calendar = e.getFecha();
+        GregorianCalendar gregorianCalendar = calendar.toGregorianCalendar();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
+        sdf.setCalendar(gregorianCalendar);
+        return sdf.format(gregorianCalendar.getTime());
     }
 
     private void eliminarEvento(servicios.Evento entity) throws AgendamlgException_Exception {
