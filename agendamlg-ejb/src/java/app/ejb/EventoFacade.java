@@ -129,13 +129,23 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
         Date ahora = new Date(System.currentTimeMillis());
         if (usuario != null && usuario.getTipo() == 3) {
-            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy ORDER BY e.fecha ASC");
-            q.setParameter("categorias", categorias);
+            Query q;
+            if(categorias != null && categorias.size() > 0) {
+                q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy ORDER BY e.fecha ASC");
+                q.setParameter("categorias", categorias);
+            } else {
+                q = em.createQuery("SELECT e FROM Evento e WHERE e.fecha > :hoy ORDER BY e.fecha ASC");
+            }
             q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             listaEventos = q.getResultList();
         } else {
-            Query q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy and e.validado = 1 ORDER BY e.fecha ASC");
-            q.setParameter("categorias", categorias);
+            Query q;
+            if(categorias != null && categorias.size() > 0) {
+                q = this.em.createQuery("select e from Evento e join e.categoriaList c where c in :categorias and e.fecha > :hoy and e.validado = 1 ORDER BY e.fecha ASC");
+                q.setParameter("categorias", categorias);
+            } else {
+                q = em.createQuery("SELECT e FROM Evento e WHERE e.fecha > :hoy AND e.validado = 1 ORDER BY e.fecha ASC");
+            }
             q.setParameter("hoy", ahora, TemporalType.TIMESTAMP);
             listaEventos = q.getResultList();
         }
