@@ -40,3 +40,8 @@ agendamlg-cliente/src/conf/xml-resources/web-service-references/Agendamlg/wsdl/l
 agendamlg-cliente/src/conf/xml-resources/web-service-references/Agendamlg/wsdl/localhost_8080/Agendamlg/Agendamlg.xsd_1.xsd
 agendamlg-cliente/web/WEB-INF/wsdl/localhost_8080/Agendamlg/Agendamlg.wsdl
 agendamlg-cliente/web/WEB-INF/wsdl/localhost_8080/Agendamlg/Agendamlg.xsd_1.xsd
+
+agendamlg-test/catalog.xml
+agendamlg-test/conf/
+agendamlg-test/web/WEB-INF/jax-ws-catalog.xml
+agendamlg-test/web/WEB-INF/wsdl/
