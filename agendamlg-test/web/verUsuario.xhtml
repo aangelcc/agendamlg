@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{usuarioBean.usuario.id}"/>
+        <f:event type="preRenderView" listener="#{usuarioBean.parametrosxD()}" />
+    </f:metadata>
+
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+        <title>Resultados de búsqueda para Usuarios - Agendamlg Tester</title>
+        <base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/" />
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <h1 class="display-1">Agendamlg Tester</h1>
+            <h2>Ver usuarios</h2>
+            <ui:repeat value="#{usuarioBean.rusuarios}" var="usuario">
+                <div class="row">
+                    <div class="col-sm-2 text-right">id</div>
+                    <div class="col-sm-10">#{usuario.id}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">tipo</div>
+                    <div class="col-sm-10">#{usuarioBean.mostrarTipo(usuario)}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">alias</div>
+                    <div class="col-sm-10">#{usuario.alias}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">nombre</div>
+                    <div class="col-sm-10">#{usuario.nombre}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">apellidos</div>
+                    <div class="col-sm-10">#{usuario.apellidos}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">email</div>
+                    <div class="col-sm-10">#{usuario.email}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">password</div>
+                    <div class="col-sm-10">#{usuario.password}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Fecha de nacimiento</div>
+                    <div class="col-sm-10">#{usuario.fechanacimiento}</div>
+                </div>
+                <hr/>
+            </ui:repeat>
+            <ui:fragment id="evento-error" rendered="#{empty usuarioBean.rusuarios}">
+                <div class="alert alert-danger" role="alert">
+                    No se ha encontrado ningún usuario con esos parámetros de búsqueda.
+                </div>
+            </ui:fragment>
+            <div class="form-group">
+                <a href="#{usuarioBean.htmlId}" class="btn btn-primary">Volver</a>
+            </div>
+        </div>
+    </h:body>
+</html>

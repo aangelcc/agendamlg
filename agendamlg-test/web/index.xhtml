@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Agendamlg Tester</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+        <style type="text/css">
+            .soap-entry {
+                margin-top: 10px;
+                margin-bottom: 70px;
+            }
+
+            .soap-entry:last-of-type {
+                margin-bottom: 200px;
+            }
+        </style>
+    </h:head>
+    <h:body p:data-spy="scroll" p:data-target="#navbar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1 class="display-1" id="top">Agendamlg Tester</h1>
+
+                    <div id="section-evento">
+                        <h1>Evento</h1>
+
+                        <div class="soap-entry">
+                            <h2 id="eliminarEvento">void eliminarEvento(int, Evento)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="eliminarEvento-evento" class="col-sm-2 col-form-label">Selecciona</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{eventoBean.evento.id}" styleClass="form-control" id="eliminarEvento-evento">
+                                            <f:selectItem itemLabel="Seleccione uno" itemDisabled="true" />
+                                            <f:selectItems value="#{eventoBean.eventosDesdeServicio}" var="evento" itemValue="#{evento.id}" itemLabel="[#{evento.id}] #{evento.nombre}" />
+                                            <f:selectItem itemLabel="Evento inválido (va a fallar)" itemValue="0" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="eliminarEvento-usuario" class="col-sm-2 col-form-label">Usuario</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="eliminarEvento-usuario">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido (va a fallar)" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.eliminarEvento(usuarioBean.usuario)}">
+                                            Borrar
+                                        </button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarEvento">Evento? buscarEvento(Object)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarEvento-id" class="col-sm-2 col-form-label">ID</label>
+                                    <div class="col-sm-8">
+                                        <input type="number"
+                                               id="buscarEvento-id"
+                                               class="form-control"
+                                               min="0"
+                                               placeholder="ID del evento"
+                                               jsf:value="#{eventoBean.evento.id}" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.buscarEvento()}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarTodosLosEventos">List&lt;Evento&gt; buscarTodosLosEventos()</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.buscarTodosLosEventos()}">Buscar todos</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarEventosUsuario">List&lt;Evento&gt; buscarEventosUsuario(int)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarEventosUsuario-usuario" class="col-sm-2 col-form-label">Usuario</label>
+                                    <div class="col-sm-8">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="buscarEventosUsuario-usuario">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido (va a fallar)" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.buscarEventosUsuario(usuarioBean.usuario)}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarEventosTipoUsuario">List&lt;Evento&gt; buscarEventosTipoUsuario(int)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarEventosTipoUsuario-usuario" class="col-sm-2 col-form-label">Usuario</label>
+                                    <div class="col-sm-8">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="buscarEventosTipoUsuario-usuario">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo o inexistente" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.buscarEventosTipoUsuario(usuarioBean.usuario)}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="validarEvento">void validarEvento(int, int)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <div class="col-sm-5">
+                                        <h:selectOneMenu value="#{eventoBean.eventoId}" styleClass="form-control" id="validarEvento-evento">
+                                            <f:selectItem itemValue="0" itemLabel="Evento inválido (va a fallar)" />
+                                            <f:selectItems value="#{eventoBean.eventosDesdeServicio}" var="evento" itemValue="#{evento.id}" itemLabel="[#{evento.id}] #{evento.nombre}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="validarEvento-usuario">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido (va a fallar)" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.validarEvento(eventoBean.evento, usuarioBean.usuario)}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="crearEventoTipoUsuario">void crearEventoTipoUsuario(Evento, List&lt;Categoria&gt;)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-tipo" class="col-sm-2 col-form-label">Tipo</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{eventoBean.evento.tipo}" styleClass="form-control" id="crearEventoTipoUsuario-tipo">
+                                            <f:selectItem itemValue="0" itemLabel="Selecciona un tipo" itemDisabled="true" />
+                                            <f:selectItem itemValue="1" itemLabel="Una vez" />
+                                            <f:selectItem itemValue="2" itemLabel="Recurrente" />
+                                            <f:selectItem itemValue="3" itemLabel="Persistente" />
+                                            <f:selectItem itemValue="4" itemLabel="Tipo inválido (va a fallar)" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-nombre" class="col-sm-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" id="crearEventoTipoUsuario-nombre" jsf:value="#{eventoBean.evento.nombre}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="crearEventoTipoUsuario-descripcion">Descripcion</label>
+                                    <h:inputTextarea styleClass="form-control" id="crearEventoTipoUsuario-descripcion" value="#{eventoBean.evento.descripcion}" />
+                                </div>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-fecha" class="col-sm-2 col-form-label">Fecha</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="datetime-local" id="crearEventoTipoUsuario-fecha" jsf:value="#{eventoBean.eventoFecha}" placeholder="aaaa-MM-ddThh:mm:ss">
+                                            <f:convertDateTime pattern="yyyy-MM-dd'T'HH:mm:ss"/>
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-precio" class="col-sm-2 col-form-label">Precio (?)</label>
+                                    <div class="col-sm-10 input-group">
+                                        <input class="form-control" type="number" id="crearEventoTipoUsuario-precio" jsf:value="#{eventoBean.evento.precio}" min="0" step="0.01" />
+                                        <div class="input-group-addon">€</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-direccion" class="col-sm-2 col-form-label">Dirección</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" id="crearEventoTipoUsuario-direccion" jsf:value="#{eventoBean.evento.direccion}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-creador" class="col-sm-2 col-form-label">Creador</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="crearEventoTipoUsuario-creador">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido (va a fallar)" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="crearEventoTipoUsuario-categorias" class="col-sm-2 col-form-label">Categorias</label>
+                                    <div class="col-sm-10">
+                                        <h:selectManyMenu value="#{categoriaBean.categoriasId}" styleClass="form-control" id="crearEventoTipoUsuario-categorias">
+                                            <f:selectItems value="#{categoriaBean.categoriasDesdeElServicio}" var="categoria" itemValue="#{categoria.id}" itemLabel="#{categoria.nombre}" />
+                                        </h:selectManyMenu>
+                                    </div>
+                                </div>
+                                <div class="form-check row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.crearEventoTipoUsuario(eventoBean.evento, usuarioBean.usuario, categoriaBean.categorias)}">Crear</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="editarEvento">void editarEvento(Evento)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="editarEvento-seleccionar" class="col-sm-2 col-form-label">Selecciona</label>
+                                    <div class="col-sm-8">
+                                        <h:selectOneMenu value="#{eventoBean.evento.id}" styleClass="form-control" id="editarEvento-seleccionar">
+                                            <f:selectItem itemLabel="Seleccione uno" itemDisabled="true" />
+                                            <f:selectItems value="#{eventoBean.eventosDesdeServicio}" var="evento" itemValue="#{evento.id}" itemLabel="[#{evento.id}] #{evento.nombre}" />
+                                            <f:selectItem itemValue="0" itemLabel="Evento inválido (va a fallar)" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.prepararEdicion()}">
+                                            Editar
+                                            <f:ajax render=":editarEvento-form" execute="@form" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </h:form>
+                            <h:form id="editarEvento-form" styleClass="#{eventoBean.eventoEnEdicion.id != null ? 'd-block' : 'd-none'}">
+                                <input type="hidden" jsf:value="#{eventoBean.eventoEnEdicion.id}" />
+                                <div class="form-group row">
+                                    <label for="editarEvento-tipo" class="col-sm-2 col-form-label">Tipo</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{eventoBean.eventoEnEdicion.tipo}" styleClass="form-control" id="editarEvento-tipo">
+                                            <f:selectItem itemValue="0" itemLabel="Selecciona un tipo" itemDisabled="true" />
+                                            <f:selectItem itemValue="1" itemLabel="Una vez" />
+                                            <f:selectItem itemValue="2" itemLabel="Recurrente" />
+                                            <f:selectItem itemValue="3" itemLabel="Persistente" />
+                                            <f:selectItem itemValue="4" itemLabel="Tipo inválido (va a fallar)" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-nombre" class="col-sm-2 col-form-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" id="editarEvento-nombre" jsf:value="#{eventoBean.eventoEnEdicion.nombre}" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editarEvento-descripcion">Descripcion</label>
+                                    <h:inputTextarea styleClass="form-control" id="editarEvento-descripcion" value="#{eventoBean.eventoEnEdicion.descripcion}" />
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-fecha" class="col-sm-2 col-form-label">Fecha</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="datetime-local" id="editarEvento-fecha" jsf:value="#{eventoBean.eventoEnEdicionFecha}" placeholder="aaaa-MM-ddThh:mm:ss">
+                                            <f:convertDateTime pattern="yyyy-MM-dd'T'HH:mm:ss"/>
+                                        </input>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-precio" class="col-sm-2 col-form-label">Precio (?)</label>
+                                    <div class="col-sm-10 input-group">
+                                        <input class="form-control" type="number" id="editarEvento-precio" jsf:value="#{eventoBean.eventoEnEdicion.precio}" min="0" step="0.01" />
+                                        <div class="input-group-addon">€</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-direccion" class="col-sm-2 col-form-label">Dirección</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" id="editarEvento-direccion" jsf:value="#{eventoBean.eventoEnEdicion.direccion}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-creador" class="col-sm-2 col-form-label">Creador</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{eventoBean.eventoEnEdicion.creador.id}" styleClass="form-control" id="editarEvento-creador">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-categorias" class="col-sm-2 col-form-label">Categorias</label>
+                                    <div class="col-sm-10">
+                                        <h:selectManyMenu value="#{categoriaBean.categoriasId}" styleClass="form-control" id="editarEvento-categorias">
+                                            <f:selectItems value="#{categoriaBean.categoriasDesdeElServicio}" var="categoria" itemValue="#{categoria.id}" itemLabel="#{categoria.nombre}" />
+                                        </h:selectManyMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="editarEvento-editor" class="col-sm-2 col-form-label">Editor</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="editarEvento-editor">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido (va a fallar)" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-check row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.editarEvento(eventoBean.eventoEnEdicion, usuarioBean.usuario, categoriaBean.categorias)}">
+                                            Guardar edición
+                                            <f:ajax render="@form" execute="@form" />
+                                        </button>
+                                        &nbsp;
+                                        <button class="btn btn-secondary" jsf:action="#{eventoBean.deshacerEditarEvento()}">
+                                            Cancelar edición
+                                            <f:ajax render="@form" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarEventoCategorias">List&lt;Evento&gt; buscarEventoCategorias(List&lt;Categoria&gt;, Usuario?, boolean, double, double, double)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarEventoCategorias-categorias" class="col-sm-2 col-form-label">Categorias</label>
+                                    <div class="col-sm-10">
+                                        <h:selectManyMenu value="#{categoriaBean.categoriasId}" styleClass="form-control" id="buscarEventoCategorias-categorias">
+                                            <f:selectItems value="#{categoriaBean.categoriasDesdeElServicio}" var="categoria" itemValue="#{categoria.id}" itemLabel="#{categoria.nombre}" />
+                                        </h:selectManyMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="buscarEventoCategorias-creador" class="col-sm-2 col-form-label">Usuario</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="buscarEventoCategorias-creador">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo (null)" />
+                                            <f:selectItem itemValue="0" itemLabel="Usuario inválido" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <label for="buscarEventoCategorias-filtroCercania" class="col-sm-2 col-form-label">
+                                        <input type="checkbox" jsf:value="#{eventoBean.filtroCercania}" class="form-check-input" id="buscarEventoCategorias-filtroCercania" />
+                                        ¿Por cercania?
+                                    </label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <div class="input-group mb-2 mb-sm-0">
+                                            <div class="input-group-addon">Long</div>
+                                            <input type="number" jsf:value="#{eventoBean.x}" class="form-control" step="0.000000001" min="-180" max="180" placeholder="Longitud" />
+                                            <div class="input-group-addon">º</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group mb-2 mb-sm-0">
+                                            <div class="input-group-addon">Lat</div>
+                                            <input type="number" jsf:value="#{eventoBean.y}" class="form-control" step="0.000000001" min="-90" max="90" placeholder="Latitud" />
+                                            <div class="input-group-addon">º</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group mb-2 mb-sm-0">
+                                            <div class="input-group-addon">Radio</div>
+                                            <input type="number" jsf:value="#{eventoBean.radio}" class="form-control" step="0.01" min="0" placeholder="Radio (Km)" />
+                                            <div class="input-group-addon">Km</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-check row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{eventoBean.buscarEventoCategorias(categoriaBean.categorias, usuarioBean.usuario)}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <div id="section-usuario">
+                        <h1>Usuario</h1>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarUsuario">Usuario? buscarUsuario(Object)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarUsuario-id" class="col-sm-2 col-form-label">ID</label>
+                                    <div class="col-sm-8">
+                                        <input type="number"
+                                               id="buscarUsuario-id"
+                                               class="form-control"
+                                               min="0"
+                                               placeholder="ID del usuario"
+                                               jsf:value="#{usuarioBean.usuario.id}" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{usuarioBean.buscarUsuario()}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarTodosLosUsuarios">List&lt;Usuario&gt; buscarTodosLosUsuarios()</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{usuarioBean.buscarTodosLosUsuarios()}">Buscar todos</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="login">Usuario? login(String, String)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="login-alias" class="col-form-label col-sm-2">Alias</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" jsf:value="#{usuarioBean.usuario.alias}" class="form-control" id="login-alias" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="login-password" class="col-form-label col-sm-2">Contraseña</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" jsf:value="#{usuarioBean.usuario.password}" class="form-control" id="login-password" />
+                                    </div>
+                                </div>
+                                <ui:fragment rendered="#{usuarioBean.usuario.id != null and usuarioBean.usuario.alias != null}">
+                                    <div class="alert alert-success">
+                                        Hola #{usuarioBean.usuario.nombre}
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{usuarioBean.usuario.id == null and usuarioBean.usuario.alias != null}">
+                                    <div class="alert alert-danger">
+                                        Usuario/Contraseña incorrectas
+                                    </div>
+                                </ui:fragment>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{usuarioBean.login()}">
+                                            Iniciar sesión
+                                            <f:ajax render="@form" execute="@form" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <div id="section-categoria">
+                        <h1>Categoria</h1>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarCategoria">Categoria? buscarCategoria(Object)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarCategoria-id" class="col-sm-2 col-form-label">ID</label>
+                                    <div class="col-sm-8">
+                                        <input type="number"
+                                               id="buscarCategoria-id"
+                                               class="form-control"
+                                               min="0"
+                                               placeholder="ID de la categoría"
+                                               jsf:value="#{categoriaBean.categoria.id}" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{categoriaBean.buscarCategoria()}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarTodasLasCategorias">List&lt;Categoria&gt; buscarTodasLasCategorias()</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{categoriaBean.buscarTodasLasCategorias()}">Buscar todas</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="buscarPreferenciasUsuario">List&lt;Categoria&gt; buscarPreferenciasUsuario(Usuario)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="buscarPreferenciasUsuario-usuario" class="col-sm-2 col-form-label">Usuario</label>
+                                    <div class="col-sm-10">
+                                        <h:selectOneMenu value="#{usuarioBean.usuarioId}" styleClass="form-control" id="buscarPreferenciasUsuario-usuario">
+                                            <f:selectItem itemValue="-1" itemLabel="Usuario anónimo o inválido (va a fallar)" />
+                                            <f:selectItems value="#{usuarioBean.usuarios}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.nombre} (aka. #{usuario.alias})" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <button class="btn btn-primary" jsf:action="#{categoriaBean.buscarPreferenciasUsuario(usuarioBean.usuario)}">Buscar preferencias</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+
+                        <div class="soap-entry">
+                            <h2 id="obtenerCategoriasEvento">List&lt;Categoria&gt; obtenerCategoriasEvento(Evento)</h2>
+                            <h:form>
+                                <div class="form-group row">
+                                    <label for="obtenerCategoriasEvento-evento" class="col-sm-2 col-form-label">Evento</label>
+                                    <div class="col-sm-8">
+                                        <h:selectOneMenu value="#{eventoBean.evento.id}" styleClass="form-control" id="obtenerCategoriasEvento-evento">
+                                            <f:selectItem itemLabel="Seleccione uno" itemDisabled="true" />
+                                            <f:selectItems value="#{eventoBean.eventosDesdeServicio}" var="evento" itemValue="#{evento.id}" itemLabel="[#{evento.id}] #{evento.nombre}" />
+                                            <f:selectItem itemValue="0" itemLabel="Evento inválido (va a fallar)" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary" jsf:action="#{categoriaBean.obtenerCategoriasEvento(eventoBean.evento)}">Buscar</button>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 d-none d-sm-block" style="padding-top: 122px">
+                    <nav id="navbar" class="navbar navbar-light bg-light" style="position:-webkit-sticky;position:sticky;top:10px;margin-bottom:20px;overflow-y: auto;max-height: calc(100vh - 2rem);">
+                        <a class="navbar-brand" href="#top">Agendamlg Tester</a>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link" href="#section-evento">Evento</a>
+                            <nav class="nav nav-pills flex-column">
+                                <a class="nav-link ml-3 my-1" href="#eliminarEvento">eliminarEvento</a>
+                                <a class="nav-link ml-3 my-1" href="#buscarEvento">buscarEvento</a>
+                                <a class="nav-link ml-3 my-1" href="#buscarTodosLosEventos">buscarTodosLosEventos</a>
+                                <a class="nav-link ml-3 my-1" href="#buscarEventosUsuario">buscarEventosUsuario</a>
+                                <a class="nav-link ml-3 my-1" href="#buscarEventosTipoUsuario">buscarEventosTipoUsuario</a>
+                                <a class="nav-link ml-3 my-1" href="#validarEvento">validarEvento</a>
+                                <a class="nav-link ml-3 my-1" href="#crearEventoTipoUsuario">crearEventoTipoUsuario</a>
+                                <a class="nav-link ml-3 my-1" href="#editarEvento">editarEvento</a>
+                                <a class="nav-link ml-3 my-1" href="#buscarEventoCategorias">buscarEventoCategorias</a>
+                            </nav>
+                        </nav>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link" href="#section-usuario">Usuario</a>
+                            <nav class="nav nav-pills flex-column">
+                                <a href="#buscarUsuario" class="nav-link ml-3 my-1">buscarUsuario</a>
+                                <a href="#buscarTodosLosUsuarios" class="nav-link ml-3 my-1">buscarTodosLosUsuarios</a>
+                                <a class="nav-link ml-3 my-1" href="#login">login</a>
+                            </nav>
+                        </nav>
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link" href="#section-categoria">Categoria</a>
+                            <nav class="nav nav-pills flex-column">
+                                <a href="#buscarCategoria" class="nav-link ml-3 my-1">buscarCategoria</a>
+                                <a href="#buscarTodasLasCategorias" class="nav-link ml-3 my-1">buscarTodasLasCategorias</a>
+                                <a class="nav-link ml-3 my-1" href="#buscarPreferenciasUsuario">buscarPreferenciasUsuario</a>
+                                <a class="nav-link ml-3 my-1" href="#obtenerCategoriasEvento">obtenerCategoriasEvento</a>
+                            </nav>
+                        </nav>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous" />
+    </h:body>
+
+</html>

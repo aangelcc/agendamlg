@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+        <title>Resultados de búsqueda para Eventos - Agendamlg Tester</title>
+        <base href="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/" />
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <h1 class="display-1">Agendamlg Tester</h1>
+            <h2>Ver eventos</h2>
+            <ui:repeat value="#{eventoBean.eventos}" var="evento">
+                <div class="row">
+                    <div class="col-sm-2 text-right">id</div>
+                    <div class="col-sm-10">#{evento.id}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Nombre</div>
+                    <div class="col-sm-10">#{evento.nombre}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Creador</div>
+                    <div class="col-sm-10">
+                        <h:form>
+                            <a href="verUsuario.jsf?id=#{evento.creador.id}">
+                                #{evento.creador.nombre}
+                            </a>
+                        </h:form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Descripción</div>
+                    <div class="col-sm-10">#{evento.descripcion}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Fecha</div>
+                    <div class="col-sm-10">#{evento.fecha.toString()}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Dirección</div>
+                    <div class="col-sm-10">#{evento.direccion}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Precio</div>
+                    <div class="col-sm-10">#{eventoBean.mostrarPrecio(evento)}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">?Validado¿</div>
+                    <div class="col-sm-10">#{eventoBean.mostrarValidado(evento)}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2 text-right">Tipo</div>
+                    <div class="col-sm-10">#{eventoBean.mostrarTipo(evento)}</div>
+                </div>
+                <hr />
+            </ui:repeat>
+            <ui:fragment id="evento-error" rendered="#{empty eventoBean.eventos}">
+                <div class="alert alert-danger" role="alert">
+                    No se ha encontrado ningún evento con esos parámetros de búsqueda.
+                </div>
+            </ui:fragment>
+            <div class="form-group">
+                <a href="#{eventoBean.htmlId}" class="btn btn-primary">Volver</a>
+            </div>
+        </div>
+    </h:body>
+</html>
