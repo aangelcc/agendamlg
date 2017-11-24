@@ -55,14 +55,17 @@ public class UsuarioBean {
     }
 
     public void parametrosxD() {
-        if(usuario.getId() != null && rusuarios.size() == 0)
-            rusuarios.add(service.getAgendamlgPort().buscarUsuario(usuario.getId()));
+        if(usuario.getId() != null && rusuarios.size() == 0) {
+            Usuario u = service.getAgendamlgPort().buscarUsuario(usuario.getId());
+            if(u != null) rusuarios.add(u);
+        }
         htmlId = "javascript:history.back()";
     }
 
     public String buscarUsuario() {
         Usuario u = service.getAgendamlgPort().buscarUsuario(usuario.getId());
         if(u != null) rusuarios.add(u);
+        usuario.setId(null);
         htmlId = "#buscarUsuario";
         return "verUsuario";
     }
