@@ -4,29 +4,37 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>#{eventoManagedBean.evento.nombre}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
     </h:head>
     <h:body>
+        <div class="container" style="margin-top: 2%;margin-bottom: 2%; background-color: #f9f9f9; padding: 4%">
         <h:form>
-            <h3>Datos del Evento</h3>
-            <h4>Nombre:</h4>
+            <h1>Datos del Evento</h1>
+            <hr/>
+            <h5>Nombre:</h5>
             #{eventoManagedBean.evento.nombre}
             <br/>
-            <h4>Descripcion:</h4>
+            <hr/>
+            <h5>Descripcion:</h5>
             #{eventoManagedBean.evento.descripcion}
             <br/>
-            <h4>Alias:</h4>
+            <hr/>
+            <h5>Alias:</h5>
             #{eventoManagedBean.evento.creador.alias}
             <br/>
-            <h4>Direccion:</h4>
+            <hr/>
+            <h5>Direccion:</h5>
             #{eventoManagedBean.evento.direccion}
             <br/>
-            <h4>Precio:</h4>
+            <hr/>
+            <h5>Precio:</h5>
             #{eventoManagedBean.evento.precio}
             <br/>
-            <h4>Fecha:</h4>
+            <hr/>
+            <h5>Fecha:</h5>
             #{eventoManagedBean.evento.fecha}
-            <br/>
-            <br/>
+            <hr/>
 
             <h:inputHidden value="#{eventoManagedBean.evento.id}" />
             <ui:fragment rendered="#{usuarioManagedBean.periodista==true}">
@@ -37,6 +45,7 @@
             </ui:fragment>
         </h:form>
         <h:link outcome="index">Volver</h:link>
+        </div>
     </h:body>
 </html>
 

@@ -5,69 +5,74 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Perfil</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
     </h:head>
     <h:body>
-        <h3>Datos del Usuario</h3>
-        Nombre: #{perfilManagedBean.usuario.nombre}
-        <br/>
-        Apellidos: #{perfilManagedBean.usuario.apellidos}
-        <br/>
-        Alias: #{perfilManagedBean.usuario.alias}
-        <br/>
-        Email: #{perfilManagedBean.usuario.email}
-        <br/>
-        Fecha de Nacimiento: #{perfilManagedBean.usuario.fechanacimiento}
-        <br/>
-        <br/>
-        <h3>Preferencias</h3>
-        <h:dataTable value="#{perfilManagedBean.categorias}" var="categoria">
-            <h:column>
-                <f:facet name="header">
-                    Nombre
-                </f:facet>
-                #{categoria.nombre}
-            </h:column>
-        </h:dataTable>
-        <h3>Eventos Subidos</h3>
-        <h:dataTable value="#{perfilManagedBean.eventos}" var="evento">
-            <h:column>
-                <f:facet name="header">
-                    Nombre
-                </f:facet>
-                #{evento.nombre}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Descripcion
-                </f:facet>
-                #{evento.descripcion}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Creador
-                </f:facet>
-                #{evento.creador.alias}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Direccion
-                </f:facet>
-                #{evento.direccion}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Precio
-                </f:facet>
-                #{evento.precio}
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    Fecha
-                </f:facet>
-                #{evento.fecha}
-            </h:column>
-        </h:dataTable>
-        <h:link outcome="index">Volver</h:link>
+        <div class="container" style="margin-top: 2%;margin-bottom: 2%; background-color: #f9f9f9; padding: 4%">
+            <h1>Datos del Usuario</h1>
+            <hr/>
+            Nombre: #{perfilManagedBean.usuario.nombre}
+            <br/>
+            Apellidos: #{perfilManagedBean.usuario.apellidos}
+            <br/>
+            Alias: #{perfilManagedBean.usuario.alias}
+            <br/>
+            Email: #{perfilManagedBean.usuario.email}
+            <br/>
+            Fecha de Nacimiento: #{perfilManagedBean.usuario.fechanacimiento}
+            <br/>
+            <br/>
+            <h3>Preferencias</h3>
+            <h:dataTable value="#{perfilManagedBean.categorias}" var="categoria" styleClass="table table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        Nombre
+                    </f:facet>
+                    #{categoria.nombre}
+                </h:column>
+            </h:dataTable>
+            <h3>Eventos Subidos</h3>
+            <h:dataTable value="#{perfilManagedBean.eventos}" var="evento" styleClass="table table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        Nombre
+                    </f:facet>
+                    #{evento.nombre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Descripcion
+                    </f:facet>
+                    #{evento.descripcion}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Creador
+                    </f:facet>
+                    #{evento.creador.alias}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Direccion
+                    </f:facet>
+                    #{evento.direccion}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Precio
+                    </f:facet>
+                    #{evento.precio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Fecha
+                    </f:facet>
+                    #{evento.fecha}
+                </h:column>
+            </h:dataTable>
+            <h:link outcome="index">Volver</h:link>
+        </div>
     </h:body>
 </html>
 
