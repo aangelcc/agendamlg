@@ -2,20 +2,77 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
+        <meta charset="utf-8" />
         <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+        <style type="text/css">
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #eee;
+            }
+
+            .form-signin {
+                max-width: 330px;
+                padding: 15px;
+                margin: 0 auto;
+            }
+            .form-signin .form-signin-heading,
+            .form-signin .checkbox {
+                margin-bottom: 10px;
+            }
+            .form-signin .checkbox {
+                font-weight: 400;
+            }
+            .form-signin .form-control {
+                position: relative;
+                box-sizing: border-box;
+                height: auto;
+                padding: 10px;
+                font-size: 16px;
+            }
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+            .form-signin input[type="text"] {
+                margin-bottom: -1px;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .form-signin input[type="password"] {
+                margin-bottom: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+            .back {
+                text-align: center;
+                margin-top: 10px;
+            }
+        </style>
     </h:head>
     <h:body>
-        <h:form>
-            Usuario: <h:inputText value="#{usuarioManagedBean.alias}" /> <br/>
-            Contraseña: <h:inputSecret value="#{usuarioManagedBean.password}" /> <br/>
-            <h:commandButton action="#{usuarioManagedBean.iniciarSesion()}" value="Login" />
-            <a href="javascript:history.back()">Atrás</a>
-        </h:form>
-        <ui:fragment rendered="#{usuarioManagedBean.mensajeDeError != null}">
-            <p style="color: rgb(240, 50, 50)">#{usuarioManagedBean.mensajeDeError}</p>
-        </ui:fragment>
+        <div class="container">
+            <h:form class="form-signin">
+                <h2 class="form-signin-heading">Iniciar sesión</h2>
+                <label for="alias" class="sr-only">Usuario</label>
+                <h:inputText value="#{usuarioManagedBean.alias}" id="alias" styleClass="form-control" p:placeholder="Alias" p:required="required" p:autofocus="autofocus" />
+                <label for="contraseña" class="sr-only">Contraseña</label>
+                <h:inputSecret value="#{usuarioManagedBean.password}" id="contraseña" styleClass="form-control" p:placeholder="Contraseña" p:required="required" />
+                <h:commandButton action="#{usuarioManagedBean.iniciarSesion()}" value="Login" styleClass="btn btn-lg btn-primary btn-block" />
+                <div class="back">
+                    <a href="index.jsf" class="btn btn-secondary">Atrás</a>
+                </div>
+            </h:form>
+            <ui:fragment rendered="#{usuarioManagedBean.mensajeDeError != null}">
+                <div class="alert alert-danger form-signin" p:role="alert">
+                    #{usuarioManagedBean.mensajeDeError}
+                </div>
+            </ui:fragment>
+        </div>
     </h:body>
 </html>
 
